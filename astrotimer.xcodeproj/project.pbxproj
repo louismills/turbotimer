@@ -1,0 +1,615 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B427009A2B7100FF00247424 /* SessionTimerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42700992B7100FF00247424 /* SessionTimerDialog.swift */; };
+		B45AEE812B4EF9F20066FFA7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45AEE802B4EF9F20066FFA7 /* AppState.swift */; };
+		B495D9FC2B4DB88700AF3F2D /* astrotimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495D9FB2B4DB88700AF3F2D /* astrotimerApp.swift */; };
+		B495D9FE2B4DB88700AF3F2D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495D9FD2B4DB88700AF3F2D /* ContentView.swift */; };
+		B495DA002B4DB88800AF3F2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B495D9FF2B4DB88800AF3F2D /* Assets.xcassets */; };
+		B495DA032B4DB88800AF3F2D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B495DA022B4DB88800AF3F2D /* Preview Assets.xcassets */; };
+		B495DA0D2B4DB88800AF3F2D /* astrotimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495DA0C2B4DB88800AF3F2D /* astrotimerTests.swift */; };
+		B495DA172B4DB88800AF3F2D /* astrotimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495DA162B4DB88800AF3F2D /* astrotimerUITests.swift */; };
+		B495DA192B4DB88800AF3F2D /* astrotimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495DA182B4DB88800AF3F2D /* astrotimerUITestsLaunchTests.swift */; };
+		B4AD5C222B6D3F0A007FED79 /* ChallengesDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AD5C212B6D3F0A007FED79 /* ChallengesDialog.swift */; };
+		B4AD5C242B6D53BC007FED79 /* PurchasesDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AD5C232B6D53BC007FED79 /* PurchasesDialog.swift */; };
+		B4AD5C262B6D616E007FED79 /* SessionTimerSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AD5C252B6D616E007FED79 /* SessionTimerSection.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B495DA092B4DB88800AF3F2D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B495D9F02B4DB88700AF3F2D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B495D9F72B4DB88700AF3F2D;
+			remoteInfo = astrotimer;
+		};
+		B495DA132B4DB88800AF3F2D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B495D9F02B4DB88700AF3F2D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B495D9F72B4DB88700AF3F2D;
+			remoteInfo = astrotimer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B42700992B7100FF00247424 /* SessionTimerDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTimerDialog.swift; sourceTree = "<group>"; };
+		B45AEE802B4EF9F20066FFA7 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		B495D9F82B4DB88700AF3F2D /* astrotimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = astrotimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B495D9FB2B4DB88700AF3F2D /* astrotimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = astrotimerApp.swift; sourceTree = "<group>"; };
+		B495D9FD2B4DB88700AF3F2D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B495D9FF2B4DB88800AF3F2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B495DA022B4DB88800AF3F2D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B495DA082B4DB88800AF3F2D /* astrotimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = astrotimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B495DA0C2B4DB88800AF3F2D /* astrotimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = astrotimerTests.swift; sourceTree = "<group>"; };
+		B495DA122B4DB88800AF3F2D /* astrotimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = astrotimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B495DA162B4DB88800AF3F2D /* astrotimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = astrotimerUITests.swift; sourceTree = "<group>"; };
+		B495DA182B4DB88800AF3F2D /* astrotimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = astrotimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B4AD5C212B6D3F0A007FED79 /* ChallengesDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesDialog.swift; sourceTree = "<group>"; };
+		B4AD5C232B6D53BC007FED79 /* PurchasesDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesDialog.swift; sourceTree = "<group>"; };
+		B4AD5C252B6D616E007FED79 /* SessionTimerSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTimerSection.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B495D9F52B4DB88700AF3F2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B495DA052B4DB88800AF3F2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B495DA0F2B4DB88800AF3F2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B495D9EF2B4DB88700AF3F2D = {
+			isa = PBXGroup;
+			children = (
+				B495D9FA2B4DB88700AF3F2D /* astrotimer */,
+				B495DA0B2B4DB88800AF3F2D /* astrotimerTests */,
+				B495DA152B4DB88800AF3F2D /* astrotimerUITests */,
+				B495D9F92B4DB88700AF3F2D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B495D9F92B4DB88700AF3F2D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B495D9F82B4DB88700AF3F2D /* astrotimer.app */,
+				B495DA082B4DB88800AF3F2D /* astrotimerTests.xctest */,
+				B495DA122B4DB88800AF3F2D /* astrotimerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B495D9FA2B4DB88700AF3F2D /* astrotimer */ = {
+			isa = PBXGroup;
+			children = (
+				B495D9FB2B4DB88700AF3F2D /* astrotimerApp.swift */,
+				B45AEE802B4EF9F20066FFA7 /* AppState.swift */,
+				B495D9FD2B4DB88700AF3F2D /* ContentView.swift */,
+				B495D9FF2B4DB88800AF3F2D /* Assets.xcassets */,
+				B495DA012B4DB88800AF3F2D /* Preview Content */,
+				B4AD5C232B6D53BC007FED79 /* PurchasesDialog.swift */,
+				B4AD5C212B6D3F0A007FED79 /* ChallengesDialog.swift */,
+				B4AD5C252B6D616E007FED79 /* SessionTimerSection.swift */,
+				B42700992B7100FF00247424 /* SessionTimerDialog.swift */,
+			);
+			path = astrotimer;
+			sourceTree = "<group>";
+		};
+		B495DA012B4DB88800AF3F2D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B495DA022B4DB88800AF3F2D /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B495DA0B2B4DB88800AF3F2D /* astrotimerTests */ = {
+			isa = PBXGroup;
+			children = (
+				B495DA0C2B4DB88800AF3F2D /* astrotimerTests.swift */,
+			);
+			path = astrotimerTests;
+			sourceTree = "<group>";
+		};
+		B495DA152B4DB88800AF3F2D /* astrotimerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B495DA162B4DB88800AF3F2D /* astrotimerUITests.swift */,
+				B495DA182B4DB88800AF3F2D /* astrotimerUITestsLaunchTests.swift */,
+			);
+			path = astrotimerUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B495D9F72B4DB88700AF3F2D /* astrotimer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B495DA1C2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimer" */;
+			buildPhases = (
+				B495D9F42B4DB88700AF3F2D /* Sources */,
+				B495D9F52B4DB88700AF3F2D /* Frameworks */,
+				B495D9F62B4DB88700AF3F2D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = astrotimer;
+			productName = astrotimer;
+			productReference = B495D9F82B4DB88700AF3F2D /* astrotimer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B495DA072B4DB88800AF3F2D /* astrotimerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B495DA1F2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimerTests" */;
+			buildPhases = (
+				B495DA042B4DB88800AF3F2D /* Sources */,
+				B495DA052B4DB88800AF3F2D /* Frameworks */,
+				B495DA062B4DB88800AF3F2D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B495DA0A2B4DB88800AF3F2D /* PBXTargetDependency */,
+			);
+			name = astrotimerTests;
+			productName = astrotimerTests;
+			productReference = B495DA082B4DB88800AF3F2D /* astrotimerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B495DA112B4DB88800AF3F2D /* astrotimerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B495DA222B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimerUITests" */;
+			buildPhases = (
+				B495DA0E2B4DB88800AF3F2D /* Sources */,
+				B495DA0F2B4DB88800AF3F2D /* Frameworks */,
+				B495DA102B4DB88800AF3F2D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B495DA142B4DB88800AF3F2D /* PBXTargetDependency */,
+			);
+			name = astrotimerUITests;
+			productName = astrotimerUITests;
+			productReference = B495DA122B4DB88800AF3F2D /* astrotimerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B495D9F02B4DB88700AF3F2D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1510;
+				LastUpgradeCheck = 1510;
+				TargetAttributes = {
+					B495D9F72B4DB88700AF3F2D = {
+						CreatedOnToolsVersion = 15.1;
+					};
+					B495DA072B4DB88800AF3F2D = {
+						CreatedOnToolsVersion = 15.1;
+						TestTargetID = B495D9F72B4DB88700AF3F2D;
+					};
+					B495DA112B4DB88800AF3F2D = {
+						CreatedOnToolsVersion = 15.1;
+						TestTargetID = B495D9F72B4DB88700AF3F2D;
+					};
+				};
+			};
+			buildConfigurationList = B495D9F32B4DB88700AF3F2D /* Build configuration list for PBXProject "astrotimer" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B495D9EF2B4DB88700AF3F2D;
+			productRefGroup = B495D9F92B4DB88700AF3F2D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B495D9F72B4DB88700AF3F2D /* astrotimer */,
+				B495DA072B4DB88800AF3F2D /* astrotimerTests */,
+				B495DA112B4DB88800AF3F2D /* astrotimerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B495D9F62B4DB88700AF3F2D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B495DA032B4DB88800AF3F2D /* Preview Assets.xcassets in Resources */,
+				B495DA002B4DB88800AF3F2D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B495DA062B4DB88800AF3F2D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B495DA102B4DB88800AF3F2D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B495D9F42B4DB88700AF3F2D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4AD5C262B6D616E007FED79 /* SessionTimerSection.swift in Sources */,
+				B4AD5C222B6D3F0A007FED79 /* ChallengesDialog.swift in Sources */,
+				B45AEE812B4EF9F20066FFA7 /* AppState.swift in Sources */,
+				B427009A2B7100FF00247424 /* SessionTimerDialog.swift in Sources */,
+				B495D9FE2B4DB88700AF3F2D /* ContentView.swift in Sources */,
+				B4AD5C242B6D53BC007FED79 /* PurchasesDialog.swift in Sources */,
+				B495D9FC2B4DB88700AF3F2D /* astrotimerApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B495DA042B4DB88800AF3F2D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B495DA0D2B4DB88800AF3F2D /* astrotimerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B495DA0E2B4DB88800AF3F2D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B495DA192B4DB88800AF3F2D /* astrotimerUITestsLaunchTests.swift in Sources */,
+				B495DA172B4DB88800AF3F2D /* astrotimerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B495DA0A2B4DB88800AF3F2D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B495D9F72B4DB88700AF3F2D /* astrotimer */;
+			targetProxy = B495DA092B4DB88800AF3F2D /* PBXContainerItemProxy */;
+		};
+		B495DA142B4DB88800AF3F2D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B495D9F72B4DB88700AF3F2D /* astrotimer */;
+			targetProxy = B495DA132B4DB88800AF3F2D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B495DA1A2B4DB88800AF3F2D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B495DA1B2B4DB88800AF3F2D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B495DA1D2B4DB88800AF3F2D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"astrotimer/Preview Content\"";
+				DEVELOPMENT_TEAM = SL2A9X2CUX;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = AstroTimer;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mills.timer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B495DA1E2B4DB88800AF3F2D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"astrotimer/Preview Content\"";
+				DEVELOPMENT_TEAM = SL2A9X2CUX;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = AstroTimer;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mills.astrotimer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B495DA202B4DB88800AF3F2D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mills.astrotimerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/astrotimer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/astrotimer";
+			};
+			name = Debug;
+		};
+		B495DA212B4DB88800AF3F2D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SL2A9X2CUX;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mills.astrotimerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/astrotimer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/astrotimer";
+			};
+			name = Release;
+		};
+		B495DA232B4DB88800AF3F2D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mills.astrotimerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = astrotimer;
+			};
+			name = Debug;
+		};
+		B495DA242B4DB88800AF3F2D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SL2A9X2CUX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mills.astrotimerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = astrotimer;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B495D9F32B4DB88700AF3F2D /* Build configuration list for PBXProject "astrotimer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B495DA1A2B4DB88800AF3F2D /* Debug */,
+				B495DA1B2B4DB88800AF3F2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B495DA1C2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B495DA1D2B4DB88800AF3F2D /* Debug */,
+				B495DA1E2B4DB88800AF3F2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B495DA1F2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B495DA202B4DB88800AF3F2D /* Debug */,
+				B495DA212B4DB88800AF3F2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B495DA222B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B495DA232B4DB88800AF3F2D /* Debug */,
+				B495DA242B4DB88800AF3F2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B495D9F02B4DB88700AF3F2D /* Project object */;
+}
