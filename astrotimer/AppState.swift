@@ -128,9 +128,6 @@ struct AppState {
   @AppStorage("userStars") var userStars = 0
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
   @AppStorage("userSessionTime") var userSessionTime = 0
-
-//  @AppStorage("userHeroColour") var userHeroColour: Color = .yellow
-  
   @AppStorage("userMultiplier") var userMultiplier = 0.0
   @AppStorage("userImage") var userImage = "fish.fill"
   
@@ -139,17 +136,9 @@ struct AppState {
 
   var shops = [shop(shop: 0, bought: true, cost: 0, multiplier: 0.0, image: "fish.fill"),
                shop(shop: 1, bought: false, cost: 1, multiplier: 0.03, image: "ladybug.fill"),
-               shop(shop: 2, bought: false, cost: 40, multiplier: 0.06, image: "lizard.fill"),
-               shop(shop: 3, bought: false, cost: 100, multiplier: 0.1, image: "bird.fill"),
+               shop(shop: 2, bought: false, cost: 4, multiplier: 0.06, image: "lizard.fill"),
+               shop(shop: 3, bought: false, cost: 10, multiplier: 0.1, image: "bird.fill"),
   ]
-
-//  var backgrounds = [background(background: 0, bought: true, cost: 1, colour: .yellow, image: "Pluto"),
-//                     background(background: 1, bought: false, cost: 1, colour: .orange, image: "Neptune"),
-//                     background(background: 2, bought: false, cost: 1, colour: .red, image:"Moon"),
-//                     background(background: 3, bought: false, cost: 1, colour: .purple, image: "Mars"),
-//                     background(background: 4, bought: false, cost: 1, colour: .indigo, image: "Sun"),
-//                     background(background: 5, bought: false, cost: 1, colour: .brown, image: "Sun"),
-//  ]
 
   var backgrounds = [background(background: 0, bought: true, cost: 1, colour: .yellow),
                      background(background: 1, bought: false, cost: 1, colour: .orange),

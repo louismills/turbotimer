@@ -25,7 +25,9 @@ struct AppBtn: ViewModifier {
 struct BtnTextFormat: ViewModifier {
   func body(content: Content) -> some View {
     content
-      .padding(5).background(.black)
+      .padding(5)
+//      .background(.black)
+      .background(Color("Background"))
       .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 }
@@ -54,19 +56,21 @@ struct starIcon: View {
   }
 }
 
-struct equipBtn: View {
-  var body: some View {
-    HStack {
-      Text("Equip").foregroundColor(.white).padding(.leading, 10).padding(.trailing, 10)
-    }
-    .btnTextFormat()
-  }
-}
+//struct equipBtn: View {
+//  var body: some View {
+//    HStack {
+//      Text("Equip").foregroundColor(.white).padding(.leading, 10).padding(.trailing, 10)
+//    }
+//    .btnTextFormat()
+//  }
+//}
 
 struct equippedBtn: View {
   var body: some View {
     HStack {
-      Text(Image(systemName:"checkmark.circle.fill")).foregroundColor(.white).padding(.leading, 10).padding(.trailing, 10)
+      Text(Image(systemName:"checkmark.circle.fill"))
+        .foregroundColor(Color("Text"))
+        .padding(.leading, 10).padding(.trailing, 10)
     }
     .btnTextFormat()
   }
@@ -79,7 +83,8 @@ struct dismissBtn: View {
     Button {
       dismiss()
     } label: {
-      Image(systemName: "xmark.circle.fill").font(.title).foregroundColor(.white)
+      Image(systemName: "xmark.circle.fill").font(.title)
+        .foregroundColor(Color("Text"))
     }
   }
 }
@@ -96,7 +101,8 @@ struct dismissSettingsBtn: View {
 
     } label: {
       Image(systemName: "xmark.circle.fill")
-        .font(.title).foregroundColor(.white)
+        .font(.title)
+        .foregroundColor(Color("Text"))
     }
   }
 }
@@ -119,7 +125,9 @@ struct buyShopBtn: View {
 
   var body: some View {
     HStack {
-      Text("\(cost)").foregroundColor(.white).padding(.leading, 10)
+      Text("\(cost)")
+        .foregroundColor(Color("Text"))
+        .padding(.leading, 10)
       starIcon()
     }.btnTextFormat()
   }
@@ -199,6 +207,7 @@ struct challengeConfig: View {
       .fontWeight(.heavy)
       .foregroundColor(.white)
       .background(.green)
+//      .background(Color("Button"))
     }
     .buttonStyle(PlainButtonStyle())
   }
@@ -248,8 +257,7 @@ struct petConfig: View {
           Text("\(Int(store.multiplier * 100))%")
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
-            .background(.white)
-            .foregroundColor(.black)
+            .background(Color("Background"))
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .offset(x: -50, y: -70)
         }
@@ -274,11 +282,7 @@ struct backgroundConfig: View {
   @Binding var appState: AppState
 
   @AppStorage("userStars") var userStars = 0
-
   @AppStorage("userBackground") var userBackground: Color = .yellow
-
-//  @AppStorage("userHeroColour") var userHeroColour: Color = .yellow
-
   @AppStorage("userBackgrounds") var userBackgrounds = [UserBackgrounds(id: 0, bought: true, cost: 1),
                                                         UserBackgrounds(id: 1, bought: false, cost: 1),
                                                         UserBackgrounds(id: 2, bought: false, cost: 1),
@@ -295,24 +299,17 @@ struct backgroundConfig: View {
         if userStars >= background.cost && userBackgrounds[background.background].bought == false {
           userStars -= background.cost
           userBackgrounds[background.background].bought = true
-
-//          userBackground = background.image
           userBackground = background.colour
-
-//          userHeroColour = background.colour
         }
         if userBackgrounds[background.background].bought == true {
-
-//          userBackground = background.image
           userBackground = background.colour
-
-//          userHeroColour = background.colour
         }
       }) {
         if userBackgrounds[background.background].bought == false {
           ZStack(alignment: .center) {
             Circle()
-              .fill(background.colour.opacity(0.6))
+//              .fill(background.colour.opacity(0.6))
+              .fill(background.colour)
               .frame(width: 80, height: 80)
               .shadow(radius: 10)
 
@@ -321,17 +318,18 @@ struct backgroundConfig: View {
           }
         }
         else {
-//          if userBackground != background.image {
           if userBackground.rawValue != background.colour.rawValue {
             ZStack(alignment: .center) {
               Circle()
-                .fill(background.colour.opacity(0.6))
+//                .fill(background.colour.opacity(0.6))
+                .fill(background.colour)
                 .frame(width: 80, height: 80)
             }
           } else {
             ZStack(alignment: .center) {
               Circle()
-                .fill(background.colour.opacity(0.6))
+//                .fill(background.colour.opacity(0.6))
+                .fill(background.colour)
                 .frame(width: 80, height: 80)
                 .shadow(radius: 10)
 
@@ -365,7 +363,9 @@ struct SheetChallengesView: View {
         HStack(spacing: 0) {
           Text("")
             .frame(width: geo.size.width / 4, alignment: .leading)
-          Text("CHALLENGES").foregroundColor(.white).font(.title3).fontWeight(.bold)
+          Text("CHALLENGES")
+            .foregroundColor(Color("Text"))
+            .font(.title3).fontWeight(.bold)
             .frame(maxWidth: .infinity, alignment: .center)
           dismissSettingsBtn()
             .frame(width: geo.size.width / 4, alignment: .trailing)
@@ -373,7 +373,14 @@ struct SheetChallengesView: View {
       }
       .frame(height: 30)
       .padding()
-      .background(.blue)
+      .background(Color("Background"))
+
+      Divider()
+        .frame(height: 2)
+        .overlay(Color("Text"))
+          .offset(y: 60)
+        .edgesIgnoringSafeArea(.horizontal)
+
       GeometryReader { geo in
         Grid(alignment: .leading, horizontalSpacing: 20, verticalSpacing: 20) {
           GridRow {
@@ -430,10 +437,8 @@ struct SheetStoreView: View {
   @State private var showingPurchases = false
 
   @AppStorage("userDestination") var userDestination = ""
-//  @AppStorage("userBackground") var userBackground = ""
   @AppStorage("userBackground") var userBackground: Color = .yellow
   @AppStorage("userStars") var userStars = 0
-//  @AppStorage("userHeroColour") var userHeroColour: Color = .yellow
 
   var body: some View {
     ZStack {
@@ -443,7 +448,7 @@ struct SheetStoreView: View {
             Text("")
               .frame(width: geo.size.width / 4, alignment: .leading)
             Text("STORE")
-              .foregroundColor(.white)
+              .foregroundColor(Color("Text"))
               .font(.title3)
               .fontWeight(.bold)
               .frame(maxWidth: .infinity, alignment: .center)
@@ -454,12 +459,19 @@ struct SheetStoreView: View {
         .frame(height: 30)
         .shadow(radius: 10)
         .padding()
-        .background(.blue)
+        .background(Color("Background"))
+
+        Divider()
+          .frame(height: 2)
+          .overlay(Color("Text"))
+//          .offset(y: 60)
+          .edgesIgnoringSafeArea(.horizontal)
 
         ScrollView {
           HStack(spacing: 0) {
             starIcon().padding(.trailing, 10)
-            Text("\(userStars)").foregroundColor(.white).padding(.trailing, 10)
+            Text("\(userStars)")
+              .padding(.trailing, 10)
             // In store purchases button
             //            Button {
             //              showingPurchases.toggle()
@@ -468,14 +480,19 @@ struct SheetStoreView: View {
             //            }
           }
           .btnTextFormat()
-          .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 20).padding(.top, 20)
-          .foregroundColor(.black)
+          .frame(maxWidth: .infinity, alignment: .leading)
+          .padding([.leading, .top], 20)
 
           VStack() {
             // PETS
             VStack() {
-              Text("Pets").font(.title2).fontWeight(.bold).frame(maxWidth: .infinity, alignment: .leading)
+              Text("Pets")
+                .foregroundColor(Color("Text"))
+                .font(.title2)
+                .fontWeight(.bold)
+                .frame(maxWidth: .infinity, alignment: .leading)
               Text("Speed up your star collection with better friends!")
+                .foregroundColor(Color("Text"))
                 .frame(maxWidth: .infinity, alignment: .leading)
               GeometryReader { geo in
                 Grid(alignment: .leading, horizontalSpacing: 0, verticalSpacing: 0) {
@@ -486,8 +503,7 @@ struct SheetStoreView: View {
                       .padding(.leading, 10)
                   }
                   .padding(.bottom, 10)
-                  .frame(width: geo.size.width / 2, height: geo.size.height / 2).foregroundColor(.black)
-
+                  .frame(width: geo.size.width / 2, height: geo.size.height / 2)
                   GridRow {
                     petConfig(appState: $appState, store: appState.shops[2])
                       .padding(.trailing, 10)
@@ -495,12 +511,12 @@ struct SheetStoreView: View {
                       .padding(.leading, 10)
                   }
                   .padding(.bottom, 10)
-                  .frame(width: geo.size.width / 2, height: geo.size.height / 2).foregroundColor(.black)
+                  .frame(width: geo.size.width / 2, height: geo.size.height / 2)
                 }
               }.frame(height: 400)
             }
             .padding()
-            .background(.white)
+            .background(Color("Background"))
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .shadow(radius: 10)
 
@@ -508,8 +524,14 @@ struct SheetStoreView: View {
             }.padding(10)
             // BACKGROUNDS
             VStack {
-              Text("Backgrounds").font(.title2).fontWeight(.bold).frame(maxWidth: .infinity, alignment: .leading)
-              Text("You deserve to look great!").frame(maxWidth: .infinity, alignment: .leading)
+              Text("Backgrounds")
+                .foregroundColor(Color("Text"))
+                .font(.title2)
+                .fontWeight(.bold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+              Text("You deserve to look great!")
+                .foregroundColor(Color("Text"))
+                .frame(maxWidth: .infinity, alignment: .leading)
               GeometryReader { geo in
                 Grid(alignment: .leading, horizontalSpacing: 0, verticalSpacing: 0) {
                   GridRow {
@@ -518,7 +540,7 @@ struct SheetStoreView: View {
                     backgroundConfig(appState: $appState, background: appState.backgrounds[2])
                   }
                   .padding(4)
-                  .frame(width: geo.size.width / 3, height: geo.size.height / 2).foregroundColor(.black)
+                  .frame(width: geo.size.width / 3, height: geo.size.height / 2)
                   GridRow {
                     backgroundConfig(appState: $appState, background: appState.backgrounds[3])
                     backgroundConfig(appState: $appState, background: appState.backgrounds[4])
@@ -526,12 +548,11 @@ struct SheetStoreView: View {
                   }
                   .padding(4)
                   .frame(width: geo.size.width / 3, height: geo.size.height / 2)
-                  .foregroundColor(.black)
                 }
               }.frame(height: 300)
             }
             .padding()
-            .background(.white)
+            .background(Color("Background"))
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .shadow(radius: 10)
           }
@@ -547,10 +568,8 @@ struct SheetStoreView: View {
         }
       }
     }
-//    .background(userHeroColour.opacity(0.6))
-//    .background(Image(userBackground).opacity(0.6))
-    .background(userBackground.opacity(0.6))
-//    .background(.red)
+//    .background(userBackground.opacity(0.6))
+    .background(userBackground)
   }
 }
 
@@ -568,12 +587,9 @@ struct ContentView: View {
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
   @AppStorage("userSessionTime") var userSessionTime = 0
   @AppStorage("userDestination") var userDestination = ""
-//  @AppStorage("userBackground") var userBackground = "yellow"
   @AppStorage("userBackground") var userBackground: Color = .yellow
-
-//  @AppStorage("userHeroColour") var userHeroColour: Color = .yellow
-
   @AppStorage("userImage") var userImage = "fish.fill"
+
   @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
 
   @State var timer: Timer? = nil
@@ -582,30 +598,39 @@ struct ContentView: View {
 
   var body: some View {
     ZStack {
-
       VStack(spacing: 10) {
         // TOP NAV SECTION - total stars, total session time, shop
         HStack {
           HStack {
             starIcon().padding(.leading, 10)
-            Text("\(userStars)").foregroundColor(.white).padding(.trailing, 10)
+            Text("\(userStars)")
+              .foregroundColor(Color("Text"))
+              .padding(.trailing, 10)
           }
           .btnTextFormat()
-          .foregroundColor(.black)
+//          .shadow(radius: 10)
           HStack {
-            Text("\(userTotalSessionTime)").foregroundColor(.white).padding(.leading, 10)
-            Image(systemName: "clock").foregroundColor(.white).padding(.trailing, 10)
-          }.btnTextFormat()
+            Text("\(userTotalSessionTime)")
+              .padding(.leading, 10)
+            Image(systemName: "clock")
+              .foregroundColor(Color("Text"))
+              .padding(.trailing, 10)
+          }
+          .btnTextFormat()
+//          .shadow(radius: 10)
           Spacer()
           Button {
             showingStore.toggle()
           } label: {
-            Image(systemName: "cart").foregroundColor(.white).padding(.leading, 10).padding(.trailing, 10).font(.system(size: 25))
+            Image(systemName: "cart")
+//              .foregroundColor(Color("Text"))
+              .foregroundColor(.white)
+              .padding(.leading, 10).padding(.trailing, 10).font(.system(size: 25))
           }.btnStoreFormat()
+//            .shadow(radius: 10)
             .fullScreenCover(isPresented: $showingStore) {
               SheetStoreView(appState: $appState)
             }
-            .foregroundColor(.black)
         }
         // END OF TOP NAV SECTION
         Spacer()
@@ -626,9 +651,8 @@ struct ContentView: View {
           }
       }
       .padding()
-//      .background(userHeroColour.opacity(0.6))
-//      .background(userBackground)
-      .background(userBackground.opacity(0.6))
+      .background(userBackground)
+//      .background(userBackground.opacity(0.6))
 
       if showingSessionTimerWarning {
         SessionTimerDialog(isActive: $showingSessionTimerWarning, appState: $appState) {

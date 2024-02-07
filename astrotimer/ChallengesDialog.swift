@@ -25,9 +25,7 @@ struct ChallengesDialog: View {
           close()
         }
 
-
       VStack {
-
         if duration < 60 {
           Text("Focus for \(duration) minutes")
             .textCase(.uppercase)
@@ -60,11 +58,12 @@ struct ChallengesDialog: View {
           }
         }
 
-
-        Text("You will get this reward when you complete this challenge.").multilineTextAlignment(.center).padding(.bottom, 20)
+        Text("You will get this reward when you complete this challenge.")
+          .foregroundColor(Color("Text"))
+          .multilineTextAlignment(.center).padding(.bottom, 20)
         Text("Remember: don't close or switch the app!")
+          .foregroundColor(Color("Text"))
           .padding(.bottom, 20)
-
 
         Button {
           action()
@@ -80,15 +79,12 @@ struct ChallengesDialog: View {
               .foregroundColor(.white)
               .padding(10)
           }
-//          .padding()
-
         }
-
       }
       .padding(.top, 20)
       .fixedSize(horizontal: false, vertical: true)
       .padding()
-      .background(.white)
+      .background(Color("Background"))
       .clipShape(RoundedRectangle(cornerRadius: 20))
       .overlay(alignment: .topTrailing) {
         Button {
@@ -98,7 +94,8 @@ struct ChallengesDialog: View {
             .font(.title2)
             .fontWeight(.medium)
         }
-        .tint(.black)
+//        .tint(.black)
+        .tint(Color("Text"))
         .padding()
       }
       .shadow(radius: 20)

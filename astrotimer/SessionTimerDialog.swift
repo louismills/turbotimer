@@ -47,12 +47,6 @@ struct SessionTimerDialog: View {
             .multilineTextAlignment(.center).padding(.bottom, 20)
         }
 
-//        var sessionTimeSoFar = (appState.workMinutes * 60) - Int(appState.currentTimeCountdown)
-
-//        Text("\(appState.workMinutes * 60)")
-//        Text("\((appState.workMinutes * 60) - Int(appState.currentTimeCountdown))")
-
-
         Button {
           timer?.invalidate()
           timer = nil
@@ -67,12 +61,10 @@ struct SessionTimerDialog: View {
 
             Text("End Session")
               .textCase(.uppercase)
-              .font(.system(size: 20, weight: .bold))
+              .fontWeight(.bold)
               .foregroundColor(.white)
               .padding(10)
           }
-//          .padding()
-
         }
 
         Button {
@@ -89,7 +81,6 @@ struct SessionTimerDialog: View {
             appState.reset()
             sessionRunning = false
           }
-
           close()
         } label: {
           ZStack {
@@ -98,22 +89,16 @@ struct SessionTimerDialog: View {
 
             Text("Continue (10 stars)")
               .textCase(.uppercase)
-              .font(.system(size: 20, weight: .bold))
+              .fontWeight(.bold)
               .foregroundColor(.white)
               .padding(10)
-//              .font(.system(size: 16, weight: .bold))
-//              .foregroundColor(.white)
-//              .padding()
           }
-//          .padding()
-
         }
-
       }
       .padding(.top, 20)
       .fixedSize(horizontal: false, vertical: true)
       .padding()
-      .background(.white)
+      .background(Color("Background"))
       .clipShape(RoundedRectangle(cornerRadius: 20))
       .overlay(alignment: .topTrailing) {
         Button {
@@ -135,7 +120,6 @@ struct SessionTimerDialog: View {
           offset = 0
         }
       }
-
     }
     .ignoresSafeArea()
   }

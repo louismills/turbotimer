@@ -104,9 +104,8 @@ struct sessionTimerSection: View {
     }
     .padding()
     .frame(maxHeight: 220)
-    .background(.white)
-    .foregroundColor(.black)
+    .background(Color("Background"))
     .clipShape(RoundedRectangle(cornerRadius: 20))
-    .shadow(radius: 10)
+//    .shadow(radius: 10)
   }
 }
