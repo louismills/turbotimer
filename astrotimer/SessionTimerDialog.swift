@@ -39,11 +39,19 @@ struct SessionTimerDialog: View {
           .font(.title2)
           .bold()
           .padding()
-        if (appState.workMinutes * 60) - Int(appState.currentTimeCountdown) < 60 {
+        let timeElapsed = (appState.workMinutes * 60) - Int(appState.currentTimeCountdown)
+        if timeElapsed == 1 {
+              Text("Session stopped! You focused just for \((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) second. You've got this!")
+          .multilineTextAlignment(.center).padding(.bottom, 20)
+       } else if (appState.workMinutes * 60) - Int(appState.currentTimeCountdown) < 60 {
           Text("Session stopped! You focused just for \((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) seconds. You've got this!")
             .multilineTextAlignment(.center).padding(.bottom, 20)
+        } else if (appState.workMinutes * 60) - Int(appState.currentTimeCountdown) == 60 {
+          Text("Session stopped! You focused just for \(((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) / 60) minute. You've got this!")
+            .multilineTextAlignment(.center).padding(.bottom, 20)
         } else {
-          Text("Session stopped! You focused just for \(((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) / 60) minutes. You've got this!")
+          let remainingMins = (appState.workMinutes - (((appState.workMinutes) / 60) * 60))
+          Text("Session stopped! You focused just for \(((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) / 60) minutes and \(remainingMins) seconds. You've got this!")
             .multilineTextAlignment(.center).padding(.bottom, 20)
         }
 

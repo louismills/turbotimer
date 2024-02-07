@@ -376,8 +376,9 @@ struct SheetChallengesView: View {
       .background(Color("Background"))
 
       Divider()
-        .frame(height: 2)
-        .overlay(Color("Text"))
+        .frame(height: 1)
+//        .overlay(Color("Text"))
+        .overlay(Color(UIColor.lightGray))
           .offset(y: 60)
         .edgesIgnoringSafeArea(.horizontal)
 
@@ -463,7 +464,8 @@ struct SheetStoreView: View {
 
         Divider()
           .frame(height: 2)
-          .overlay(Color("Text"))
+//          .overlay(Color("Text"))
+          .overlay(Color(UIColor.lightGray))
 //          .offset(y: 60)
           .edgesIgnoringSafeArea(.horizontal)
 
@@ -639,6 +641,7 @@ struct ContentView: View {
           .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
             if newPhase == .active {
               print("Active")
+              UIApplication.shared.isIdleTimerDisabled = false
             } else if newPhase == .inactive {
               print("Inactive")
             } else if newPhase == .background {

@@ -54,6 +54,7 @@
 		B4AD5C212B6D3F0A007FED79 /* ChallengesDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesDialog.swift; sourceTree = "<group>"; };
 		B4AD5C232B6D53BC007FED79 /* PurchasesDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesDialog.swift; sourceTree = "<group>"; };
 		B4AD5C252B6D616E007FED79 /* SessionTimerSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTimerSection.swift; sourceTree = "<group>"; };
+		B4C5764C2B73B4BF006B3F41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +105,7 @@
 		B495D9FA2B4DB88700AF3F2D /* astrotimer */ = {
 			isa = PBXGroup;
 			children = (
+				B4C5764C2B73B4BF006B3F41 /* Info.plist */,
 				B495D9FB2B4DB88700AF3F2D /* astrotimerApp.swift */,
 				B45AEE802B4EF9F20066FFA7 /* AppState.swift */,
 				B495D9FD2B4DB88700AF3F2D /* ContentView.swift */,
@@ -446,6 +448,7 @@
 				DEVELOPMENT_TEAM = SL2A9X2CUX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = astrotimer/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AstroTimer;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -477,6 +480,7 @@
 				DEVELOPMENT_TEAM = SL2A9X2CUX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = astrotimer/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AstroTimer;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
