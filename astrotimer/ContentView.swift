@@ -26,8 +26,15 @@ struct BtnTextFormat: ViewModifier {
   func body(content: Content) -> some View {
     content
       .padding(5)
-//      .background(.black)
       .background(Color("Background"))
+      .clipShape(RoundedRectangle(cornerRadius: 20))
+  }
+}
+
+struct BtnTextStoreFormat: ViewModifier {
+  func body(content: Content) -> some View {
+    content
+      .padding(5)
       .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 }
@@ -55,15 +62,6 @@ struct starIcon: View {
     Image(systemName: "star.fill").foregroundColor(.yellow)
   }
 }
-
-//struct equipBtn: View {
-//  var body: some View {
-//    HStack {
-//      Text("Equip").foregroundColor(.white).padding(.leading, 10).padding(.trailing, 10)
-//    }
-//    .btnTextFormat()
-//  }
-//}
 
 struct equippedBtn: View {
   var body: some View {
@@ -98,7 +96,6 @@ struct dismissSettingsBtn: View {
     Button {
       dismiss()
       challengeSelected = false
-
     } label: {
       Image(systemName: "xmark.circle.fill")
         .font(.title)
@@ -136,6 +133,12 @@ struct buyShopBtn: View {
 extension View {
   func btnTextFormat() -> some View {
     modifier(BtnTextFormat())
+  }
+}
+
+extension View {
+  func btnTextStoreFormat() -> some View {
+    modifier(BtnTextStoreFormat())
   }
 }
 
@@ -206,8 +209,9 @@ struct challengeConfig: View {
       }
       .fontWeight(.heavy)
       .foregroundColor(.white)
-      .background(.green)
-//      .background(Color("Button"))
+//      .background(.green)
+//      .foregroundColor(.red)
+      .background(.red)
     }
     .buttonStyle(PlainButtonStyle())
   }
@@ -222,18 +226,20 @@ struct petConfig: View {
 
   @AppStorage("userMultiplier") var userMultiplier: Double = 0
 
-  @AppStorage("userImage") var userImage = "fish.fill"
+//  @AppStorage("userImage") var userImage = "fish.fill"
+
+  @AppStorage("userImage") var userImage = "car1"
 
   @AppStorage("userShops") var userStores = [UserShops(id: 0, bought: true, cost: 1),
-                                            UserShops(id: 1, bought: false, cost: 40),
-                                            UserShops(id: 2, bought: false, cost: 80),
-                                            UserShops(id: 3, bought: false, cost: 100),
-                                            UserShops(id: 4, bought: false, cost: 125),
-                                            UserShops(id: 5, bought: false, cost: 200),
-                                            UserShops(id: 6, bought: false, cost: 250),
-                                            UserShops(id: 7, bought: false, cost: 500),
-                                            UserShops(id: 8, bought: false, cost: 750),
-                                            UserShops(id: 9, bought: false, cost: 1000)]
+                                             UserShops(id: 1, bought: false, cost: 40),
+                                             UserShops(id: 2, bought: false, cost: 80),
+                                             UserShops(id: 3, bought: false, cost: 100),
+                                             UserShops(id: 4, bought: false, cost: 125),
+                                             UserShops(id: 5, bought: false, cost: 200),
+                                             UserShops(id: 6, bought: false, cost: 250),
+                                             UserShops(id: 7, bought: false, cost: 500),
+                                             UserShops(id: 8, bought: false, cost: 750),
+                                             UserShops(id: 9, bought: false, cost: 1000)]
 
   var store: shop
 
@@ -250,9 +256,12 @@ struct petConfig: View {
       }
     }) {
       ZStack {
-        Image(systemName: store.image)
-          .font(.system(size: 80))
-          .foregroundColor(.white)
+        Image(store.image)
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+//        Image(systemName: store.image)
+//          .font(.system(size: 80))
+//          .foregroundColor(.white)
         if Int(store.multiplier * 100) > 0 {
           Text("\(Int(store.multiplier * 100))%")
             .padding(.horizontal, 10)
@@ -308,7 +317,6 @@ struct backgroundConfig: View {
         if userBackgrounds[background.background].bought == false {
           ZStack(alignment: .center) {
             Circle()
-//              .fill(background.colour.opacity(0.6))
               .fill(background.colour)
               .frame(width: 80, height: 80)
               .shadow(radius: 10)
@@ -321,14 +329,12 @@ struct backgroundConfig: View {
           if userBackground.rawValue != background.colour.rawValue {
             ZStack(alignment: .center) {
               Circle()
-//                .fill(background.colour.opacity(0.6))
                 .fill(background.colour)
                 .frame(width: 80, height: 80)
             }
           } else {
             ZStack(alignment: .center) {
               Circle()
-//                .fill(background.colour.opacity(0.6))
                 .fill(background.colour)
                 .frame(width: 80, height: 80)
                 .shadow(radius: 10)
@@ -376,10 +382,8 @@ struct SheetChallengesView: View {
       .background(Color("Background"))
 
       Divider()
-        .frame(height: 1)
-//        .overlay(Color("Text"))
         .overlay(Color(UIColor.lightGray))
-          .offset(y: 60)
+        .offset(y: 60)
         .edgesIgnoringSafeArea(.horizontal)
 
       GeometryReader { geo in
@@ -388,27 +392,37 @@ struct SheetChallengesView: View {
             challengeConfig(appState: $appState, workMinutes: 5, reward: 1)
             challengeConfig(appState: $appState, workMinutes: 10, reward: 2)
           }
-          .frame(width: geo.size.width / 2, height: geo.size.height / 7).foregroundColor(.black).background(.green).clipShape(RoundedRectangle(cornerRadius: 15))
+          .frame(width: geo.size.width / 2, height: geo.size.height / 7)
+//          .foregroundColor(.black).background(.green)
+          .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
             challengeConfig(appState: $appState, workMinutes: 15, reward: 3)
             challengeConfig(appState: $appState, workMinutes: 20, reward : 5)
           }
-          .frame(width: geo.size.width / 2, height: geo.size.height / 7).foregroundColor(.black).background(.green).clipShape(RoundedRectangle(cornerRadius: 15))
+          .frame(width: geo.size.width / 2, height: geo.size.height / 7)
+//          .foregroundColor(.black).background(.green)
+          .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
             challengeConfig(appState: $appState, workMinutes: 25, reward: 7)
             challengeConfig(appState: $appState, workMinutes: 30, reward: 11)
           }
-          .frame(width: geo.size.width / 2, height: geo.size.height / 7).foregroundColor(.black).background(.green).clipShape(RoundedRectangle(cornerRadius: 15))
+          .frame(width: geo.size.width / 2, height: geo.size.height / 7)
+//          .foregroundColor(.black).background(.green)
+          .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
             challengeConfig(appState: $appState, workMinutes: 45, reward: 15)
             challengeConfig(appState: $appState, workMinutes: 60, reward: 22)
           }
-          .frame(width: geo.size.width / 2, height: geo.size.height / 7).foregroundColor(.black).background(.green).clipShape(RoundedRectangle(cornerRadius: 15))
+          .frame(width: geo.size.width / 2, height: geo.size.height / 7)
+//          .foregroundColor(.black).background(.green)
+          .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
             challengeConfig(appState: $appState, workMinutes: 90, reward: 30)
             challengeConfig(appState: $appState, workMinutes: 120, reward: 38)
           }
-          .frame(width: geo.size.width / 2, height: geo.size.height / 7).foregroundColor(.black).background(.green).clipShape(RoundedRectangle(cornerRadius: 15))
+          .frame(width: geo.size.width / 2, height: geo.size.height / 7)
+//          .foregroundColor(.black).background(.green)
+          .clipShape(RoundedRectangle(cornerRadius: 15))
         }
         .frame(width: geo.size.width, height: geo.size.height)
       }
@@ -421,7 +435,7 @@ struct SheetChallengesView: View {
       //      .font(.title)
 
       if challengeSelected {
-        ChallengesDialog(isActive: $challengeSelected, duration: challengeSelectedDuration, reward: challengeSelectedReward, buttonTitle: "Select") {
+        ChallengesDialog(isActive: $challengeSelected, duration: challengeSelectedDuration, reward: challengeSelectedReward) {
           appState.workMinutes = challengeSelectedDuration
           dismiss()
         }
@@ -458,15 +472,11 @@ struct SheetStoreView: View {
           }
         }
         .frame(height: 30)
-        .shadow(radius: 10)
         .padding()
         .background(Color("Background"))
 
         Divider()
-          .frame(height: 2)
-//          .overlay(Color("Text"))
           .overlay(Color(UIColor.lightGray))
-//          .offset(y: 60)
           .edgesIgnoringSafeArea(.horizontal)
 
         ScrollView {
@@ -481,7 +491,15 @@ struct SheetStoreView: View {
             //              Image(systemName: "plus.circle.fill").foregroundColor(.green)
             //            }
           }
-          .btnTextFormat()
+          .btnTextStoreFormat()
+//          .overlay(
+//            RoundedRectangle(cornerRadius: 16)
+//              .stroke(userBackground, lineWidth: 2)
+//          )
+          .overlay(
+            RoundedRectangle(cornerRadius: 12)
+              .stroke(Color("Text"), lineWidth: 1)
+          )
           .frame(maxWidth: .infinity, alignment: .leading)
           .padding([.leading, .top], 20)
 
@@ -519,8 +537,16 @@ struct SheetStoreView: View {
             }
             .padding()
             .background(Color("Background"))
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .shadow(radius: 10)
+
+//            .overlay(
+//              RoundedRectangle(cornerRadius: 16)
+//                .stroke(userBackground, lineWidth: 4)
+//            )
+            .overlay(
+              RoundedRectangle(cornerRadius: 16)
+                .stroke(Color("Text"), lineWidth: 2)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 16))
 
             HStack {
             }.padding(10)
@@ -555,8 +581,16 @@ struct SheetStoreView: View {
             }
             .padding()
             .background(Color("Background"))
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .shadow(radius: 10)
+
+//            .overlay(
+//              RoundedRectangle(cornerRadius: 16)
+//                .stroke(userBackground, lineWidth: 4)
+//            )
+            .overlay(
+              RoundedRectangle(cornerRadius: 16)
+                .stroke(Color("Text"), lineWidth: 2)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 16))
           }
           .padding()
         }
@@ -570,8 +604,7 @@ struct SheetStoreView: View {
         }
       }
     }
-//    .background(userBackground.opacity(0.6))
-    .background(userBackground)
+    .background(Color("Background"))
   }
 }
 
@@ -601,47 +634,52 @@ struct ContentView: View {
   var body: some View {
     ZStack {
       VStack(spacing: 10) {
-        // TOP NAV SECTION - total stars, total session time, shop
+        // TOP NAV SECTION - total stars, total session time and shop
         HStack {
           HStack {
             starIcon().padding(.leading, 10)
             Text("\(userStars)")
               .foregroundColor(Color("Text"))
               .padding(.trailing, 10)
-          }
-          .btnTextFormat()
-//          .shadow(radius: 10)
+          }.font(.system(size: 25))
+            .btnTextFormat()
           HStack {
             Text("\(userTotalSessionTime)")
               .padding(.leading, 10)
             Image(systemName: "clock")
               .foregroundColor(Color("Text"))
               .padding(.trailing, 10)
-          }
-          .btnTextFormat()
-//          .shadow(radius: 10)
+          }.font(.system(size: 25))
+            .btnTextFormat()
           Spacer()
           Button {
             showingStore.toggle()
           } label: {
             Image(systemName: "cart")
-//              .foregroundColor(Color("Text"))
               .foregroundColor(.white)
-              .padding(.leading, 10).padding(.trailing, 10).font(.system(size: 25))
+              .font(.system(size: 25))
           }.btnStoreFormat()
-//            .shadow(radius: 10)
             .fullScreenCover(isPresented: $showingStore) {
               SheetStoreView(appState: $appState)
             }
         }
         // END OF TOP NAV SECTION
         Spacer()
-        Image(systemName: userImage).foregroundColor(.white).font(.system(size: 100))
+//        Image(systemName: userImage)
+//          .transition(.symbolEffect(.automatic))
+//          .foregroundColor(Color("Background"))
+//          .font(.system(size: 100))
+Image(userImage)
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .padding(.bottom, 20)
+//          .frame(width: 250, height: 100)
+
+
         sessionTimerSection(appState: $appState)
           .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
             if newPhase == .active {
               print("Active")
-              UIApplication.shared.isIdleTimerDisabled = false
             } else if newPhase == .inactive {
               print("Inactive")
             } else if newPhase == .background {
@@ -652,10 +690,19 @@ struct ContentView: View {
               appState.reset()
             }
           }
+          .onAppear {
+            UIApplication.shared.isIdleTimerDisabled = true
+          }
       }
       .padding()
-      .background(userBackground)
-//      .background(userBackground.opacity(0.6))
+//      .background(userBackground)
+
+//      .background(Image("cargarage1")
+//        .resizable()
+//        .ignoresSafeArea()
+//        .aspectRatio(contentMode: .fill)
+//      .background(.gray)
+      .background(Color(UIColor.lightGray).opacity(0.4))
 
       if showingSessionTimerWarning {
         SessionTimerDialog(isActive: $showingSessionTimerWarning, appState: $appState) {

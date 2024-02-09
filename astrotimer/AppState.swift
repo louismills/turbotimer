@@ -134,15 +134,21 @@ struct AppState {
   @AppStorage("challengeSelectedReward") var challengeSelectedReward = 0
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
 
-  var shops = [shop(shop: 0, bought: true, cost: 0, multiplier: 0.0, image: "fish.fill"),
-               shop(shop: 1, bought: false, cost: 1, multiplier: 0.03, image: "ladybug.fill"),
-               shop(shop: 2, bought: false, cost: 4, multiplier: 0.06, image: "lizard.fill"),
-               shop(shop: 3, bought: false, cost: 10, multiplier: 0.1, image: "bird.fill"),
+//  var shops = [shop(shop: 0, bought: true, cost: 0, multiplier: 0.0, image: "fish.fill"),
+//               shop(shop: 1, bought: false, cost: 1, multiplier: 0.03, image: "ladybug.fill"),
+//               shop(shop: 2, bought: false, cost: 4, multiplier: 0.06, image: "lizard.fill"),
+//               shop(shop: 3, bought: false, cost: 10, multiplier: 0.1, image: "bird.fill"),
+//  ]
+
+  var shops = [shop(shop: 0, bought: true, cost: 0, multiplier: 0.0, image: "car1"),
+               shop(shop: 1, bought: false, cost: 1, multiplier: 0.03, image: "car2"),
+               shop(shop: 2, bought: false, cost: 4, multiplier: 0.06, image: "car3"),
+               shop(shop: 3, bought: false, cost: 10, multiplier: 0.1, image: "car4"),
   ]
 
-  var backgrounds = [background(background: 0, bought: true, cost: 1, colour: .yellow),
+  var backgrounds = [background(background: 0, bought: true, cost: 1, colour: .red),
                      background(background: 1, bought: false, cost: 1, colour: .orange),
-                     background(background: 2, bought: false, cost: 1, colour: .red),
+                     background(background: 2, bought: false, cost: 1, colour: .blue),
                      background(background: 3, bought: false, cost: 1, colour: .purple),
                      background(background: 4, bought: false, cost: 1, colour: .indigo),
                      background(background: 5, bought: false, cost: 1, colour: .brown),

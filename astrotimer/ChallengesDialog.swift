@@ -13,7 +13,6 @@ struct ChallengesDialog: View {
 
   let duration: Int
   let reward: Int
-  let buttonTitle: String
   let action: () -> ()
   @State private var offset: CGFloat = 1000
 
@@ -25,7 +24,26 @@ struct ChallengesDialog: View {
           close()
         }
 
+
+
       VStack {
+        ZStack {
+          Image(systemName: "star.fill").font(.system(size: 80)).foregroundColor(.yellow)
+//            .offset(y: -160)
+          Text("\(reward)")
+            .padding(10)
+            .background(.indigo)
+            .foregroundColor(.white)
+            .clipShape(Circle())
+            .offset(x: 40, y: -40)
+        }
+//        .offset(x: 0, y: offset)
+//        .onAppear {
+//          withAnimation(.spring()) {
+//            offset = 0
+//          }
+//        }
+
         if duration < 60 {
           Text("Focus for \(duration) minutes")
             .textCase(.uppercase)
@@ -72,32 +90,65 @@ struct ChallengesDialog: View {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
               .foregroundColor(.green)
+//              .foregroundColor(.yellow)
 
-            Text(buttonTitle)
+            Text("Select")
               .textCase(.uppercase)
               .font(.system(size: 20, weight: .bold))
               .foregroundColor(.white)
               .padding(10)
           }
         }
+
+        Button {
+//          action()
+          close()
+        } label: {
+          ZStack {
+            RoundedRectangle(cornerRadius: 20)
+              .foregroundColor(.gray)
+
+            Text("Cancel")
+              .textCase(.uppercase)
+              .font(.system(size: 20, weight: .bold))
+              .foregroundColor(.white)
+              .padding(10)
+          }
+        }
+        //        Image(systemName: "star.fill")
+        //          .font(.system(size: 80))
+        //          .foregroundColor(.yellow)
+        //          .offset(y: -160)
+        //          Text("\(reward)")
+        //  //          .padding(.horizontal, 15)
+        //          .padding(10)
+        //            .background(.indigo)
+        //            .foregroundColor(.white)
+        //            .clipShape(Circle())
+        //            .offset(x: 40, y: -200)
       }
+
+
       .padding(.top, 20)
       .fixedSize(horizontal: false, vertical: true)
       .padding()
       .background(Color("Background"))
       .clipShape(RoundedRectangle(cornerRadius: 20))
-      .overlay(alignment: .topTrailing) {
-        Button {
-          close()
-        } label: {
-          Image(systemName: "xmark")
-            .font(.title2)
-            .fontWeight(.medium)
-        }
-//        .tint(.black)
-        .tint(Color("Text"))
-        .padding()
-      }
+
+
+
+
+//      .overlay(alignment: .topTrailing) {
+//        Button {
+//          close()
+//        } label: {
+//          Image(systemName: "xmark")
+//            .font(.title2)
+//            .fontWeight(.medium)
+//        }
+//        .tint(Color("Text"))
+//        .padding()
+//      }
       .shadow(radius: 20)
       .padding(20)
       .offset(x: 0, y: offset)
@@ -107,14 +158,21 @@ struct ChallengesDialog: View {
           offset = 0
         }
       }
-      Image(systemName: "star.fill").font(.system(size: 80)).foregroundColor(.yellow).offset(y: -160)
-        Text("\(reward)")
-//          .padding(.horizontal, 15)
-        .padding(10)
-          .background(.indigo)
-          .foregroundColor(.white)
-          .clipShape(Circle())
-          .offset(x: 40, y: -200)
+//      VStack {
+//        Image(systemName: "star.fill").font(.system(size: 80)).foregroundColor(.yellow).offset(y: -160)
+//        Text("\(reward)")
+//          .padding(10)
+//          .background(.indigo)
+//          .foregroundColor(.white)
+//          .clipShape(Circle())
+//          .offset(x: 40, y: -280)
+//      }
+//      .offset(x: 0, y: offset)
+//      .onAppear {
+//        withAnimation(.spring()) {
+//          offset = 0
+//        }
+//      }
     }
     .ignoresSafeArea()
   }
@@ -129,6 +187,6 @@ struct ChallengesDialog: View {
 
 struct ChallengesDialog_Previews: PreviewProvider {
   static var previews: some View {
-    ChallengesDialog(isActive: .constant(true), duration: 10, reward: 2, buttonTitle: "Select", action: {})
+    ChallengesDialog(isActive: .constant(true), duration: 10, reward: 2, action: {})
   }
 }

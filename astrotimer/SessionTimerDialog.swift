@@ -33,47 +33,70 @@ struct SessionTimerDialog: View {
         }
 
       VStack {
-        Image(systemName: "brain").foregroundColor(.pink).font(.system(size: 80))
+//        Image(systemName: "brain").foregroundColor(.pink).font(.system(size: 80))
+        Image("crashhelmetnobg").resizable()
+          .frame(width: 100, height: 100)
+//          .font(.system(size: 80))
         Text("Stay Focused")
           .textCase(.uppercase)
           .font(.title2)
           .bold()
-          .padding()
+          .padding(.bottom, 20)
+          .padding(.top, 10)
+
+
         let timeElapsed = (appState.workMinutes * 60) - Int(appState.currentTimeCountdown)
         if timeElapsed == 1 {
-              Text("Session stopped! You focused just for \((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) second. You've got this!")
+              Text("Session stopped! You focused just for \(timeElapsed) second. You've got this!")
           .multilineTextAlignment(.center).padding(.bottom, 20)
-       } else if (appState.workMinutes * 60) - Int(appState.currentTimeCountdown) < 60 {
-          Text("Session stopped! You focused just for \((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) seconds. You've got this!")
+       } else if timeElapsed < 60 {
+          Text("Session stopped! You focused just for \(timeElapsed) seconds. You've got this!")
             .multilineTextAlignment(.center).padding(.bottom, 20)
-        } else if (appState.workMinutes * 60) - Int(appState.currentTimeCountdown) == 60 {
+        } else if timeElapsed == 60 {
           Text("Session stopped! You focused just for \(((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) / 60) minute. You've got this!")
             .multilineTextAlignment(.center).padding(.bottom, 20)
         } else {
-          let remainingMins = (appState.workMinutes - (((appState.workMinutes) / 60) * 60))
-          Text("Session stopped! You focused just for \(((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) / 60) minutes and \(remainingMins) seconds. You've got this!")
-            .multilineTextAlignment(.center).padding(.bottom, 20)
-        }
-
-        Button {
-          timer?.invalidate()
-          timer = nil
-          appState.reset()
-          sessionRunning = false
-
-          close()
-        } label: {
-          ZStack {
-            RoundedRectangle(cornerRadius: 20)
-              .foregroundColor(.red)
-
-            Text("End Session")
-              .textCase(.uppercase)
-              .fontWeight(.bold)
-              .foregroundColor(.white)
-              .padding(10)
+          // More than 1 minute has passed
+          let remainingSecs = (appState.workMinutes - (((appState.workMinutes) / 60) * 60))
+          // less than 2 mins
+          if timeElapsed < 120 {
+            if remainingSecs == 1 {
+              Text("Session stopped! You focused just for \(((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) / 60) minute and \(remainingSecs) second. You've got this!")
+                .multilineTextAlignment(.center).padding(.bottom, 20)
+            } else {
+              Text("Session stopped! You focused just for \(((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) / 60) minute and \(remainingSecs) seconds. You've got this!")
+                .multilineTextAlignment(.center).padding(.bottom, 20)
+            }
+          } else {
+            if remainingSecs == 1 {
+              Text("Session stopped! You focused just for \(((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) / 60) minutes and \(remainingSecs) second. You've got this!")
+                .multilineTextAlignment(.center).padding(.bottom, 20)
+            } else {
+              Text("Session stopped! You focused just for \(((appState.workMinutes * 60) - Int(appState.currentTimeCountdown)) / 60) minutes and \(remainingSecs) seconds. You've got this!")
+                .multilineTextAlignment(.center).padding(.bottom, 20)
+            }
           }
         }
+
+//        Button {
+//          timer?.invalidate()
+//          timer = nil
+//          appState.reset()
+//          sessionRunning = false
+//
+//          close()
+//        } label: {
+//          ZStack {
+//            RoundedRectangle(cornerRadius: 20)
+//              .foregroundColor(.gray)
+//
+//            Text("End Session")
+//              .textCase(.uppercase)
+//              .fontWeight(.bold)
+//              .foregroundColor(.white)
+//              .padding(10)
+//          }
+//        }
 
         Button {
           if userStars >= 10 {
@@ -93,9 +116,31 @@ struct SessionTimerDialog: View {
         } label: {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
-              .foregroundColor(.green)
+//              .foregroundColor(.green)
+              .foregroundColor(.yellow)
 
-            Text("Continue (10 stars)")
+//            Text("Continue (10 stars)")
+            Text("Continue (10 Trophies)")
+              .textCase(.uppercase)
+              .fontWeight(.bold)
+              .foregroundColor(.white)
+              .padding(10)
+          }
+        }
+
+        Button {
+          timer?.invalidate()
+          timer = nil
+          appState.reset()
+          sessionRunning = false
+
+          close()
+        } label: {
+          ZStack {
+            RoundedRectangle(cornerRadius: 20)
+              .foregroundColor(.gray)
+
+            Text("End Session")
               .textCase(.uppercase)
               .fontWeight(.bold)
               .foregroundColor(.white)
@@ -103,7 +148,7 @@ struct SessionTimerDialog: View {
           }
         }
       }
-      .padding(.top, 20)
+//      .padding(.top, 20)
       .fixedSize(horizontal: false, vertical: true)
       .padding()
       .background(Color("Background"))
