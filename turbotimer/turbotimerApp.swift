@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct astrotimerApp: App {
+struct turbotimerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

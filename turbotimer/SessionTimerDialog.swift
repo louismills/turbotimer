@@ -1,6 +1,6 @@
 //
 //  SessionTimerDialog.swift
-//  astrotimer
+//  turbotimer
 //
 //  Created by Louis Mills on 05/02/2024.
 //
@@ -10,16 +10,12 @@ import SwiftUI
 
 struct SessionTimerDialog: View {
   @Binding var isActive: Bool
-
   @Binding var appState: AppState
 
   @State var timer: Timer? = nil
 
   @AppStorage("userStars") var userStars = 0
-
   @AppStorage("sessionRunning") var sessionRunning = false
-
-
 
   let action: () -> ()
   @State private var offset: CGFloat = 1000
@@ -33,10 +29,8 @@ struct SessionTimerDialog: View {
         }
 
       VStack {
-//        Image(systemName: "brain").foregroundColor(.pink).font(.system(size: 80))
-        Image("crashhelmetnobg").resizable()
+        Image("crashhelmet").resizable()
           .frame(width: 100, height: 100)
-//          .font(.system(size: 80))
         Text("Stay Focused")
           .textCase(.uppercase)
           .font(.title2)

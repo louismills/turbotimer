@@ -1,6 +1,6 @@
 //
 //  AppState.swift
-//  astrotimer
+//  turbotimer
 //
 //  Created by Louis Mills on 10/01/2024.
 //
@@ -17,9 +17,9 @@ struct background {
   var background: Int
   var bought: Bool
   var cost: Int
-//  var colour: String
-  var colour: Color
-//  var image: String
+  //  var colour: String
+  //  var colour: Color
+  var image: String
 }
 
 struct UserBackgrounds: Identifiable, Codable{
@@ -34,14 +34,38 @@ struct UserBackgrounds: Identifiable, Codable{
   }
 }
 
+struct consumable {
+  var consumable: Int
+  var bought: Bool
+  var cost: Int
+  var inventory: Int
+  var multiplier: Double
+  var duration: Int
+  var image: String
+}
+
+struct UserConsumables: Identifiable, Codable{
+  let id : Int
+  var bought : Bool
+  var cost : Int
+  var inventory: Int
+
+  init(id: Int, bought: Bool, cost: Int, inventory: Int) {
+    self.id = id
+    self.bought = bought
+    self.cost = cost
+    self.inventory = inventory
+  }
+}
+
 struct shop {
   var shop: Int
   var bought: Bool
   var cost: Int
-//  var colour: Color
+  //  var colour: Color
   var multiplier: Double
   var image: String
-//  var image: Image
+  //  var image: Image
 }
 
 struct UserShops: Identifiable, Codable{
@@ -129,16 +153,10 @@ struct AppState {
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
   @AppStorage("userSessionTime") var userSessionTime = 0
   @AppStorage("userMultiplier") var userMultiplier = 0.0
-  @AppStorage("userImage") var userImage = "fish.fill"
-  
+  @AppStorage("userImage") var userImage = "car1"
+
   @AppStorage("challengeSelectedReward") var challengeSelectedReward = 0
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
-
-//  var shops = [shop(shop: 0, bought: true, cost: 0, multiplier: 0.0, image: "fish.fill"),
-//               shop(shop: 1, bought: false, cost: 1, multiplier: 0.03, image: "ladybug.fill"),
-//               shop(shop: 2, bought: false, cost: 4, multiplier: 0.06, image: "lizard.fill"),
-//               shop(shop: 3, bought: false, cost: 10, multiplier: 0.1, image: "bird.fill"),
-//  ]
 
   var shops = [shop(shop: 0, bought: true, cost: 0, multiplier: 0.0, image: "car1"),
                shop(shop: 1, bought: false, cost: 1, multiplier: 0.03, image: "car2"),
@@ -146,15 +164,27 @@ struct AppState {
                shop(shop: 3, bought: false, cost: 10, multiplier: 0.1, image: "car4"),
   ]
 
-  var backgrounds = [background(background: 0, bought: true, cost: 1, colour: .red),
-                     background(background: 1, bought: false, cost: 1, colour: .orange),
-                     background(background: 2, bought: false, cost: 1, colour: .blue),
-                     background(background: 3, bought: false, cost: 1, colour: .purple),
-                     background(background: 4, bought: false, cost: 1, colour: .indigo),
-                     background(background: 5, bought: false, cost: 1, colour: .brown),
+  var consumables = [consumable(consumable: 0, bought: false, cost: 5, inventory: 0, multiplier: 0.3, duration: 30, image: "fuelcan"),
+                     consumable(consumable: 1, bought: false, cost: 10, inventory: 0, multiplier: 0.75, duration: 15, image: "tyre"),
   ]
 
-  var workMinutes: Int = 5 {
+  //  var backgrounds = [background(background: 0, bought: true, cost: 1, colour: .red),
+  //                     background(background: 1, bought: false, cost: 1, colour: .orange),
+  //                     background(background: 2, bought: false, cost: 1, colour: .blue),
+  //                     background(background: 3, bought: false, cost: 1, colour: .purple),
+  //                     background(background: 4, bought: false, cost: 1, colour: .indigo),
+  //                     background(background: 5, bought: false, cost: 1, colour: .brown),
+  //  ]
+
+  var backgrounds = [background(background: 0, bought: true, cost: 1, image: "bg1"),
+                     background(background: 1, bought: false, cost: 1, image: "bg2"),
+                     background(background: 2, bought: false, cost: 1, image: "bg3"),
+                     background(background: 3, bought: false, cost: 1, image: "bg4"),
+                     background(background: 4, bought: false, cost: 1, image: "bg5"),
+                     background(background: 5, bought: false, cost: 1, image: "bg1"),
+                                ]
+
+                                var workMinutes: Int = 5 {
     didSet {
       if mode == .session {
         currentTime = workMinutes * 60
@@ -162,7 +192,7 @@ struct AppState {
     }
   }
 
-  var restMinutes: Int = 1 {
+                                var restMinutes: Int = 1 {
     didSet {
       if mode == .rest {
         currentTime = restMinutes * 60
@@ -170,35 +200,35 @@ struct AppState {
     }
   }
 
-  var mode = Mode.session
+                                var mode = Mode.session
 
-  var currentTime: Int
+                                var currentTime: Int
 
-  init(playSound: @escaping () -> Void) {
+                                init(playSound: @escaping () -> Void) {
     self.currentTime = workMinutes * 60
   }
 
-  var currentTimeDisplay: String {
+                                var currentTimeDisplay: String {
     let hours = ((currentTime / 60) / 60)
     let minutes = (currentTime / 60) - (((currentTime / 60) / 60) * 60)
     let secondsLeft = currentTime % 60
     return "\(hours):\(minutes < 10 ? "0" : "")\(minutes):\(secondsLeft < 10 ? "0" : "")\(secondsLeft)"
   }
 
-  var currentTimeCountdown: Double {
+                                var currentTimeCountdown: Double {
     let time = Double(currentTime)
     return time
   }
 
-  mutating func next() {
+                                mutating func next() {
     // Reward user with stars per minute
     if currentTime % 60 == 0 {
-//      print("WorkMinutes: \(workMinutes)")
-//      print("challengeSelectedReward: \(challengeSelectedReward)")
-//      print("Reward per minute: \(Float(challengeSelectedReward) / Float(workMinutes))")
-//      print("Multiplier: \(userMultiplier)")
-//      print("Reward Per Minute x Multiplier: \((Float(challengeSelectedReward) / Float(workMinutes)) + (Float(challengeSelectedReward) / Float(workMinutes)) * Float(userMultiplier))")
-      
+      //      print("WorkMinutes: \(workMinutes)")
+      //      print("challengeSelectedReward: \(challengeSelectedReward)")
+      //      print("Reward per minute: \(Float(challengeSelectedReward) / Float(workMinutes))")
+      //      print("Multiplier: \(userMultiplier)")
+      //      print("Reward Per Minute x Multiplier: \((Float(challengeSelectedReward) / Float(workMinutes)) + (Float(challengeSelectedReward) / Float(workMinutes)) * Float(userMultiplier))")
+
       let rewardPerMinute = Float(challengeSelectedReward) / Float(workMinutes)
       let rewardPerMinuteMultiplied = rewardPerMinute + (rewardPerMinute * Float(userMultiplier))
 
@@ -229,10 +259,10 @@ struct AppState {
 
   }
 
-  mutating func reset() {
+                                mutating func reset() {
     restMinutes = 1
     workMinutes = challengeSelectedDuration
     sessionStars = 0
     mode = .session
   }
-}
+                                }

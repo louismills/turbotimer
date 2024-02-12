@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  astrotimer
+//  turbotimer
 //
 //  Created by Louis Mills on 09/01/2024.
 //
@@ -209,15 +209,13 @@ struct challengeConfig: View {
       }
       .fontWeight(.heavy)
       .foregroundColor(.white)
-//      .background(.green)
-//      .foregroundColor(.red)
-      .background(.red)
+            .background(.green)
     }
     .buttonStyle(PlainButtonStyle())
   }
 }
 
-struct petConfig: View {
+struct vehicleConfig: View {
   @Binding var appState: AppState
 
   @AppStorage("userStars") var userStars = 0
@@ -225,8 +223,6 @@ struct petConfig: View {
   @AppStorage("userHeroColour") var userHeroColour: Color = .yellow
 
   @AppStorage("userMultiplier") var userMultiplier: Double = 0
-
-//  @AppStorage("userImage") var userImage = "fish.fill"
 
   @AppStorage("userImage") var userImage = "car1"
 
@@ -259,11 +255,9 @@ struct petConfig: View {
         Image(store.image)
           .resizable()
           .aspectRatio(contentMode: .fit)
-//        Image(systemName: store.image)
-//          .font(.system(size: 80))
-//          .foregroundColor(.white)
         if Int(store.multiplier * 100) > 0 {
-          Text("\(Int(store.multiplier * 100))%")
+          Text("+\(Int(store.multiplier * 100))%")
+//            .frame(alignment: .leading)
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
             .background(Color("Background"))
@@ -287,11 +281,79 @@ struct petConfig: View {
   }
 }
 
+struct consumableConfig: View {
+  @Binding var appState: AppState
+
+  @AppStorage("userStars") var userStars = 0
+  @AppStorage("userHeroColour") var userHeroColour: Color = .yellow
+  @AppStorage("userMultiplier") var userMultiplier: Double = 0
+  @AppStorage("userImage") var userImage = "car1"
+  @AppStorage("userConsumables") var userConsumables = [UserConsumables(id: 0, bought: false, cost: 1, inventory: 0),
+                                                        UserConsumables(id: 1, bought: false, cost: 1, inventory: 0)]
+
+  var consumable: consumable
+
+  var body: some View {
+    VStack {
+    Button(action: {
+      if userStars >= consumable.cost && userConsumables[consumable.consumable].bought == false {
+        userStars -= consumable.cost
+        userConsumables[consumable.consumable].bought = true
+        userMultiplier = consumable.multiplier
+      }
+      if userConsumables[consumable.consumable].bought == true {
+        userMultiplier = consumable.multiplier
+        userImage = consumable.image
+      }
+    }) {
+        ZStack {
+          Image(consumable.image)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .padding()
+          Text("+\(Int(consumable.multiplier * 100))%")
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(Color("Background"))
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .offset(x: -50, y: -70)
+          if userConsumables[consumable.consumable].bought == false {
+            buyShopBtn(cost: consumable.cost).offset(x: 40, y: -70)
+          }
+          else {
+            if userMultiplier == consumable.multiplier {
+              equippedBtn().offset(x: 50, y: -70)
+            }
+          }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(UIColor.lightGray).opacity(0.4))
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+
+      }
+      Text("\(consumable.inventory)")
+        Button(action: {
+          userConsumables[consumable.consumable].inventory -= 1
+          print(consumable.inventory)
+        }) {
+          if consumable.inventory > 0 {
+            Text("Activate")
+          } else {
+            Text("Buy")
+          }
+      }
+    }
+    .buttonStyle(PlainButtonStyle())
+
+  }
+}
+
 struct backgroundConfig: View {
   @Binding var appState: AppState
 
   @AppStorage("userStars") var userStars = 0
-  @AppStorage("userBackground") var userBackground: Color = .yellow
+//  @AppStorage("userBackground") var userBackground: Color = .yellow
+  @AppStorage("userBackground") var userBackground = "bg1"
   @AppStorage("userBackgrounds") var userBackgrounds = [UserBackgrounds(id: 0, bought: true, cost: 1),
                                                         UserBackgrounds(id: 1, bought: false, cost: 1),
                                                         UserBackgrounds(id: 2, bought: false, cost: 1),
@@ -308,42 +370,53 @@ struct backgroundConfig: View {
         if userStars >= background.cost && userBackgrounds[background.background].bought == false {
           userStars -= background.cost
           userBackgrounds[background.background].bought = true
-          userBackground = background.colour
+          userBackground = background.image
         }
         if userBackgrounds[background.background].bought == true {
-          userBackground = background.colour
+          userBackground = background.image
         }
       }) {
         if userBackgrounds[background.background].bought == false {
           ZStack(alignment: .center) {
-            Circle()
-              .fill(background.colour)
-              .frame(width: 80, height: 80)
-              .shadow(radius: 10)
+            Image(background.image)
+              .resizable()
+              .aspectRatio(contentMode: .fit)
+              .clipShape(Circle())
 
             buyShopBtn(cost: background.cost)
               .offset(x: 30, y: -30)
           }
         }
         else {
-          if userBackground.rawValue != background.colour.rawValue {
-            ZStack(alignment: .center) {
-              Circle()
-                .fill(background.colour)
-                .frame(width: 80, height: 80)
-            }
-          } else {
-            ZStack(alignment: .center) {
-              Circle()
-                .fill(background.colour)
-                .frame(width: 80, height: 80)
-                .shadow(radius: 10)
+          ZStack(alignment: .center) {
+            Image(background.image)
+              .resizable()
+              .aspectRatio(contentMode: .fit)
+              .clipShape(Circle())
 
-              equippedBtn()
-                .offset(x: 30, y: -30)
-            }
+            equippedBtn()
+            .offset(x: 30, y: -30)
           }
         }
+//        else {
+////          if userBackground.rawValue != background.colour.rawValue {
+//            ZStack(alignment: .center) {
+//              Circle()
+////                .fill(background.colour)
+//                .frame(width: 80, height: 80)
+//            }
+//          } else {
+//            ZStack(alignment: .center) {
+//              Circle()
+////                .fill(background.colour)
+//                .frame(width: 80, height: 80)
+//                .shadow(radius: 10)
+//
+//              equippedBtn()
+//                .offset(x: 30, y: -30)
+//            }
+//          }
+//        }
       }.buttonStyle(PlainButtonStyle())
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -393,35 +466,30 @@ struct SheetChallengesView: View {
             challengeConfig(appState: $appState, workMinutes: 10, reward: 2)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
-//          .foregroundColor(.black).background(.green)
           .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
             challengeConfig(appState: $appState, workMinutes: 15, reward: 3)
             challengeConfig(appState: $appState, workMinutes: 20, reward : 5)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
-//          .foregroundColor(.black).background(.green)
           .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
             challengeConfig(appState: $appState, workMinutes: 25, reward: 7)
             challengeConfig(appState: $appState, workMinutes: 30, reward: 11)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
-//          .foregroundColor(.black).background(.green)
           .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
             challengeConfig(appState: $appState, workMinutes: 45, reward: 15)
             challengeConfig(appState: $appState, workMinutes: 60, reward: 22)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
-//          .foregroundColor(.black).background(.green)
           .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
             challengeConfig(appState: $appState, workMinutes: 90, reward: 30)
             challengeConfig(appState: $appState, workMinutes: 120, reward: 38)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
-//          .foregroundColor(.black).background(.green)
           .clipShape(RoundedRectangle(cornerRadius: 15))
         }
         .frame(width: geo.size.width, height: geo.size.height)
@@ -452,7 +520,8 @@ struct SheetStoreView: View {
   @State private var showingPurchases = false
 
   @AppStorage("userDestination") var userDestination = ""
-  @AppStorage("userBackground") var userBackground: Color = .yellow
+//  @AppStorage("userBackground") var userBackground: Color = .yellow
+  @AppStorage("userBackground") var userBackground = "bg1"
   @AppStorage("userStars") var userStars = 0
 
   var body: some View {
@@ -485,17 +554,13 @@ struct SheetStoreView: View {
             Text("\(userStars)")
               .padding(.trailing, 10)
             // In store purchases button
-            //            Button {
-            //              showingPurchases.toggle()
-            //            } label: {
-            //              Image(systemName: "plus.circle.fill").foregroundColor(.green)
-            //            }
+            Button {
+              showingPurchases.toggle()
+            } label: {
+              Image(systemName: "plus.circle.fill").foregroundColor(.green)
+            }
           }
           .btnTextStoreFormat()
-//          .overlay(
-//            RoundedRectangle(cornerRadius: 16)
-//              .stroke(userBackground, lineWidth: 2)
-//          )
           .overlay(
             RoundedRectangle(cornerRadius: 12)
               .stroke(Color("Text"), lineWidth: 1)
@@ -504,30 +569,30 @@ struct SheetStoreView: View {
           .padding([.leading, .top], 20)
 
           VStack() {
-            // PETS
+            // VEHICLES
             VStack() {
-              Text("Pets")
+              Text("Vehicles")
                 .foregroundColor(Color("Text"))
                 .font(.title2)
                 .fontWeight(.bold)
                 .frame(maxWidth: .infinity, alignment: .leading)
-              Text("Speed up your star collection with better friends!")
+              Text("Speed up your trophy collection with better vehicles!")
                 .foregroundColor(Color("Text"))
                 .frame(maxWidth: .infinity, alignment: .leading)
               GeometryReader { geo in
                 Grid(alignment: .leading, horizontalSpacing: 0, verticalSpacing: 0) {
                   GridRow {
-                    petConfig(appState: $appState, store: appState.shops[0])
+                    vehicleConfig(appState: $appState, store: appState.shops[0])
                       .padding(.trailing, 10)
-                    petConfig(appState: $appState, store: appState.shops[1])
+                    vehicleConfig(appState: $appState, store: appState.shops[1])
                       .padding(.leading, 10)
                   }
                   .padding(.bottom, 10)
                   .frame(width: geo.size.width / 2, height: geo.size.height / 2)
                   GridRow {
-                    petConfig(appState: $appState, store: appState.shops[2])
+                    vehicleConfig(appState: $appState, store: appState.shops[2])
                       .padding(.trailing, 10)
-                    petConfig(appState: $appState, store: appState.shops[3])
+                    vehicleConfig(appState: $appState, store: appState.shops[3])
                       .padding(.leading, 10)
                   }
                   .padding(.bottom, 10)
@@ -537,11 +602,38 @@ struct SheetStoreView: View {
             }
             .padding()
             .background(Color("Background"))
+            .overlay(
+              RoundedRectangle(cornerRadius: 16)
+                .stroke(Color("Text"), lineWidth: 2)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 16))
 
-//            .overlay(
-//              RoundedRectangle(cornerRadius: 16)
-//                .stroke(userBackground, lineWidth: 4)
-//            )
+            HStack {
+            }.padding(10)
+
+            // BOOSTS
+            VStack {
+              Text("Powerful Boosts")
+                .foregroundColor(Color("Text"))
+                .font(.title2)
+                .fontWeight(.bold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+              Text("Temporarily shift into a higher gear for a boost in performance!")
+                .foregroundColor(Color("Text"))
+                .frame(maxWidth: .infinity, alignment: .leading)
+              GeometryReader { geo in
+                Grid(alignment: .leading, horizontalSpacing: 0, verticalSpacing: 0) {
+                  GridRow {
+                    consumableConfig(appState: $appState, consumable: appState.consumables[0])
+                    consumableConfig(appState: $appState, consumable: appState.consumables[1])
+                  }
+                  .padding(4)
+                  .frame(width: geo.size.width / 2, height: geo.size.height)
+                }
+              }.frame(height: 250)
+            }
+            .padding()
+            .background(Color("Background"))
             .overlay(
               RoundedRectangle(cornerRadius: 16)
                 .stroke(Color("Text"), lineWidth: 2)
@@ -557,7 +649,7 @@ struct SheetStoreView: View {
                 .font(.title2)
                 .fontWeight(.bold)
                 .frame(maxWidth: .infinity, alignment: .leading)
-              Text("You deserve to look great!")
+              Text("You deserve to look groovy!")
                 .foregroundColor(Color("Text"))
                 .frame(maxWidth: .infinity, alignment: .leading)
               GeometryReader { geo in
@@ -581,11 +673,6 @@ struct SheetStoreView: View {
             }
             .padding()
             .background(Color("Background"))
-
-//            .overlay(
-//              RoundedRectangle(cornerRadius: 16)
-//                .stroke(userBackground, lineWidth: 4)
-//            )
             .overlay(
               RoundedRectangle(cornerRadius: 16)
                 .stroke(Color("Text"), lineWidth: 2)
@@ -622,8 +709,9 @@ struct ContentView: View {
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
   @AppStorage("userSessionTime") var userSessionTime = 0
   @AppStorage("userDestination") var userDestination = ""
-  @AppStorage("userBackground") var userBackground: Color = .yellow
-  @AppStorage("userImage") var userImage = "fish.fill"
+//  @AppStorage("userBackground") var userBackground: Color = .yellow
+  @AppStorage("userBackground") var userBackground = "bg1"
+  @AppStorage("userImage") var userImage = "car1"
 
   @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
 
@@ -665,16 +753,10 @@ struct ContentView: View {
         }
         // END OF TOP NAV SECTION
         Spacer()
-//        Image(systemName: userImage)
-//          .transition(.symbolEffect(.automatic))
-//          .foregroundColor(Color("Background"))
-//          .font(.system(size: 100))
-Image(userImage)
+        Image(userImage)
           .resizable()
           .aspectRatio(contentMode: .fit)
           .padding(.bottom, 20)
-//          .frame(width: 250, height: 100)
-
 
         sessionTimerSection(appState: $appState)
           .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
@@ -695,14 +777,9 @@ Image(userImage)
           }
       }
       .padding()
-//      .background(userBackground)
-
-//      .background(Image("cargarage1")
-//        .resizable()
-//        .ignoresSafeArea()
-//        .aspectRatio(contentMode: .fill)
-//      .background(.gray)
-      .background(Color(UIColor.lightGray).opacity(0.4))
+            .background(Image(userBackground))
+//      .background(Image("bg2"))
+//      .background(Color(UIColor.lightGray).opacity(0.4))
 
       if showingSessionTimerWarning {
         SessionTimerDialog(isActive: $showingSessionTimerWarning, appState: $appState) {

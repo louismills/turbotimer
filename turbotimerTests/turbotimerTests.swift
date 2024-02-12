@@ -1,14 +1,14 @@
 //
-//  astrotimerTests.swift
-//  astrotimerTests
+//  turbotimerTests.swift
+//  turbotimerTests
 //
 //  Created by Louis Mills on 09/01/2024.
 //
 
 import XCTest
-@testable import astrotimer
+@testable import turbotimer
 
-final class astrotimerTests: XCTestCase {
+final class turbotimerTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

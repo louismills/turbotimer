@@ -1,6 +1,6 @@
 //
 //  CustomDialog.swift
-//  astrotimer
+//  turbotimer
 //
 //  Created by Louis Mills on 02/02/2024.
 //

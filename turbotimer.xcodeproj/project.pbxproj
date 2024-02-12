@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		B427009A2B7100FF00247424 /* SessionTimerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42700992B7100FF00247424 /* SessionTimerDialog.swift */; };
 		B45AEE812B4EF9F20066FFA7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45AEE802B4EF9F20066FFA7 /* AppState.swift */; };
-		B495D9FC2B4DB88700AF3F2D /* astrotimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495D9FB2B4DB88700AF3F2D /* astrotimerApp.swift */; };
+		B495D9FC2B4DB88700AF3F2D /* turbotimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495D9FB2B4DB88700AF3F2D /* turbotimerApp.swift */; };
 		B495D9FE2B4DB88700AF3F2D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495D9FD2B4DB88700AF3F2D /* ContentView.swift */; };
 		B495DA002B4DB88800AF3F2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B495D9FF2B4DB88800AF3F2D /* Assets.xcassets */; };
 		B495DA032B4DB88800AF3F2D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B495DA022B4DB88800AF3F2D /* Preview Assets.xcassets */; };
-		B495DA0D2B4DB88800AF3F2D /* astrotimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495DA0C2B4DB88800AF3F2D /* astrotimerTests.swift */; };
-		B495DA172B4DB88800AF3F2D /* astrotimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495DA162B4DB88800AF3F2D /* astrotimerUITests.swift */; };
-		B495DA192B4DB88800AF3F2D /* astrotimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495DA182B4DB88800AF3F2D /* astrotimerUITestsLaunchTests.swift */; };
+		B495DA0D2B4DB88800AF3F2D /* turbotimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495DA0C2B4DB88800AF3F2D /* turbotimerTests.swift */; };
+		B495DA172B4DB88800AF3F2D /* turbotimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495DA162B4DB88800AF3F2D /* turbotimerUITests.swift */; };
+		B495DA192B4DB88800AF3F2D /* turbotimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495DA182B4DB88800AF3F2D /* turbotimerUITestsLaunchTests.swift */; };
 		B4AD5C222B6D3F0A007FED79 /* ChallengesDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AD5C212B6D3F0A007FED79 /* ChallengesDialog.swift */; };
 		B4AD5C242B6D53BC007FED79 /* PurchasesDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AD5C232B6D53BC007FED79 /* PurchasesDialog.swift */; };
 		B4AD5C262B6D616E007FED79 /* SessionTimerSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AD5C252B6D616E007FED79 /* SessionTimerSection.swift */; };
@@ -41,16 +41,16 @@
 /* Begin PBXFileReference section */
 		B42700992B7100FF00247424 /* SessionTimerDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTimerDialog.swift; sourceTree = "<group>"; };
 		B45AEE802B4EF9F20066FFA7 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		B495D9F82B4DB88700AF3F2D /* astrotimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = astrotimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B495D9FB2B4DB88700AF3F2D /* astrotimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = astrotimerApp.swift; sourceTree = "<group>"; };
+		B495D9F82B4DB88700AF3F2D /* turbotimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = turbotimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B495D9FB2B4DB88700AF3F2D /* turbotimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = turbotimerApp.swift; sourceTree = "<group>"; };
 		B495D9FD2B4DB88700AF3F2D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B495D9FF2B4DB88800AF3F2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B495DA022B4DB88800AF3F2D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		B495DA082B4DB88800AF3F2D /* astrotimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = astrotimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B495DA0C2B4DB88800AF3F2D /* astrotimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = astrotimerTests.swift; sourceTree = "<group>"; };
-		B495DA122B4DB88800AF3F2D /* astrotimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = astrotimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B495DA162B4DB88800AF3F2D /* astrotimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = astrotimerUITests.swift; sourceTree = "<group>"; };
-		B495DA182B4DB88800AF3F2D /* astrotimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = astrotimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B495DA082B4DB88800AF3F2D /* turbotimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = turbotimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B495DA0C2B4DB88800AF3F2D /* turbotimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = turbotimerTests.swift; sourceTree = "<group>"; };
+		B495DA122B4DB88800AF3F2D /* turbotimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = turbotimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B495DA162B4DB88800AF3F2D /* turbotimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = turbotimerUITests.swift; sourceTree = "<group>"; };
+		B495DA182B4DB88800AF3F2D /* turbotimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = turbotimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B4AD5C212B6D3F0A007FED79 /* ChallengesDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesDialog.swift; sourceTree = "<group>"; };
 		B4AD5C232B6D53BC007FED79 /* PurchasesDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesDialog.swift; sourceTree = "<group>"; };
 		B4AD5C252B6D616E007FED79 /* SessionTimerSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTimerSection.swift; sourceTree = "<group>"; };
@@ -85,9 +85,9 @@
 		B495D9EF2B4DB88700AF3F2D = {
 			isa = PBXGroup;
 			children = (
-				B495D9FA2B4DB88700AF3F2D /* astrotimer */,
-				B495DA0B2B4DB88800AF3F2D /* astrotimerTests */,
-				B495DA152B4DB88800AF3F2D /* astrotimerUITests */,
+				B495D9FA2B4DB88700AF3F2D /* turbotimer */,
+				B495DA0B2B4DB88800AF3F2D /* turbotimerTests */,
+				B495DA152B4DB88800AF3F2D /* turbotimerUITests */,
 				B495D9F92B4DB88700AF3F2D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,18 +95,18 @@
 		B495D9F92B4DB88700AF3F2D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B495D9F82B4DB88700AF3F2D /* astrotimer.app */,
-				B495DA082B4DB88800AF3F2D /* astrotimerTests.xctest */,
-				B495DA122B4DB88800AF3F2D /* astrotimerUITests.xctest */,
+				B495D9F82B4DB88700AF3F2D /* turbotimer.app */,
+				B495DA082B4DB88800AF3F2D /* turbotimerTests.xctest */,
+				B495DA122B4DB88800AF3F2D /* turbotimerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B495D9FA2B4DB88700AF3F2D /* astrotimer */ = {
+		B495D9FA2B4DB88700AF3F2D /* turbotimer */ = {
 			isa = PBXGroup;
 			children = (
 				B4C5764C2B73B4BF006B3F41 /* Info.plist */,
-				B495D9FB2B4DB88700AF3F2D /* astrotimerApp.swift */,
+				B495D9FB2B4DB88700AF3F2D /* turbotimerApp.swift */,
 				B45AEE802B4EF9F20066FFA7 /* AppState.swift */,
 				B495D9FD2B4DB88700AF3F2D /* ContentView.swift */,
 				B495D9FF2B4DB88800AF3F2D /* Assets.xcassets */,
@@ -116,7 +116,7 @@
 				B4AD5C252B6D616E007FED79 /* SessionTimerSection.swift */,
 				B42700992B7100FF00247424 /* SessionTimerDialog.swift */,
 			);
-			path = astrotimer;
+			path = turbotimer;
 			sourceTree = "<group>";
 		};
 		B495DA012B4DB88800AF3F2D /* Preview Content */ = {
@@ -127,29 +127,29 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		B495DA0B2B4DB88800AF3F2D /* astrotimerTests */ = {
+		B495DA0B2B4DB88800AF3F2D /* turbotimerTests */ = {
 			isa = PBXGroup;
 			children = (
-				B495DA0C2B4DB88800AF3F2D /* astrotimerTests.swift */,
+				B495DA0C2B4DB88800AF3F2D /* turbotimerTests.swift */,
 			);
-			path = astrotimerTests;
+			path = turbotimerTests;
 			sourceTree = "<group>";
 		};
-		B495DA152B4DB88800AF3F2D /* astrotimerUITests */ = {
+		B495DA152B4DB88800AF3F2D /* turbotimerUITests */ = {
 			isa = PBXGroup;
 			children = (
-				B495DA162B4DB88800AF3F2D /* astrotimerUITests.swift */,
-				B495DA182B4DB88800AF3F2D /* astrotimerUITestsLaunchTests.swift */,
+				B495DA162B4DB88800AF3F2D /* turbotimerUITests.swift */,
+				B495DA182B4DB88800AF3F2D /* turbotimerUITestsLaunchTests.swift */,
 			);
-			path = astrotimerUITests;
+			path = turbotimerUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B495D9F72B4DB88700AF3F2D /* astrotimer */ = {
+		B495D9F72B4DB88700AF3F2D /* turbotimer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B495DA1C2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimer" */;
+			buildConfigurationList = B495DA1C2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "turbotimer" */;
 			buildPhases = (
 				B495D9F42B4DB88700AF3F2D /* Sources */,
 				B495D9F52B4DB88700AF3F2D /* Frameworks */,
@@ -159,14 +159,14 @@
 			);
 			dependencies = (
 			);
-			name = astrotimer;
+			name = turbotimer;
 			productName = astrotimer;
-			productReference = B495D9F82B4DB88700AF3F2D /* astrotimer.app */;
+			productReference = B495D9F82B4DB88700AF3F2D /* turbotimer.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B495DA072B4DB88800AF3F2D /* astrotimerTests */ = {
+		B495DA072B4DB88800AF3F2D /* turbotimerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B495DA1F2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimerTests" */;
+			buildConfigurationList = B495DA1F2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "turbotimerTests" */;
 			buildPhases = (
 				B495DA042B4DB88800AF3F2D /* Sources */,
 				B495DA052B4DB88800AF3F2D /* Frameworks */,
@@ -177,14 +177,14 @@
 			dependencies = (
 				B495DA0A2B4DB88800AF3F2D /* PBXTargetDependency */,
 			);
-			name = astrotimerTests;
+			name = turbotimerTests;
 			productName = astrotimerTests;
-			productReference = B495DA082B4DB88800AF3F2D /* astrotimerTests.xctest */;
+			productReference = B495DA082B4DB88800AF3F2D /* turbotimerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		B495DA112B4DB88800AF3F2D /* astrotimerUITests */ = {
+		B495DA112B4DB88800AF3F2D /* turbotimerUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B495DA222B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimerUITests" */;
+			buildConfigurationList = B495DA222B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "turbotimerUITests" */;
 			buildPhases = (
 				B495DA0E2B4DB88800AF3F2D /* Sources */,
 				B495DA0F2B4DB88800AF3F2D /* Frameworks */,
@@ -195,9 +195,9 @@
 			dependencies = (
 				B495DA142B4DB88800AF3F2D /* PBXTargetDependency */,
 			);
-			name = astrotimerUITests;
+			name = turbotimerUITests;
 			productName = astrotimerUITests;
-			productReference = B495DA122B4DB88800AF3F2D /* astrotimerUITests.xctest */;
+			productReference = B495DA122B4DB88800AF3F2D /* turbotimerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -223,7 +223,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B495D9F32B4DB88700AF3F2D /* Build configuration list for PBXProject "astrotimer" */;
+			buildConfigurationList = B495D9F32B4DB88700AF3F2D /* Build configuration list for PBXProject "turbotimer" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -236,9 +236,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B495D9F72B4DB88700AF3F2D /* astrotimer */,
-				B495DA072B4DB88800AF3F2D /* astrotimerTests */,
-				B495DA112B4DB88800AF3F2D /* astrotimerUITests */,
+				B495D9F72B4DB88700AF3F2D /* turbotimer */,
+				B495DA072B4DB88800AF3F2D /* turbotimerTests */,
+				B495DA112B4DB88800AF3F2D /* turbotimerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -280,7 +280,7 @@
 				B427009A2B7100FF00247424 /* SessionTimerDialog.swift in Sources */,
 				B495D9FE2B4DB88700AF3F2D /* ContentView.swift in Sources */,
 				B4AD5C242B6D53BC007FED79 /* PurchasesDialog.swift in Sources */,
-				B495D9FC2B4DB88700AF3F2D /* astrotimerApp.swift in Sources */,
+				B495D9FC2B4DB88700AF3F2D /* turbotimerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B495DA0D2B4DB88800AF3F2D /* astrotimerTests.swift in Sources */,
+				B495DA0D2B4DB88800AF3F2D /* turbotimerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,8 +296,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B495DA192B4DB88800AF3F2D /* astrotimerUITestsLaunchTests.swift in Sources */,
-				B495DA172B4DB88800AF3F2D /* astrotimerUITests.swift in Sources */,
+				B495DA192B4DB88800AF3F2D /* turbotimerUITestsLaunchTests.swift in Sources */,
+				B495DA172B4DB88800AF3F2D /* turbotimerUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,12 +306,12 @@
 /* Begin PBXTargetDependency section */
 		B495DA0A2B4DB88800AF3F2D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B495D9F72B4DB88700AF3F2D /* astrotimer */;
+			target = B495D9F72B4DB88700AF3F2D /* turbotimer */;
 			targetProxy = B495DA092B4DB88800AF3F2D /* PBXContainerItemProxy */;
 		};
 		B495DA142B4DB88800AF3F2D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B495D9F72B4DB88700AF3F2D /* astrotimer */;
+			target = B495D9F72B4DB88700AF3F2D /* turbotimer */;
 			targetProxy = B495DA132B4DB88800AF3F2D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -369,6 +369,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = /Users/louismills/Documents/iosapp/turbotimer/turbotimer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -426,6 +427,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = /Users/louismills/Documents/iosapp/turbotimer/turbotimer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -444,12 +446,12 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"astrotimer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"turbotimer/Preview Content\"";
 				DEVELOPMENT_TEAM = SL2A9X2CUX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = astrotimer/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = AstroTimer;
+				INFOPLIST_FILE = turbotimer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TurboTimer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -461,7 +463,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.5;
-				PRODUCT_BUNDLE_IDENTIFIER = mills.timer;
+				PRODUCT_BUNDLE_IDENTIFIER = mills.turbotimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -477,12 +479,12 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"astrotimer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"turbotimer/Preview Content\"";
 				DEVELOPMENT_TEAM = SL2A9X2CUX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = astrotimer/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = AstroTimer;
+				INFOPLIST_FILE = turbotimer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TurboTimer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -494,7 +496,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.5;
-				PRODUCT_BUNDLE_IDENTIFIER = mills.astrotimer;
+				PRODUCT_BUNDLE_IDENTIFIER = mills.turbotimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -579,7 +581,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B495D9F32B4DB88700AF3F2D /* Build configuration list for PBXProject "astrotimer" */ = {
+		B495D9F32B4DB88700AF3F2D /* Build configuration list for PBXProject "turbotimer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B495DA1A2B4DB88800AF3F2D /* Debug */,
@@ -588,7 +590,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B495DA1C2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimer" */ = {
+		B495DA1C2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "turbotimer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B495DA1D2B4DB88800AF3F2D /* Debug */,
@@ -597,7 +599,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B495DA1F2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimerTests" */ = {
+		B495DA1F2B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "turbotimerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B495DA202B4DB88800AF3F2D /* Debug */,
@@ -606,7 +608,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B495DA222B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "astrotimerUITests" */ = {
+		B495DA222B4DB88800AF3F2D /* Build configuration list for PBXNativeTarget "turbotimerUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B495DA232B4DB88800AF3F2D /* Debug */,

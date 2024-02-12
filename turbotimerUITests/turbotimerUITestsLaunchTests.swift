@@ -1,6 +1,6 @@
 //
-//  astrotimerUITestsLaunchTests.swift
-//  astrotimerUITests
+//  turbotimerUITestsLaunchTests.swift
+//  turbotimerUITests
 //
 //  Created by Louis Mills on 09/01/2024.
 //
