@@ -5,6 +5,10 @@
 //  Created by Louis Mills on 09/01/2024.
 //
 
+import SpriteKit
+import GameplayKit
+import CoreMotion
+
 import SwiftUI
 import AVFoundation
 
@@ -388,39 +392,51 @@ struct backgroundConfig: View {
           }
         }
         else {
-          ZStack(alignment: .center) {
-            Image(background.image)
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-              .clipShape(Circle())
+          if userBackground == background.image {
+            ZStack(alignment: .center) {
+              Image(background.image)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .clipShape(Circle())
 
-            equippedBtn()
-            .offset(x: 30, y: -30)
+              equippedBtn()
+                .offset(x: 30, y: -30)
+            }
+          }
+          else {
+            ZStack(alignment: .center) {
+              Image(background.image)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .clipShape(Circle())
+            }
           }
         }
-//        else {
-////          if userBackground.rawValue != background.colour.rawValue {
-//            ZStack(alignment: .center) {
-//              Circle()
-////                .fill(background.colour)
-//                .frame(width: 80, height: 80)
-//            }
-//          } else {
-//            ZStack(alignment: .center) {
-//              Circle()
-////                .fill(background.colour)
-//                .frame(width: 80, height: 80)
-//                .shadow(radius: 10)
-//
-//              equippedBtn()
-//                .offset(x: 30, y: -30)
-//            }
-//          }
-//        }
-      }.buttonStyle(PlainButtonStyle())
+
+            //        else {
+            ////          if userBackground.rawValue != background.colour.rawValue {
+            //            ZStack(alignment: .center) {
+            //              Circle()
+            ////                .fill(background.colour)
+            //                .frame(width: 80, height: 80)
+            //            }
+            //          } else {
+            //            ZStack(alignment: .center) {
+            //              Circle()
+            ////                .fill(background.colour)
+            //                .frame(width: 80, height: 80)
+            //                .shadow(radius: 10)
+            //
+            //              equippedBtn()
+            //                .offset(x: 30, y: -30)
+            //            }
+            //          }
+            //        }
+          }
+            .buttonStyle(PlainButtonStyle())
+        }
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-  }
 }
 
 struct SheetChallengesView: View {
@@ -520,7 +536,6 @@ struct SheetStoreView: View {
   @State private var showingPurchases = false
 
   @AppStorage("userDestination") var userDestination = ""
-//  @AppStorage("userBackground") var userBackground: Color = .yellow
   @AppStorage("userBackground") var userBackground = "bg1"
   @AppStorage("userStars") var userStars = 0
 
@@ -695,6 +710,121 @@ struct SheetStoreView: View {
   }
 }
 
+// WIP
+enum CollisionType: UInt32 {
+    case object = 1
+    case wall = 2
+}
+
+class GameScene: SKScene {
+  private var motionManager: CMMotionManager!
+
+  private var ball: SKCropNode!
+
+  init(sceneSize: CGSize) {
+    super.init(size: sceneSize)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  override func sceneDidLoad() {
+    setUpBounds()
+    createBall()
+    setUpBox()
+  }
+
+  override func didMove(to view: SKView) {
+    motionManager = CMMotionManager()
+    motionManager.startAccelerometerUpdates()
+
+    self.backgroundColor = SKColor.darkGray
+    self.physicsWorld.gravity = .zero
+    self.scaleMode = .aspectFit
+  }
+
+
+  private func setUpBounds() {
+    self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+    self.physicsBody?.isDynamic = false
+    self.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
+  }
+
+  private func setUpBox() {
+    let box = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
+       box.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+       box.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
+    box.physicsBody?.isDynamic = false
+      box.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
+       addChild(box)
+  }
+
+  private func createBall() {
+    // Create shape node to use during mouse interaction
+    let maskShapeTexture = SKTexture(imageNamed: "circle")
+    let texture = SKTexture(imageNamed: "tyre")
+    let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
+    let mask = SKSpriteNode(texture: maskShapeTexture) //make a circular mask
+    let ball = SKCropNode()
+    ball.maskNode = mask
+    ball.addChild(pictureToMask)
+
+    ball.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+    ball.zPosition = 1
+    ball.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+    ball.physicsBody?.allowsRotation = true
+    ball.physicsBody?.linearDamping = 0.5
+
+    ball.physicsBody?.isDynamic = true
+    ball.physicsBody?.categoryBitMask = CollisionType.object.rawValue
+    ball.physicsBody?.collisionBitMask = CollisionType.wall.rawValue
+
+    self.ball = ball
+    self.addChild(self.ball)
+  }
+
+  override func update(_ currentTime: TimeInterval) {
+    print("update acc scene")
+    if let accelerometerData = motionManager.accelerometerData {
+      physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.x * 7, dy: accelerometerData.acceleration.y * 7)
+    }
+  }
+
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    guard let touch = touches.first else { return }
+    let location = touch.location(in: self)
+//    let box = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
+//    box.position = location
+//    box.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
+//    addChild(box)
+
+    let maskShapeTexture = SKTexture(imageNamed: "circle")
+    let texture = SKTexture(imageNamed: "tyre")
+    let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
+    let mask = SKSpriteNode(texture: maskShapeTexture) //make a circular mask
+    let ball = SKCropNode()
+    ball.maskNode = mask
+    ball.addChild(pictureToMask)
+
+//    ball.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+    ball.position = location
+
+    ball.zPosition = 1
+//    ball.physicsBody = SKPhysicsBody(circleOfRadius: w)
+    ball.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+    ball.physicsBody?.allowsRotation = true
+    ball.physicsBody?.linearDamping = 0.5
+
+    ball.physicsBody?.isDynamic = true
+//    ball.physicsBody?.categoryBitMask = CollisionType.object.rawValue
+//    ball.physicsBody?.collisionBitMask = CollisionType.wall.rawValue
+
+    addChild(ball)
+  }
+}
+// WIP
+
 
 struct ContentView: View {
   @Environment(\.scenePhase) var scenePhase
@@ -709,7 +839,6 @@ struct ContentView: View {
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
   @AppStorage("userSessionTime") var userSessionTime = 0
   @AppStorage("userDestination") var userDestination = ""
-//  @AppStorage("userBackground") var userBackground: Color = .yellow
   @AppStorage("userBackground") var userBackground = "bg1"
   @AppStorage("userImage") var userImage = "car1"
 
@@ -719,8 +848,21 @@ struct ContentView: View {
   @State private var showingStore = false
   @State var sessionRunning = false
 
+  // WIP
+  var scene: SKScene {
+      let scene = GameScene(sceneSize: CGSize(width: 390, height: 700))
+      return scene
+    }
+  // WIP
+
   var body: some View {
     ZStack {
+      // WIP
+      SpriteView(scene: scene)
+                  .frame(width: 390, height: 700)
+                  .ignoresSafeArea()
+      // WIP
+
       VStack(spacing: 10) {
         // TOP NAV SECTION - total stars, total session time and shop
         HStack {
@@ -753,10 +895,16 @@ struct ContentView: View {
         }
         // END OF TOP NAV SECTION
         Spacer()
-        Image(userImage)
-          .resizable()
-          .aspectRatio(contentMode: .fit)
-          .padding(.bottom, 20)
+//        Image(userImage)
+//          .resizable()
+//          .aspectRatio(contentMode: .fit)
+//          .padding(.bottom, 20)
+
+//        // WIP
+//        SpriteView(scene: scene)
+//                    .frame(width: 350, height: 400)
+//                    .ignoresSafeArea()
+//        // WIP
 
         sessionTimerSection(appState: $appState)
           .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
@@ -777,9 +925,13 @@ struct ContentView: View {
           }
       }
       .padding()
-            .background(Image(userBackground))
-//      .background(Image("bg2"))
-//      .background(Color(UIColor.lightGray).opacity(0.4))
+//      .background(Image(userBackground).resizable().aspectRatio(contentMode: .fill).ignoresSafeArea())
+
+//      // WIP
+//      SpriteView(scene: scene)
+//                  .frame(width: 350, height: 400)
+//                  .ignoresSafeArea()
+//      // WIP
 
       if showingSessionTimerWarning {
         SessionTimerDialog(isActive: $showingSessionTimerWarning, appState: $appState) {
