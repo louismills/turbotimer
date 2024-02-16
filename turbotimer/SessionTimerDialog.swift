@@ -24,9 +24,9 @@ struct SessionTimerDialog: View {
     ZStack {
       Color(.black)
         .opacity(0.3)
-        .onTapGesture {
-          close()
-        }
+//        .onTapGesture {
+//          close()
+//        }
 
       VStack {
         Image("crashhelmet").resizable()
@@ -72,26 +72,6 @@ struct SessionTimerDialog: View {
           }
         }
 
-//        Button {
-//          timer?.invalidate()
-//          timer = nil
-//          appState.reset()
-//          sessionRunning = false
-//
-//          close()
-//        } label: {
-//          ZStack {
-//            RoundedRectangle(cornerRadius: 20)
-//              .foregroundColor(.gray)
-//
-//            Text("End Session")
-//              .textCase(.uppercase)
-//              .fontWeight(.bold)
-//              .foregroundColor(.white)
-//              .padding(10)
-//          }
-//        }
-
         Button {
           if userStars >= 10 {
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ _ in
@@ -110,10 +90,8 @@ struct SessionTimerDialog: View {
         } label: {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
-//              .foregroundColor(.green)
-              .foregroundColor(.yellow)
-
-//            Text("Continue (10 stars)")
+              .foregroundColor(.green)
+//              .foregroundColor(.yellow)
             Text("Continue (10 Trophies)")
               .textCase(.uppercase)
               .fontWeight(.bold)
@@ -145,19 +123,8 @@ struct SessionTimerDialog: View {
 //      .padding(.top, 20)
       .fixedSize(horizontal: false, vertical: true)
       .padding()
-      .background(Color("Background"))
+      .background(Color("BackgroundPanel"))
       .clipShape(RoundedRectangle(cornerRadius: 20))
-      .overlay(alignment: .topTrailing) {
-        Button {
-          close()
-        } label: {
-          Image(systemName: "xmark")
-            .font(.title2)
-            .fontWeight(.medium)
-        }
-        .tint(.black)
-        .padding()
-      }
       .shadow(radius: 20)
       .padding(20)
       .offset(x: 0, y: offset)

@@ -12,7 +12,8 @@ struct ChallengesDialog: View {
   @Binding var isActive: Bool
 
   let duration: Int
-  let reward: Int
+  let rewardTyres: Int
+  let rewardStars: Int
   let action: () -> ()
   @State private var offset: CGFloat = 1000
 
@@ -20,29 +21,35 @@ struct ChallengesDialog: View {
     ZStack {
       Color(.black)
         .opacity(0.3)
-        .onTapGesture {
-          close()
-        }
-
-
+//        .onTapGesture {
+//          close()
+//        }
 
       VStack {
-        ZStack {
-          Image(systemName: "star.fill").font(.system(size: 80)).foregroundColor(.yellow)
-//            .offset(y: -160)
-          Text("\(reward)")
-            .padding(10)
-            .background(.indigo)
-            .foregroundColor(.white)
-            .clipShape(Circle())
-            .offset(x: 40, y: -40)
+        HStack {
+          ZStack {
+            Image("tyre")
+              .resizable()
+              .frame(width: 90, height: 90)
+            Text("\(rewardTyres)")
+              .padding(10)
+              .background(.indigo)
+              .foregroundColor(.white)
+              .clipShape(Circle())
+              .offset(x: 50, y: -40)
+          }
+          ZStack {
+            Image(systemName: "star.fill")
+              .font(.system(size: 80))
+              .foregroundColor(.yellow)
+            Text("\(rewardStars)")
+              .padding(10)
+              .background(.indigo)
+              .foregroundColor(.white)
+              .clipShape(Circle())
+              .offset(x: 40, y: -40)
+          }
         }
-//        .offset(x: 0, y: offset)
-//        .onAppear {
-//          withAnimation(.spring()) {
-//            offset = 0
-//          }
-//        }
 
         if duration < 60 {
           Text("Focus for \(duration) minutes")
@@ -50,7 +57,6 @@ struct ChallengesDialog: View {
             .font(.title2)
             .bold()
             .padding()
-
         } else {
           let remainingMins = (duration - (((duration) / 60) * 60))
           if remainingMins > 0 {
@@ -115,64 +121,20 @@ struct ChallengesDialog: View {
               .padding(10)
           }
         }
-        //        Image(systemName: "star.fill")
-        //          .font(.system(size: 80))
-        //          .foregroundColor(.yellow)
-        //          .offset(y: -160)
-        //          Text("\(reward)")
-        //  //          .padding(.horizontal, 15)
-        //          .padding(10)
-        //            .background(.indigo)
-        //            .foregroundColor(.white)
-        //            .clipShape(Circle())
-        //            .offset(x: 40, y: -200)
       }
-
-
       .padding(.top, 20)
       .fixedSize(horizontal: false, vertical: true)
       .padding()
-      .background(Color("Background"))
+      .background(Color("BackgroundPanel"))
       .clipShape(RoundedRectangle(cornerRadius: 20))
-
-
-
-
-//      .overlay(alignment: .topTrailing) {
-//        Button {
-//          close()
-//        } label: {
-//          Image(systemName: "xmark")
-//            .font(.title2)
-//            .fontWeight(.medium)
-//        }
-//        .tint(Color("Text"))
-//        .padding()
-//      }
       .shadow(radius: 20)
       .padding(20)
       .offset(x: 0, y: offset)
-
       .onAppear {
         withAnimation(.spring()) {
           offset = 0
         }
       }
-//      VStack {
-//        Image(systemName: "star.fill").font(.system(size: 80)).foregroundColor(.yellow).offset(y: -160)
-//        Text("\(reward)")
-//          .padding(10)
-//          .background(.indigo)
-//          .foregroundColor(.white)
-//          .clipShape(Circle())
-//          .offset(x: 40, y: -280)
-//      }
-//      .offset(x: 0, y: offset)
-//      .onAppear {
-//        withAnimation(.spring()) {
-//          offset = 0
-//        }
-//      }
     }
     .ignoresSafeArea()
   }
@@ -187,6 +149,6 @@ struct ChallengesDialog: View {
 
 struct ChallengesDialog_Previews: PreviewProvider {
   static var previews: some View {
-    ChallengesDialog(isActive: .constant(true), duration: 10, reward: 2, action: {})
+    ChallengesDialog(isActive: .constant(true), duration: 10, rewardTyres: 0, rewardStars: 2, action: {})
   }
 }

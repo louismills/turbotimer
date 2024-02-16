@@ -18,8 +18,8 @@ struct background {
   var bought: Bool
   var cost: Int
   //  var colour: String
-  //  var colour: Color
-  var image: String
+    var colour: Color
+//  var image: String
 }
 
 struct UserBackgrounds: Identifiable, Codable{
@@ -158,6 +158,8 @@ struct AppState {
   @AppStorage("challengeSelectedReward") var challengeSelectedReward = 0
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
 
+  
+
   var shops = [shop(shop: 0, bought: true, cost: 0, multiplier: 0.0, image: "car1"),
                shop(shop: 1, bought: false, cost: 1, multiplier: 0.03, image: "car2"),
                shop(shop: 2, bought: false, cost: 4, multiplier: 0.06, image: "car3"),
@@ -168,21 +170,21 @@ struct AppState {
                      consumable(consumable: 1, bought: false, cost: 10, inventory: 0, multiplier: 0.75, duration: 15, image: "tyre"),
   ]
 
-  //  var backgrounds = [background(background: 0, bought: true, cost: 1, colour: .red),
-  //                     background(background: 1, bought: false, cost: 1, colour: .orange),
-  //                     background(background: 2, bought: false, cost: 1, colour: .blue),
-  //                     background(background: 3, bought: false, cost: 1, colour: .purple),
-  //                     background(background: 4, bought: false, cost: 1, colour: .indigo),
-  //                     background(background: 5, bought: false, cost: 1, colour: .brown),
-  //  ]
+    var backgrounds = [background(background: 0, bought: true, cost: 1, colour: .red),
+                       background(background: 1, bought: false, cost: 1, colour: .orange),
+                       background(background: 2, bought: false, cost: 1, colour: .blue),
+                       background(background: 3, bought: false, cost: 1, colour: .purple),
+                       background(background: 4, bought: false, cost: 1, colour: .indigo),
+                       background(background: 5, bought: false, cost: 1, colour: .brown),
+    ]
 
-  var backgrounds = [background(background: 0, bought: true, cost: 1, image: "bg1"),
-                     background(background: 1, bought: false, cost: 1, image: "bg2"),
-                     background(background: 2, bought: false, cost: 1, image: "bg3"),
-                     background(background: 3, bought: false, cost: 1, image: "bg4"),
-                     background(background: 4, bought: false, cost: 1, image: "bg5"),
-                     background(background: 5, bought: false, cost: 1, image: "bg1"),
-                                ]
+//  var backgrounds = [background(background: 0, bought: true, cost: 1, image: "bg1"),
+//                     background(background: 1, bought: false, cost: 1, image: "bg2"),
+//                     background(background: 2, bought: false, cost: 1, image: "bg3"),
+//                     background(background: 3, bought: false, cost: 1, image: "bg4"),
+//                     background(background: 4, bought: false, cost: 1, image: "bg5"),
+//                     background(background: 5, bought: false, cost: 1, image: "bg1"),
+//                                ]
 
                                 var workMinutes: Int = 5 {
     didSet {
@@ -245,6 +247,8 @@ struct AppState {
       userStars += Int(sessionStars)
       userTotalSessionTime += workMinutes
       sessionStars = 0
+      // Create new ball
+
     }
 
     switch(mode) {

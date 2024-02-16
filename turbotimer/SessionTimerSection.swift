@@ -22,8 +22,14 @@ struct sessionTimerSection: View {
   @AppStorage("userStars") var userStars = 0
   @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
 
+  @AppStorage("userBackground") var userBackground: Color = .red
+
 
   var body: some View {
+    // WIP
+    let screen = UIScreen.main.bounds
+    let screenWidth = screen.size.width
+    // WIP
     GeometryReader { geo in
       VStack {
         HStack() {
@@ -104,8 +110,13 @@ struct sessionTimerSection: View {
     }
     .padding()
     .frame(maxHeight: 220)
-    .background(Color("Background"))
+
+    .frame(width: screenWidth - 106)
+    .background(Color("BackgroundPanel"))
+    .overlay(
+      RoundedRectangle(cornerRadius: 20)
+        .stroke(Color(userBackground), lineWidth: 2)
+    )
     .clipShape(RoundedRectangle(cornerRadius: 20))
-//    .shadow(radius: 10)
   }
 }

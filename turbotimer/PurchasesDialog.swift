@@ -23,11 +23,11 @@ struct PurchasesDialog: View {
     ZStack {
       Color(.black)
         .opacity(0.2)
-        .onTapGesture {
-          close()
-        }
+//        .onTapGesture {
+//          close()
+//        }
 
-      VStack {
+      VStack(spacing: 20) {
         VStack {
           HStack {
             Text(message1)
@@ -46,7 +46,7 @@ struct PurchasesDialog: View {
 
               Text(buttonTitle1)
                 .font(.system(size: 20, weight: .bold))
-                .foregroundColor(.white)
+                .foregroundColor(Color("Text"))
                 .padding()
             }
           }
@@ -56,7 +56,7 @@ struct PurchasesDialog: View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
 //        .frame(height: 150)
 
-        VStack {}.padding()
+//        VStack {}.padding()
 
         VStack {
           HStack {
@@ -77,7 +77,7 @@ struct PurchasesDialog: View {
               Text(buttonTitle2)
                 .lineLimit(2)
                 .font(.system(size: 20, weight: .bold))
-                .foregroundColor(.white)
+                .foregroundColor(Color("Text"))
                 .padding()
             }
           }
@@ -85,24 +85,29 @@ struct PurchasesDialog: View {
         .padding()
         .background(.purple.opacity(0.4))
         .clipShape(RoundedRectangle(cornerRadius: 20))
+
+        Button {
+          close()
+        } label: {
+          ZStack {
+            RoundedRectangle(cornerRadius: 20)
+              .foregroundColor(.gray)
+
+            Text("Cancel")
+              .textCase(.uppercase)
+              .font(.system(size: 20, weight: .bold))
+              .foregroundColor(.white)
+              .padding(10)
+          }
+        }
       }
       .fixedSize(horizontal: false, vertical: true)
       .padding()
       .padding(.top, 20)
       .padding(.bottom, 10)
-      .background(.white)
+//      .background(.white)
+      .background(Color("BackgroundPanel"))
       .clipShape(RoundedRectangle(cornerRadius: 20))
-      .overlay(alignment: .topTrailing) {
-        Button {
-          close()
-        } label: {
-          Image(systemName: "xmark")
-            .font(.title2)
-            .fontWeight(.medium)
-        }
-        .tint(.black)
-        .padding()
-      }
       .shadow(radius: 20)
       .padding(20)
       .offset(x: 0, y: offset)

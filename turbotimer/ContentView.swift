@@ -26,19 +26,26 @@ struct AppBtn: ViewModifier {
   }
 }
 
+struct BtnTextPanelFormat: ViewModifier {
+  @AppStorage("userBackground") var userBackground: Color = .red
+
+  func body(content: Content) -> some View {
+    content
+      .padding(5)
+      .background(Color("BackgroundPanel"))
+      .overlay(
+        RoundedRectangle(cornerRadius: 16)
+          .stroke(Color(userBackground), lineWidth: 2)
+      )
+      .clipShape(RoundedRectangle(cornerRadius: 16))
+  }
+}
+
 struct BtnTextFormat: ViewModifier {
   func body(content: Content) -> some View {
     content
       .padding(5)
       .background(Color("Background"))
-      .clipShape(RoundedRectangle(cornerRadius: 20))
-  }
-}
-
-struct BtnTextStoreFormat: ViewModifier {
-  func body(content: Content) -> some View {
-    content
-      .padding(5)
       .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 }
@@ -141,8 +148,8 @@ extension View {
 }
 
 extension View {
-  func btnTextStoreFormat() -> some View {
-    modifier(BtnTextStoreFormat())
+  func btnTextPanelFormat() -> some View {
+    modifier(BtnTextPanelFormat())
   }
 }
 
@@ -169,21 +176,25 @@ struct challengeConfig: View {
 
   @Binding var appState: AppState
 
-  @State var timer: Timer? = nil
+//  @State var timer: Timer? = nil
 
   @AppStorage("userSessionTime") var userSessionTime = 0
+  @AppStorage("userBackground") var userBackground: Color = .red
   @AppStorage("challengeSelected") var challengeSelected = false
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
-  @AppStorage("challengeSelectedReward") var challengeSelectedReward = 0
+  @AppStorage("challengeSelectedRewardStars") var challengeSelectedRewardStars = 0
+  @AppStorage("challengeSelectedRewardTyres") var challengeSelectedRewardTyres = 0
 
   let workMinutes: Int
-  let reward: Int
+  let rewardTyres: Int
+  let rewardStars: Int
 
   var body: some View {
     Button(action: {
       challengeSelected = true
       challengeSelectedDuration = workMinutes
-      challengeSelectedReward = reward
+      challengeSelectedRewardTyres = rewardTyres
+      challengeSelectedRewardStars = rewardStars
     }) {
       HStack {
         Spacer()
@@ -212,8 +223,13 @@ struct challengeConfig: View {
         Spacer()
       }
       .fontWeight(.heavy)
-      .foregroundColor(.white)
-            .background(.green)
+      .foregroundColor(Color("Text"))
+      .background(Color("BackgroundPanel"))
+      .overlay(
+        RoundedRectangle(cornerRadius: 16)
+          .stroke(Color(userBackground), lineWidth: 2)
+      )
+      .clipShape(RoundedRectangle(cornerRadius: 16))
     }
     .buttonStyle(PlainButtonStyle())
   }
@@ -223,13 +239,9 @@ struct vehicleConfig: View {
   @Binding var appState: AppState
 
   @AppStorage("userStars") var userStars = 0
-
   @AppStorage("userHeroColour") var userHeroColour: Color = .yellow
-
   @AppStorage("userMultiplier") var userMultiplier: Double = 0
-
   @AppStorage("userImage") var userImage = "car1"
-
   @AppStorage("userShops") var userStores = [UserShops(id: 0, bought: true, cost: 1),
                                              UserShops(id: 1, bought: false, cost: 40),
                                              UserShops(id: 2, bought: false, cost: 80),
@@ -261,7 +273,6 @@ struct vehicleConfig: View {
           .aspectRatio(contentMode: .fit)
         if Int(store.multiplier * 100) > 0 {
           Text("+\(Int(store.multiplier * 100))%")
-//            .frame(alignment: .leading)
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
             .background(Color("Background"))
@@ -299,17 +310,17 @@ struct consumableConfig: View {
 
   var body: some View {
     VStack {
-    Button(action: {
-      if userStars >= consumable.cost && userConsumables[consumable.consumable].bought == false {
-        userStars -= consumable.cost
-        userConsumables[consumable.consumable].bought = true
-        userMultiplier = consumable.multiplier
-      }
-      if userConsumables[consumable.consumable].bought == true {
-        userMultiplier = consumable.multiplier
-        userImage = consumable.image
-      }
-    }) {
+      Button(action: {
+        if userStars >= consumable.cost && userConsumables[consumable.consumable].bought == false {
+          userStars -= consumable.cost
+          userConsumables[consumable.consumable].bought = true
+          userMultiplier = consumable.multiplier
+        }
+        if userConsumables[consumable.consumable].bought == true {
+          userMultiplier = consumable.multiplier
+          userImage = consumable.image
+        }
+      }) {
         ZStack {
           Image(consumable.image)
             .resizable()
@@ -336,15 +347,15 @@ struct consumableConfig: View {
 
       }
       Text("\(consumable.inventory)")
-        Button(action: {
-          userConsumables[consumable.consumable].inventory -= 1
-          print(consumable.inventory)
-        }) {
-          if consumable.inventory > 0 {
-            Text("Activate")
-          } else {
-            Text("Buy")
-          }
+      Button(action: {
+        userConsumables[consumable.consumable].inventory -= 1
+        print(consumable.inventory)
+      }) {
+        if consumable.inventory > 0 {
+          Text("Activate")
+        } else {
+          Text("Buy")
+        }
       }
     }
     .buttonStyle(PlainButtonStyle())
@@ -356,8 +367,8 @@ struct backgroundConfig: View {
   @Binding var appState: AppState
 
   @AppStorage("userStars") var userStars = 0
-//  @AppStorage("userBackground") var userBackground: Color = .yellow
-  @AppStorage("userBackground") var userBackground = "bg1"
+  @AppStorage("userBackground") var userBackground: Color = .red
+  //  @AppStorage("userBackground") var userBackground = "bg1"
   @AppStorage("userBackgrounds") var userBackgrounds = [UserBackgrounds(id: 0, bought: true, cost: 1),
                                                         UserBackgrounds(id: 1, bought: false, cost: 1),
                                                         UserBackgrounds(id: 2, bought: false, cost: 1),
@@ -374,69 +385,32 @@ struct backgroundConfig: View {
         if userStars >= background.cost && userBackgrounds[background.background].bought == false {
           userStars -= background.cost
           userBackgrounds[background.background].bought = true
-          userBackground = background.image
+          //          userBackground = background.image
+          userBackground = background.colour
         }
         if userBackgrounds[background.background].bought == true {
-          userBackground = background.image
+          //          userBackground = background.image
+          userBackground = background.colour
         }
+
       }) {
-        if userBackgrounds[background.background].bought == false {
-          ZStack(alignment: .center) {
-            Image(background.image)
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-              .clipShape(Circle())
+        ZStack(alignment: .center) {
+          Circle().fill(background.colour).padding(10)
 
-            buyShopBtn(cost: background.cost)
-              .offset(x: 30, y: -30)
-          }
-        }
-        else {
-          if userBackground == background.image {
-            ZStack(alignment: .center) {
-              Image(background.image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .clipShape(Circle())
-
-              equippedBtn()
-                .offset(x: 30, y: -30)
-            }
+          if userBackgrounds[background.background].bought == false {
+            buyShopBtn(cost: background.cost).offset(x: 30, y: -30)
           }
           else {
-            ZStack(alignment: .center) {
-              Image(background.image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .clipShape(Circle())
+            if userBackground.rawValue == background.colour.rawValue {
+              equippedBtn().offset(x: 30, y: -30)
             }
           }
         }
-
-            //        else {
-            ////          if userBackground.rawValue != background.colour.rawValue {
-            //            ZStack(alignment: .center) {
-            //              Circle()
-            ////                .fill(background.colour)
-            //                .frame(width: 80, height: 80)
-            //            }
-            //          } else {
-            //            ZStack(alignment: .center) {
-            //              Circle()
-            ////                .fill(background.colour)
-            //                .frame(width: 80, height: 80)
-            //                .shadow(radius: 10)
-            //
-            //              equippedBtn()
-            //                .offset(x: 30, y: -30)
-            //            }
-            //          }
-            //        }
-          }
-            .buttonStyle(PlainButtonStyle())
-        }
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
+      }
+      .buttonStyle(PlainButtonStyle())
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+  }
 }
 
 struct SheetChallengesView: View {
@@ -446,7 +420,8 @@ struct SheetChallengesView: View {
   @AppStorage("sessionRunning") var sessionRunning = false
   @AppStorage("challengeSelected") var challengeSelected = false
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
-  @AppStorage("challengeSelectedReward") var challengeSelectedReward = 0
+  @AppStorage("challengeSelectedRewardStars") var challengeSelectedRewardStars = 0
+  @AppStorage("challengeSelectedRewardTyres") var challengeSelectedRewardTyres = 0
   @AppStorage("userSessionTime") var userSessionTime = 0
 
   @Environment(\.dismiss) var dismiss
@@ -478,35 +453,30 @@ struct SheetChallengesView: View {
       GeometryReader { geo in
         Grid(alignment: .leading, horizontalSpacing: 20, verticalSpacing: 20) {
           GridRow {
-            challengeConfig(appState: $appState, workMinutes: 5, reward: 1)
-            challengeConfig(appState: $appState, workMinutes: 10, reward: 2)
+            challengeConfig(appState: $appState, workMinutes: 5, rewardTyres: 1, rewardStars: 1)
+            challengeConfig(appState: $appState, workMinutes: 10, rewardTyres: 1,rewardStars: 2)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
-          .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
-            challengeConfig(appState: $appState, workMinutes: 15, reward: 3)
-            challengeConfig(appState: $appState, workMinutes: 20, reward : 5)
+            challengeConfig(appState: $appState, workMinutes: 15, rewardTyres: 1,rewardStars: 3)
+            challengeConfig(appState: $appState, workMinutes: 20, rewardTyres: 1,rewardStars: 5)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
-          .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
-            challengeConfig(appState: $appState, workMinutes: 25, reward: 7)
-            challengeConfig(appState: $appState, workMinutes: 30, reward: 11)
+            challengeConfig(appState: $appState, workMinutes: 25, rewardTyres: 1,rewardStars: 7)
+            challengeConfig(appState: $appState, workMinutes: 30, rewardTyres: 1,rewardStars: 11)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
-          .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
-            challengeConfig(appState: $appState, workMinutes: 45, reward: 15)
-            challengeConfig(appState: $appState, workMinutes: 60, reward: 22)
+            challengeConfig(appState: $appState, workMinutes: 45, rewardTyres: 1,rewardStars: 15)
+            challengeConfig(appState: $appState, workMinutes: 60, rewardTyres: 1,rewardStars: 22)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
-          .clipShape(RoundedRectangle(cornerRadius: 15))
           GridRow {
-            challengeConfig(appState: $appState, workMinutes: 90, reward: 30)
-            challengeConfig(appState: $appState, workMinutes: 120, reward: 38)
+            challengeConfig(appState: $appState, workMinutes: 90, rewardTyres: 1,rewardStars: 30)
+            challengeConfig(appState: $appState, workMinutes: 120, rewardTyres: 1,rewardStars: 38)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
-          .clipShape(RoundedRectangle(cornerRadius: 15))
         }
         .frame(width: geo.size.width, height: geo.size.height)
       }
@@ -519,7 +489,7 @@ struct SheetChallengesView: View {
       //      .font(.title)
 
       if challengeSelected {
-        ChallengesDialog(isActive: $challengeSelected, duration: challengeSelectedDuration, reward: challengeSelectedReward) {
+        ChallengesDialog(isActive: $challengeSelected, duration: challengeSelectedDuration, rewardTyres: challengeSelectedRewardTyres, rewardStars: challengeSelectedRewardStars) {
           appState.workMinutes = challengeSelectedDuration
           dismiss()
         }
@@ -536,7 +506,8 @@ struct SheetStoreView: View {
   @State private var showingPurchases = false
 
   @AppStorage("userDestination") var userDestination = ""
-  @AppStorage("userBackground") var userBackground = "bg1"
+  //  @AppStorage("userBackground") var userBackground = "bg1"
+  @AppStorage("userBackground") var userBackground: Color = .red
   @AppStorage("userStars") var userStars = 0
 
   var body: some View {
@@ -564,24 +535,22 @@ struct SheetStoreView: View {
           .edgesIgnoringSafeArea(.horizontal)
 
         ScrollView {
-          HStack(spacing: 0) {
-            starIcon().padding(.trailing, 10)
+          HStack {
+            starIcon().padding(.leading, 10)
             Text("\(userStars)")
-              .padding(.trailing, 10)
+              .foregroundColor(Color("Text"))
+              .padding(.trailing, 5)
             // In store purchases button
             Button {
               showingPurchases.toggle()
             } label: {
               Image(systemName: "plus.circle.fill").foregroundColor(.green)
             }
-          }
-          .btnTextStoreFormat()
-          .overlay(
-            RoundedRectangle(cornerRadius: 12)
-              .stroke(Color("Text"), lineWidth: 1)
-          )
-          .frame(maxWidth: .infinity, alignment: .leading)
-          .padding([.leading, .top], 20)
+          }.font(.system(size: 20))
+            .btnTextPanelFormat()
+
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding([.leading, .top], 20)
 
           VStack() {
             // VEHICLES
@@ -616,10 +585,11 @@ struct SheetStoreView: View {
               }.frame(height: 400)
             }
             .padding()
-            .background(Color("Background"))
+            .background(Color("BackgroundPanel"))
             .overlay(
               RoundedRectangle(cornerRadius: 16)
-                .stroke(Color("Text"), lineWidth: 2)
+              //                .stroke(Color("Text"), lineWidth: 2)
+                .stroke(Color(userBackground), lineWidth: 2)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16))
 
@@ -648,23 +618,24 @@ struct SheetStoreView: View {
               }.frame(height: 250)
             }
             .padding()
-            .background(Color("Background"))
+            .background(Color("BackgroundPanel"))
             .overlay(
               RoundedRectangle(cornerRadius: 16)
-                .stroke(Color("Text"), lineWidth: 2)
+              //                .stroke(Color("Text"), lineWidth: 2)
+                .stroke(Color(userBackground), lineWidth: 2)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16))
 
             HStack {
             }.padding(10)
-            // BACKGROUNDS
+            // THEMES
             VStack {
-              Text("Backgrounds")
+              Text("Themes")
                 .foregroundColor(Color("Text"))
                 .font(.title2)
                 .fontWeight(.bold)
                 .frame(maxWidth: .infinity, alignment: .leading)
-              Text("You deserve to look groovy!")
+              Text("Set the mood with these clean themes!")
                 .foregroundColor(Color("Text"))
                 .frame(maxWidth: .infinity, alignment: .leading)
               GeometryReader { geo in
@@ -687,10 +658,11 @@ struct SheetStoreView: View {
               }.frame(height: 300)
             }
             .padding()
-            .background(Color("Background"))
+            .background(Color("BackgroundPanel"))
             .overlay(
               RoundedRectangle(cornerRadius: 16)
-                .stroke(Color("Text"), lineWidth: 2)
+              //                .stroke(Color("Text"), lineWidth: 2)
+                .stroke(Color(userBackground), lineWidth: 2)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16))
           }
@@ -707,39 +679,44 @@ struct SheetStoreView: View {
       }
     }
     .background(Color("Background"))
+    //    .background(.black)
   }
 }
 
 // WIP
 enum CollisionType: UInt32 {
-    case object = 1
-    case wall = 2
+  case object = 1
+  case wall = 2
 }
 
-class GameScene: SKScene {
+//class GameScene: SKScene {
+class GameScene: SKScene, ObservableObject { // wip
+  @State var timer: Timer? = nil // wip
+
   private var motionManager: CMMotionManager!
 
   private var ball: SKCropNode!
 
-  init(sceneSize: CGSize) {
-    super.init(size: sceneSize)
-  }
+  @AppStorage("userBackground") var userBackground: Color = .red
 
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
+  //  init(sceneSize: CGSize) {
+  //    super.init(size: sceneSize)
+  //  }
+  //
+  //  required init?(coder aDecoder: NSCoder) {
+  //    fatalError("init(coder:) has not been implemented")
+  //  }
 
   override func sceneDidLoad() {
     setUpBounds()
-    createBall()
+//    createBall()
     setUpBox()
   }
 
   override func didMove(to view: SKView) {
     motionManager = CMMotionManager()
     motionManager.startAccelerometerUpdates()
-
-    self.backgroundColor = SKColor.darkGray
+    self.backgroundColor = UIColor(Color("Background"))
     self.physicsWorld.gravity = .zero
     self.scaleMode = .aspectFit
   }
@@ -752,75 +729,83 @@ class GameScene: SKScene {
   }
 
   private func setUpBox() {
-    let box = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
-       box.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-       box.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
-    box.physicsBody?.isDynamic = false
-      box.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
-       addChild(box)
+    let screen = UIScreen.main.bounds
+    let screenWidth = screen.size.width
+//    let screenHeight = screen.size.height
+
+    let shape = SKShapeNode()
+
+    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 53, width: screenWidth - 106, height: 220), cornerRadius: 20).cgPath
+
+    shape.path = shapePath
+    //    shape.position = CGPoint(x: frame.midX, y: frame.midY)
+
+    //    shape.physicsBody = SKPhysicsBody(edgeChainFrom: shapePath)
+    shape.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
+    shape.physicsBody?.isDynamic = false
+    shape.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
+    shape.strokeColor = UIColor(.black.opacity(0))
+    shape.lineWidth = 2
+    addChild(shape)
   }
 
-  private func createBall() {
+//  private func createBall() {
+  public func createBall() {
     // Create shape node to use during mouse interaction
     let maskShapeTexture = SKTexture(imageNamed: "circle")
     let texture = SKTexture(imageNamed: "tyre")
     let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
     let mask = SKSpriteNode(texture: maskShapeTexture) //make a circular mask
     let ball = SKCropNode()
+
     ball.maskNode = mask
     ball.addChild(pictureToMask)
-
     ball.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
     ball.zPosition = 1
     ball.physicsBody = SKPhysicsBody(circleOfRadius: 25)
     ball.physicsBody?.allowsRotation = true
     ball.physicsBody?.linearDamping = 0.5
-
     ball.physicsBody?.isDynamic = true
     ball.physicsBody?.categoryBitMask = CollisionType.object.rawValue
     ball.physicsBody?.collisionBitMask = CollisionType.wall.rawValue
 
     self.ball = ball
     self.addChild(self.ball)
+
   }
 
   override func update(_ currentTime: TimeInterval) {
-    print("update acc scene")
+    //    print("update acc scene")
     if let accelerometerData = motionManager.accelerometerData {
       physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.x * 7, dy: accelerometerData.acceleration.y * 7)
     }
+// unlimited balls spawn
+//    if timer == nil {
+//      createBall()
+//    }
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     guard let touch = touches.first else { return }
     let location = touch.location(in: self)
-//    let box = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
-//    box.position = location
-//    box.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
-//    addChild(box)
-
     let maskShapeTexture = SKTexture(imageNamed: "circle")
     let texture = SKTexture(imageNamed: "tyre")
     let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
     let mask = SKSpriteNode(texture: maskShapeTexture) //make a circular mask
     let ball = SKCropNode()
+
     ball.maskNode = mask
     ball.addChild(pictureToMask)
-
-//    ball.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
     ball.position = location
-
     ball.zPosition = 1
-//    ball.physicsBody = SKPhysicsBody(circleOfRadius: w)
     ball.physicsBody = SKPhysicsBody(circleOfRadius: 25)
     ball.physicsBody?.allowsRotation = true
     ball.physicsBody?.linearDamping = 0.5
-
     ball.physicsBody?.isDynamic = true
-//    ball.physicsBody?.categoryBitMask = CollisionType.object.rawValue
-//    ball.physicsBody?.collisionBitMask = CollisionType.wall.rawValue
 
     addChild(ball)
+
+//    createBall()
   }
 }
 // WIP
@@ -839,7 +824,7 @@ struct ContentView: View {
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
   @AppStorage("userSessionTime") var userSessionTime = 0
   @AppStorage("userDestination") var userDestination = ""
-  @AppStorage("userBackground") var userBackground = "bg1"
+  @AppStorage("userBackground") var userBackground: Color = .red
   @AppStorage("userImage") var userImage = "car1"
 
   @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
@@ -848,19 +833,44 @@ struct ContentView: View {
   @State private var showingStore = false
   @State var sessionRunning = false
 
+
+
   // WIP
-  var scene: SKScene {
-      let scene = GameScene(sceneSize: CGSize(width: 390, height: 700))
+//  var scene: SKScene {
+//    //      let scene = GameScene(sceneSize: CGSize(width: 390, height: 700))
+//
+//    //    let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: 800))
+//    let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+//
+//    //    let scene = GameScene()
+//    scene.scaleMode = .resizeFill
+//    return scene
+//  }
+
+//  let scene: GameScene = {
+//      let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: 800))
+//    scene.scaleMode = .resizeFill
+//
+//      return scene
+//  }()
+
+  @State var scene: GameScene = {
+      let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: 800))
+    scene.scaleMode = .resizeFill
+
       return scene
-    }
+  }()
   // WIP
 
   var body: some View {
     ZStack {
       // WIP
       SpriteView(scene: scene)
-                  .frame(width: 390, height: 700)
-                  .ignoresSafeArea()
+      //        .frame(maxWidth: .infinity, maxHeight: .infinity)
+      //        .frame(width: screenWidth, height: screenHeight)
+
+      //                  .frame(width: 390, height: 700)
+        .ignoresSafeArea()
       // WIP
 
       VStack(spacing: 10) {
@@ -871,23 +881,24 @@ struct ContentView: View {
             Text("\(userStars)")
               .foregroundColor(Color("Text"))
               .padding(.trailing, 10)
-          }.font(.system(size: 25))
-            .btnTextFormat()
+          }.font(.system(size: 20))
+            .btnTextPanelFormat()
           HStack {
             Text("\(userTotalSessionTime)")
               .padding(.leading, 10)
             Image(systemName: "clock")
               .foregroundColor(Color("Text"))
               .padding(.trailing, 10)
-          }.font(.system(size: 25))
-            .btnTextFormat()
+          }.font(.system(size: 20))
+            .btnTextPanelFormat()
           Spacer()
           Button {
+//            scene.createBall() // works but wip
             showingStore.toggle()
           } label: {
             Image(systemName: "cart")
               .foregroundColor(.white)
-              .font(.system(size: 25))
+              .font(.system(size: 20))
           }.btnStoreFormat()
             .fullScreenCover(isPresented: $showingStore) {
               SheetStoreView(appState: $appState)
@@ -895,17 +906,14 @@ struct ContentView: View {
         }
         // END OF TOP NAV SECTION
         Spacer()
-//        Image(userImage)
-//          .resizable()
-//          .aspectRatio(contentMode: .fit)
-//          .padding(.bottom, 20)
+        //        Image(userImage)
+        //          .resizable()
+        //          .aspectRatio(contentMode: .fit)
+        //          .padding(.bottom, 20)
 
-//        // WIP
-//        SpriteView(scene: scene)
-//                    .frame(width: 350, height: 400)
-//                    .ignoresSafeArea()
-//        // WIP
 
+
+//        sessionTimerSection(appState: $appState)
         sessionTimerSection(appState: $appState)
           .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
             if newPhase == .active {
@@ -925,18 +933,15 @@ struct ContentView: View {
           }
       }
       .padding()
-//      .background(Image(userBackground).resizable().aspectRatio(contentMode: .fill).ignoresSafeArea())
+      .padding(.bottom, 3)
+      //      .background(Image(userBackground).resizable().aspectRatio(contentMode: .fill).ignoresSafeArea())
 
-//      // WIP
-//      SpriteView(scene: scene)
-//                  .frame(width: 350, height: 400)
-//                  .ignoresSafeArea()
-//      // WIP
+
 
       if showingSessionTimerWarning {
         SessionTimerDialog(isActive: $showingSessionTimerWarning, appState: $appState) {
           showingSessionTimerWarning = false
-          dismiss()
+//          dismiss()
         }
       }
     }
