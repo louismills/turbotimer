@@ -32,22 +32,22 @@ struct sessionTimerSection: View {
     // WIP
     GeometryReader { geo in
       VStack {
-        HStack() {
+        HStack {
           // TOP LEFT - SESSION TIME
           VStack (alignment: .leading) {
             Text(appState.mode.rawValue)
               .foregroundStyle(.gray)
             Text(appState.currentTimeDisplay)
-              .font(.system(size: 50))
+              .font(.system(size: 45))
               .fontWeight(.heavy)
           }
           Spacer()
           VStack (alignment: .trailing) {
             // TOP RIGHT - STARS COUNT
-            Text("Stars")
+            Text("Trophies")
               .foregroundStyle(.gray)
             Text("\(Int(appState.sessionStars))").foregroundColor(.yellow)
-              .font(.system(size: 50))
+              .font(.system(size: 45))
               .fontWeight(.heavy)
           }
         }
@@ -100,9 +100,12 @@ struct sessionTimerSection: View {
               Text("START")
               Spacer()
             } else {
+//              Spacer()
               Text("STOP")
+//              Spacer()
             }
-          }.appBtn(color: !sessionRunning ? .green : Color(UIColor.lightGray).opacity(0.4))
+          }
+          .appBtn(color: !sessionRunning ? .green : Color(UIColor.lightGray).opacity(0.4))
             .fontWeight(.heavy)
         }
       }

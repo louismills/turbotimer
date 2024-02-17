@@ -19,7 +19,8 @@ struct AppBtn: ViewModifier {
 
   func body(content: Content) -> some View {
     content
-      .frame(minWidth: sessionRunning ? 80 : 250, minHeight: 45)
+//      .frame(minWidth: sessionRunning ? 80 : 250, minHeight: 45)
+      .frame(minWidth: 80, minHeight: 45)
       .background(color)
       .foregroundColor(.white)
       .clipShape(RoundedRectangle(cornerRadius: 20))
@@ -539,7 +540,6 @@ struct SheetStoreView: View {
             starIcon().padding(.leading, 10)
             Text("\(userStars)")
               .foregroundColor(Color("Text"))
-              .padding(.trailing, 5)
             // In store purchases button
             Button {
               showingPurchases.toggle()
@@ -555,7 +555,7 @@ struct SheetStoreView: View {
           VStack() {
             // VEHICLES
             VStack() {
-              Text("Vehicles")
+              Text("Effects")
                 .foregroundColor(Color("Text"))
                 .font(.title2)
                 .fontWeight(.bold)
@@ -679,7 +679,6 @@ struct SheetStoreView: View {
       }
     }
     .background(Color("Background"))
-    //    .background(.black)
   }
 }
 
@@ -689,9 +688,9 @@ enum CollisionType: UInt32 {
   case wall = 2
 }
 
-//class GameScene: SKScene {
-class GameScene: SKScene, ObservableObject { // wip
-  @State var timer: Timer? = nil // wip
+class GameScene: SKScene {
+//class GameScene: SKScene, ObservableObject { // wip
+//  @State var timer: Timer? = nil // wip
 
   private var motionManager: CMMotionManager!
 
@@ -711,6 +710,14 @@ class GameScene: SKScene, ObservableObject { // wip
     setUpBounds()
 //    createBall()
     setUpBox()
+    setUpBtnTopLeft()
+    setUpBtnTopRight()
+
+    createTyre(tyreType: "tyreRed")
+    createTyre(tyreType: "tyreBlue")
+    createTyre(tyreType: "tyreYellow")
+    createTyre(tyreType: "tyreWhite")
+    createTyre(tyreType: "tyreGreen")
   }
 
   override func didMove(to view: SKView) {
@@ -731,12 +738,8 @@ class GameScene: SKScene, ObservableObject { // wip
   private func setUpBox() {
     let screen = UIScreen.main.bounds
     let screenWidth = screen.size.width
-//    let screenHeight = screen.size.height
-
     let shape = SKShapeNode()
-
     let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 53, width: screenWidth - 106, height: 220), cornerRadius: 20).cgPath
-
     shape.path = shapePath
     //    shape.position = CGPoint(x: frame.midX, y: frame.midY)
 
@@ -749,18 +752,74 @@ class GameScene: SKScene, ObservableObject { // wip
     addChild(shape)
   }
 
+  private func setUpBtnTopLeft() {
+//    let screen = UIScreen.main.bounds
+    let btnTop = SKShapeNode()
+    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 16, y: self.frame.maxY - 112, width: 166, height: 30), cornerRadius: 20).cgPath
+
+    btnTop.path = shapePath
+    btnTop.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
+    btnTop.physicsBody?.isDynamic = false
+    btnTop.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
+//    btnTop.strokeColor = UIColor(.black.opacity(0))
+    btnTop.lineWidth = 2
+    addChild(btnTop)
+  }
+
+  private func setUpBtnTopRight() {
+//    let screen = UIScreen.main.bounds
+    let btnTop = SKShapeNode()
+    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.maxX - 66, y: self.frame.maxY - 120, width: 50, height: 45), cornerRadius: 20).cgPath
+
+    btnTop.path = shapePath
+    btnTop.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
+    btnTop.physicsBody?.isDynamic = false
+    btnTop.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
+//    btnTop.strokeColor = UIColor(.black.opacity(0))
+    btnTop.lineWidth = 2
+    addChild(btnTop)
+  }
+
 //  private func createBall() {
-  public func createBall() {
+//  public func createBall() {
+//    // Create shape node to use during mouse interaction
+//    let maskShapeTexture = SKTexture(imageNamed: "circle")
+////    let texture = SKTexture(imageNamed: "tyre")
+//    let texture = SKTexture(imageNamed: "tyreRedTEST")
+//    let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
+//    let mask = SKSpriteNode(texture: maskShapeTexture) //make a circular mask
+//    let ball = SKCropNode()
+//
+//    ball.maskNode = mask
+//    ball.addChild(pictureToMask)
+//    ball.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+//    ball.zPosition = 1
+//    ball.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+//    ball.physicsBody?.allowsRotation = true
+//    ball.physicsBody?.linearDamping = 0.5
+//    ball.physicsBody?.isDynamic = true
+//    ball.physicsBody?.categoryBitMask = CollisionType.object.rawValue
+//    ball.physicsBody?.collisionBitMask = CollisionType.wall.rawValue
+//
+//    self.ball = ball
+//    self.addChild(self.ball)
+//  }
+
+  public func createTyre(tyreType: String) {
     // Create shape node to use during mouse interaction
     let maskShapeTexture = SKTexture(imageNamed: "circle")
-    let texture = SKTexture(imageNamed: "tyre")
+//    let texture = SKTexture(imageNamed: "tyre")
+    let texture = SKTexture(imageNamed: tyreType)
     let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
     let mask = SKSpriteNode(texture: maskShapeTexture) //make a circular mask
     let ball = SKCropNode()
 
     ball.maskNode = mask
     ball.addChild(pictureToMask)
-    ball.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+
+    let randomCGFloat = CGFloat.random(in: 1...100)
+
+    ball.position = CGPoint(x: self.frame.midX + randomCGFloat, y: self.frame.midY + randomCGFloat)
     ball.zPosition = 1
     ball.physicsBody = SKPhysicsBody(circleOfRadius: 25)
     ball.physicsBody?.allowsRotation = true
@@ -771,7 +830,6 @@ class GameScene: SKScene, ObservableObject { // wip
 
     self.ball = ball
     self.addChild(self.ball)
-
   }
 
   override func update(_ currentTime: TimeInterval) {
@@ -789,7 +847,8 @@ class GameScene: SKScene, ObservableObject { // wip
     guard let touch = touches.first else { return }
     let location = touch.location(in: self)
     let maskShapeTexture = SKTexture(imageNamed: "circle")
-    let texture = SKTexture(imageNamed: "tyre")
+//    let texture = SKTexture(imageNamed: "tyre")
+    let texture = SKTexture(imageNamed: "tyreRed")
     let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
     let mask = SKSpriteNode(texture: maskShapeTexture) //make a circular mask
     let ball = SKCropNode()
@@ -836,16 +895,16 @@ struct ContentView: View {
 
 
   // WIP
-//  var scene: SKScene {
+  var scene: SKScene {
 //    //      let scene = GameScene(sceneSize: CGSize(width: 390, height: 700))
 //
 //    //    let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: 800))
-//    let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+    let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
 //
-//    //    let scene = GameScene()
-//    scene.scaleMode = .resizeFill
-//    return scene
-//  }
+//    let scene = GameScene()
+    scene.scaleMode = .resizeFill
+    return scene
+  }
 
 //  let scene: GameScene = {
 //      let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: 800))
@@ -854,12 +913,12 @@ struct ContentView: View {
 //      return scene
 //  }()
 
-  @State var scene: GameScene = {
-      let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: 800))
-    scene.scaleMode = .resizeFill
-
-      return scene
-  }()
+//  let scene: GameScene = {
+//      let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: 800))
+//    scene.scaleMode = .resizeFill
+//
+//      return scene
+//  }()
   // WIP
 
   var body: some View {
@@ -906,14 +965,6 @@ struct ContentView: View {
         }
         // END OF TOP NAV SECTION
         Spacer()
-        //        Image(userImage)
-        //          .resizable()
-        //          .aspectRatio(contentMode: .fit)
-        //          .padding(.bottom, 20)
-
-
-
-//        sessionTimerSection(appState: $appState)
         sessionTimerSection(appState: $appState)
           .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
             if newPhase == .active {
@@ -934,14 +985,10 @@ struct ContentView: View {
       }
       .padding()
       .padding(.bottom, 3)
-      //      .background(Image(userBackground).resizable().aspectRatio(contentMode: .fill).ignoresSafeArea())
-
-
 
       if showingSessionTimerWarning {
         SessionTimerDialog(isActive: $showingSessionTimerWarning, appState: $appState) {
           showingSessionTimerWarning = false
-//          dismiss()
         }
       }
     }

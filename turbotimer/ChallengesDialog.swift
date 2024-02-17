@@ -21,9 +21,6 @@ struct ChallengesDialog: View {
     ZStack {
       Color(.black)
         .opacity(0.3)
-//        .onTapGesture {
-//          close()
-//        }
 
       VStack {
         HStack {

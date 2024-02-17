@@ -24,9 +24,6 @@ struct SessionTimerDialog: View {
     ZStack {
       Color(.black)
         .opacity(0.3)
-//        .onTapGesture {
-//          close()
-//        }
 
       VStack {
         Image("crashhelmet").resizable()

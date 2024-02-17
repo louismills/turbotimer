@@ -22,10 +22,7 @@ struct PurchasesDialog: View {
   var body: some View {
     ZStack {
       Color(.black)
-        .opacity(0.2)
-//        .onTapGesture {
-//          close()
-//        }
+        .opacity(0.3)
 
       VStack(spacing: 20) {
         VStack {
@@ -52,11 +49,8 @@ struct PurchasesDialog: View {
           }
         }
         .padding()
-        .background(.purple.opacity(0.4))
+        .background(Color(UIColor.lightGray).opacity(0.4))
         .clipShape(RoundedRectangle(cornerRadius: 20))
-//        .frame(height: 150)
-
-//        VStack {}.padding()
 
         VStack {
           HStack {
@@ -83,7 +77,7 @@ struct PurchasesDialog: View {
           }
         }
         .padding()
-        .background(.purple.opacity(0.4))
+        .background(Color(UIColor.lightGray).opacity(0.4))
         .clipShape(RoundedRectangle(cornerRadius: 20))
 
         Button {
@@ -101,17 +95,14 @@ struct PurchasesDialog: View {
           }
         }
       }
+      .padding(.top, 20)
       .fixedSize(horizontal: false, vertical: true)
       .padding()
-      .padding(.top, 20)
-      .padding(.bottom, 10)
-//      .background(.white)
       .background(Color("BackgroundPanel"))
       .clipShape(RoundedRectangle(cornerRadius: 20))
       .shadow(radius: 20)
       .padding(20)
       .offset(x: 0, y: offset)
-
       .onAppear {
         withAnimation(.spring()) {
           offset = 0
