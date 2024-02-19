@@ -12,6 +12,7 @@ struct ChallengesDialog: View {
   @Binding var isActive: Bool
 
   let duration: Int
+  let rewardTyresType: String
   let rewardTyres: Int
   let rewardStars: Int
   let action: () -> ()
@@ -25,7 +26,7 @@ struct ChallengesDialog: View {
       VStack {
         HStack {
           ZStack {
-            Image("tyre")
+            Image(rewardTyresType)
               .resizable()
               .frame(width: 90, height: 90)
             Text("\(rewardTyres)")
@@ -146,6 +147,6 @@ struct ChallengesDialog: View {
 
 struct ChallengesDialog_Previews: PreviewProvider {
   static var previews: some View {
-    ChallengesDialog(isActive: .constant(true), duration: 10, rewardTyres: 0, rewardStars: 2, action: {})
+    ChallengesDialog(isActive: .constant(true), duration: 10, rewardTyresType: "tyreRed", rewardTyres: 0, rewardStars: 2, action: {})
   }
 }

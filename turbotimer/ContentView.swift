@@ -185,8 +185,10 @@ struct challengeConfig: View {
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
   @AppStorage("challengeSelectedRewardStars") var challengeSelectedRewardStars = 0
   @AppStorage("challengeSelectedRewardTyres") var challengeSelectedRewardTyres = 0
+  @AppStorage("challengeSelectedRewardTyresType") var challengeSelectedRewardTyresType = ""
 
   let workMinutes: Int
+  let rewardTyresType: String
   let rewardTyres: Int
   let rewardStars: Int
 
@@ -196,6 +198,7 @@ struct challengeConfig: View {
       challengeSelectedDuration = workMinutes
       challengeSelectedRewardTyres = rewardTyres
       challengeSelectedRewardStars = rewardStars
+      challengeSelectedRewardTyresType = rewardTyresType
     }) {
       HStack {
         Spacer()
@@ -423,6 +426,7 @@ struct SheetChallengesView: View {
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
   @AppStorage("challengeSelectedRewardStars") var challengeSelectedRewardStars = 0
   @AppStorage("challengeSelectedRewardTyres") var challengeSelectedRewardTyres = 0
+  @AppStorage("challengeSelectedRewardTyresType") var challengeSelectedRewardTyresType = ""
   @AppStorage("userSessionTime") var userSessionTime = 0
 
   @Environment(\.dismiss) var dismiss
@@ -454,28 +458,28 @@ struct SheetChallengesView: View {
       GeometryReader { geo in
         Grid(alignment: .leading, horizontalSpacing: 20, verticalSpacing: 20) {
           GridRow {
-            challengeConfig(appState: $appState, workMinutes: 5, rewardTyres: 1, rewardStars: 1)
-            challengeConfig(appState: $appState, workMinutes: 10, rewardTyres: 1,rewardStars: 2)
+            challengeConfig(appState: $appState, workMinutes: 5, rewardTyresType: "tyreRed", rewardTyres: 1, rewardStars: 1)
+            challengeConfig(appState: $appState, workMinutes: 10, rewardTyresType: "tyreYellow", rewardTyres: 1,rewardStars: 2)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
           GridRow {
-            challengeConfig(appState: $appState, workMinutes: 15, rewardTyres: 1,rewardStars: 3)
-            challengeConfig(appState: $appState, workMinutes: 20, rewardTyres: 1,rewardStars: 5)
+            challengeConfig(appState: $appState, workMinutes: 15, rewardTyresType: "tyreWhite", rewardTyres: 1,rewardStars: 3)
+            challengeConfig(appState: $appState, workMinutes: 20, rewardTyresType: "tyreGreen", rewardTyres: 1,rewardStars: 5)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
           GridRow {
-            challengeConfig(appState: $appState, workMinutes: 25, rewardTyres: 1,rewardStars: 7)
-            challengeConfig(appState: $appState, workMinutes: 30, rewardTyres: 1,rewardStars: 11)
+            challengeConfig(appState: $appState, workMinutes: 25, rewardTyresType: "tyreBlue", rewardTyres: 1,rewardStars: 7)
+            challengeConfig(appState: $appState, workMinutes: 30, rewardTyresType: "tyreRed", rewardTyres: 2,rewardStars: 11)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
           GridRow {
-            challengeConfig(appState: $appState, workMinutes: 45, rewardTyres: 1,rewardStars: 15)
-            challengeConfig(appState: $appState, workMinutes: 60, rewardTyres: 1,rewardStars: 22)
+            challengeConfig(appState: $appState, workMinutes: 45, rewardTyresType: "tyreYellow", rewardTyres: 2,rewardStars: 15)
+            challengeConfig(appState: $appState, workMinutes: 60, rewardTyresType: "tyreWhite", rewardTyres: 2,rewardStars: 22)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
           GridRow {
-            challengeConfig(appState: $appState, workMinutes: 90, rewardTyres: 1,rewardStars: 30)
-            challengeConfig(appState: $appState, workMinutes: 120, rewardTyres: 1,rewardStars: 38)
+            challengeConfig(appState: $appState, workMinutes: 90, rewardTyresType: "tyreGreen", rewardTyres: 2,rewardStars: 30)
+            challengeConfig(appState: $appState, workMinutes: 120, rewardTyresType: "tyreBlue", rewardTyres: 2,rewardStars: 38)
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
         }
@@ -490,7 +494,7 @@ struct SheetChallengesView: View {
       //      .font(.title)
 
       if challengeSelected {
-        ChallengesDialog(isActive: $challengeSelected, duration: challengeSelectedDuration, rewardTyres: challengeSelectedRewardTyres, rewardStars: challengeSelectedRewardStars) {
+        ChallengesDialog(isActive: $challengeSelected, duration: challengeSelectedDuration, rewardTyresType: challengeSelectedRewardTyresType, rewardTyres: challengeSelectedRewardTyres, rewardStars: challengeSelectedRewardStars) {
           appState.workMinutes = challengeSelectedDuration
           dismiss()
         }
@@ -711,6 +715,7 @@ class GameScene: SKScene {
 //    createBall()
     setUpBox()
     setUpBtnTopLeft()
+    setUpBtnTopMiddle()
     setUpBtnTopRight()
 
     createTyre(tyreType: "tyreRed")
@@ -723,6 +728,7 @@ class GameScene: SKScene {
   override func didMove(to view: SKView) {
     motionManager = CMMotionManager()
     motionManager.startAccelerometerUpdates()
+//    print(UIColor(Color("Background")))
     self.backgroundColor = UIColor(Color("Background"))
     self.physicsWorld.gravity = .zero
     self.scaleMode = .aspectFit
@@ -739,7 +745,8 @@ class GameScene: SKScene {
     let screen = UIScreen.main.bounds
     let screenWidth = screen.size.width
     let shape = SKShapeNode()
-    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 53, width: screenWidth - 106, height: 220), cornerRadius: 20).cgPath
+//    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 53, width: screenWidth - 106, height: 220), cornerRadius: 20).cgPath
+    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 20, width: screenWidth - 106, height: 220), cornerRadius: 20).cgPath
     shape.path = shapePath
     //    shape.position = CGPoint(x: frame.midX, y: frame.midY)
 
@@ -747,21 +754,61 @@ class GameScene: SKScene {
     shape.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
     shape.physicsBody?.isDynamic = false
     shape.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
-    shape.strokeColor = UIColor(.black.opacity(0))
+//    shape.strokeColor = UIColor(.black.opacity(0))
     shape.lineWidth = 2
     addChild(shape)
   }
 
   private func setUpBtnTopLeft() {
-//    let screen = UIScreen.main.bounds
+    let screen = UIScreen.main.bounds
+    let screenWidth = screen.size.width
+    let screenHeight = screen.size.height
+
+    print("Top left screenHeight: \(screenHeight) screenWidth: \(screenWidth)")
+
+//    let screenHeight = self.scene!.size.height
+//    let screenWidth = self.scene!.size.width
+
+//    print(screenHeight)
+//    print(screenWidth)
+
     let btnTop = SKShapeNode()
-    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 16, y: self.frame.maxY - 112, width: 166, height: 30), cornerRadius: 20).cgPath
+//    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 16, y: self.frame.maxY - 112, width: 166, height: 30), cornerRadius: 20).cgPath
+
+//    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 16, y: screenHeight - 97, width: 80, height: 30), cornerRadius: 20).cgPath
+
+    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 16, y: screenHeight - 93, width: 80, height: 30), cornerRadius: 20).cgPath
 
     btnTop.path = shapePath
     btnTop.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
     btnTop.physicsBody?.isDynamic = false
     btnTop.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
 //    btnTop.strokeColor = UIColor(.black.opacity(0))
+    btnTop.lineWidth = 2
+    addChild(btnTop)
+  }
+
+  private func setUpBtnTopMiddle() {
+//    let screenHeight = self.scene!.size.height
+//    let screenWidth = self.scene!.size.width
+
+    let screen = UIScreen.main.bounds
+    let screenWidth = screen.size.width
+    let screenHeight = screen.size.height
+
+    print("Top right screenHeight: \(screenHeight) screenWidth: \(screenWidth)")
+
+    let btnTop = SKShapeNode()
+//    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 16, y: self.frame.maxY - 112, width: 166, height: 30), cornerRadius: 20).cgPath
+
+//    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 106, y: screenHeight - 97, width: 80, height: 30), cornerRadius: 20).cgPath
+
+    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 104, y: screenHeight - 93, width: 80, height: 30), cornerRadius: 20).cgPath
+
+    btnTop.path = shapePath
+    btnTop.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
+    btnTop.physicsBody?.isDynamic = false
+    btnTop.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
     btnTop.lineWidth = 2
     addChild(btnTop)
   }
@@ -769,7 +816,7 @@ class GameScene: SKScene {
   private func setUpBtnTopRight() {
 //    let screen = UIScreen.main.bounds
     let btnTop = SKShapeNode()
-    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.maxX - 66, y: self.frame.maxY - 120, width: 50, height: 45), cornerRadius: 20).cgPath
+    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.maxX - 66, y: self.frame.maxY - 100, width: 50, height: 45), cornerRadius: 20).cgPath
 
     btnTop.path = shapePath
     btnTop.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
@@ -780,56 +827,23 @@ class GameScene: SKScene {
     addChild(btnTop)
   }
 
-//  private func createBall() {
-//  public func createBall() {
-//    // Create shape node to use during mouse interaction
-//    let maskShapeTexture = SKTexture(imageNamed: "circle")
-////    let texture = SKTexture(imageNamed: "tyre")
-//    let texture = SKTexture(imageNamed: "tyreRedTEST")
-//    let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
-//    let mask = SKSpriteNode(texture: maskShapeTexture) //make a circular mask
-//    let ball = SKCropNode()
-//
-//    ball.maskNode = mask
-//    ball.addChild(pictureToMask)
-//    ball.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-//    ball.zPosition = 1
-//    ball.physicsBody = SKPhysicsBody(circleOfRadius: 25)
-//    ball.physicsBody?.allowsRotation = true
-//    ball.physicsBody?.linearDamping = 0.5
-//    ball.physicsBody?.isDynamic = true
-//    ball.physicsBody?.categoryBitMask = CollisionType.object.rawValue
-//    ball.physicsBody?.collisionBitMask = CollisionType.wall.rawValue
-//
-//    self.ball = ball
-//    self.addChild(self.ball)
-//  }
-
-  public func createTyre(tyreType: String) {
+  private func createTyre(tyreType: String) {
     // Create shape node to use during mouse interaction
     let maskShapeTexture = SKTexture(imageNamed: "circle")
-//    let texture = SKTexture(imageNamed: "tyre")
     let texture = SKTexture(imageNamed: tyreType)
     let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
     let mask = SKSpriteNode(texture: maskShapeTexture) //make a circular mask
-    let ball = SKCropNode()
-
-    ball.maskNode = mask
-    ball.addChild(pictureToMask)
-
+    let tyre = SKCropNode()
+    tyre.maskNode = mask
+    tyre.addChild(pictureToMask)
     let randomCGFloat = CGFloat.random(in: 1...100)
-
-    ball.position = CGPoint(x: self.frame.midX + randomCGFloat, y: self.frame.midY + randomCGFloat)
-    ball.zPosition = 1
-    ball.physicsBody = SKPhysicsBody(circleOfRadius: 25)
-    ball.physicsBody?.allowsRotation = true
-    ball.physicsBody?.linearDamping = 0.5
-    ball.physicsBody?.isDynamic = true
-    ball.physicsBody?.categoryBitMask = CollisionType.object.rawValue
-    ball.physicsBody?.collisionBitMask = CollisionType.wall.rawValue
-
-    self.ball = ball
-    self.addChild(self.ball)
+    tyre.position = CGPoint(x: self.frame.midX + randomCGFloat, y: self.frame.midY + randomCGFloat)
+    tyre.zPosition = 1
+    tyre.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+    tyre.physicsBody?.allowsRotation = true
+    tyre.physicsBody?.linearDamping = 0.5
+    tyre.physicsBody?.isDynamic = true
+    addChild(tyre)
   }
 
   override func update(_ currentTime: TimeInterval) {
@@ -896,61 +910,86 @@ struct ContentView: View {
 
   // WIP
   var scene: SKScene {
-//    //      let scene = GameScene(sceneSize: CGSize(width: 390, height: 700))
-//
-//    //    let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: 800))
     let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
-//
-//    let scene = GameScene()
     scene.scaleMode = .resizeFill
+    scene.backgroundColor = UIColor(Color("Background"))
+
+//    print(UIScreen.main.bounds.size.height)
+
     return scene
   }
 
-//  let scene: GameScene = {
-//      let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: 800))
-//    scene.scaleMode = .resizeFill
-//
-//      return scene
-//  }()
-
-//  let scene: GameScene = {
-//      let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: 800))
-//    scene.scaleMode = .resizeFill
-//
-//      return scene
-//  }()
-  // WIP
 
   var body: some View {
     ZStack {
       // WIP
       SpriteView(scene: scene)
-      //        .frame(maxWidth: .infinity, maxHeight: .infinity)
-      //        .frame(width: screenWidth, height: screenHeight)
+//              .frame(maxWidth: .infinity, maxHeight: .infinity)
+//              .frame(width: screenWidth, height: screenHeight)
+        .frame(maxHeight: UIScreen.main.bounds.size.height)
 
       //                  .frame(width: 390, height: 700)
-        .ignoresSafeArea()
+//        .ignoresSafeArea()
       // WIP
 
+//      VStack(spacing: 10) {
       VStack(spacing: 10) {
         // TOP NAV SECTION - total stars, total session time and shop
         HStack {
+//          HStack {
+//            starIcon().padding(.leading, 10)
+//            Text("\(userStars)")
+//              .foregroundColor(Color("Text"))
+//              .padding(.trailing, 10)
+//          }.font(.system(size: 20))
+//            .btnTextPanelFormat()
+
+          // WIP
           HStack {
-            starIcon().padding(.leading, 10)
+            starIcon()
+//              .padding(.leading, 10)
             Text("\(userStars)")
               .foregroundColor(Color("Text"))
-              .padding(.trailing, 10)
-          }.font(.system(size: 20))
-            .btnTextPanelFormat()
+//              .padding(.trailing, 10)
+          }
+          .font(.system(size: 20))
+          .frame(width: 80, height: 30)
+          .background(Color("BackgroundPanel"))
+          .overlay(
+            RoundedRectangle(cornerRadius: 16)
+              .stroke(Color(userBackground), lineWidth: 2)
+          )
+          .clipShape(RoundedRectangle(cornerRadius: 16))
+//          .position(CGPoint(x: 0, y: 0))
+
           HStack {
             Text("\(userTotalSessionTime)")
-              .padding(.leading, 10)
+//              .padding(.leading, 10)
             Image(systemName: "clock")
               .foregroundColor(Color("Text"))
-              .padding(.trailing, 10)
-          }.font(.system(size: 20))
-            .btnTextPanelFormat()
+//              .padding(.trailing, 10)
+          }
+          .font(.system(size: 20))
+          .frame(width: 80, height: 30)
+          .background(Color("BackgroundPanel"))
+          .overlay(
+            RoundedRectangle(cornerRadius: 16)
+              .stroke(Color(userBackground), lineWidth: 2)
+          )
+          .clipShape(RoundedRectangle(cornerRadius: 16))
+          // WIP
+
+
+//          HStack {
+//            Text("\(userTotalSessionTime)")
+//              .padding(.leading, 10)
+//            Image(systemName: "clock")
+//              .foregroundColor(Color("Text"))
+//              .padding(.trailing, 10)
+//          }.font(.system(size: 20))
+//            .btnTextPanelFormat()
           Spacer()
+
           Button {
 //            scene.createBall() // works but wip
             showingStore.toggle()
@@ -985,13 +1024,17 @@ struct ContentView: View {
       }
       .padding()
       .padding(.bottom, 3)
+      .padding(.top, 40)
 
       if showingSessionTimerWarning {
         SessionTimerDialog(isActive: $showingSessionTimerWarning, appState: $appState) {
           showingSessionTimerWarning = false
         }
+
+
       }
-    }
+
+    }.ignoresSafeArea()
   }
 }
 
