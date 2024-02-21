@@ -16,7 +16,9 @@ struct ChallengesDialog: View {
   let rewardTyres: Int
   let rewardStars: Int
   let action: () -> ()
+
   @State private var offset: CGFloat = 1000
+  @AppStorage("userBackground") var userBackground: Color = .gray
 
   var body: some View {
     ZStack {
@@ -31,7 +33,7 @@ struct ChallengesDialog: View {
               .frame(width: 90, height: 90)
             Text("\(rewardTyres)")
               .padding(10)
-              .background(.indigo)
+              .background(userBackground)
               .foregroundColor(.white)
               .clipShape(Circle())
               .offset(x: 50, y: -40)
@@ -42,7 +44,7 @@ struct ChallengesDialog: View {
               .foregroundColor(.yellow)
             Text("\(rewardStars)")
               .padding(10)
-              .background(.indigo)
+              .background(userBackground)
               .foregroundColor(.white)
               .clipShape(Circle())
               .offset(x: 40, y: -40)
@@ -94,8 +96,6 @@ struct ChallengesDialog: View {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
               .foregroundColor(.green)
-//              .foregroundColor(.yellow)
-
             Text("Select")
               .textCase(.uppercase)
               .font(.system(size: 20, weight: .bold))
@@ -103,9 +103,7 @@ struct ChallengesDialog: View {
               .padding(10)
           }
         }
-
         Button {
-//          action()
           close()
         } label: {
           ZStack {

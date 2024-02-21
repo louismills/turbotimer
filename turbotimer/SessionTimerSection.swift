@@ -22,8 +22,9 @@ struct sessionTimerSection: View {
   @AppStorage("userStars") var userStars = 0
   @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
 
-  @AppStorage("userBackground") var userBackground: Color = .red
+  @AppStorage("userBackground") var userBackground: Color = .gray
 
+  let scene: GameScene
 
   var body: some View {
     // WIP
@@ -71,9 +72,13 @@ struct sessionTimerSection: View {
             if sessionRunning {
               Text("Progress")
                 .foregroundStyle(.gray)
-              ProgressView(value: appState.currentTimeCountdown, total: Double(appState.workMinutes * 60))
-              //              ProgressView(value: appState.currentTimeCountdown, total: Double(userSessionTime * 60))
-                .progressViewStyle(MyProgressViewStyle(myColor: Color.green))
+              if appState.mode == .session {
+                ProgressView(value: appState.currentTimeCountdown, total: Double(appState.workMinutes * 60))
+                  .progressViewStyle(MyProgressViewStyle(myColor: Color.green))
+              } else {
+                ProgressView(value: appState.currentTimeCountdown, total: Double(appState.restMinutes * 60))
+                  .progressViewStyle(MyProgressViewStyle(myColor: Color.green))
+              }
             }
           }
 
@@ -81,6 +86,7 @@ struct sessionTimerSection: View {
 
           // BOTTOM RIGHT - Start / Stop button
           Button {
+            scene.createTyre(tyreType: "tyreBlue") // Creates a new tyre!
             if timer == nil {
               timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ _ in
                 appState.next()
@@ -100,9 +106,7 @@ struct sessionTimerSection: View {
               Text("START")
               Spacer()
             } else {
-//              Spacer()
               Text("STOP")
-//              Spacer()
             }
           }
           .appBtn(color: !sessionRunning ? .green : Color(UIColor.lightGray).opacity(0.4))
@@ -113,7 +117,6 @@ struct sessionTimerSection: View {
     }
     .padding()
     .frame(maxHeight: 220)
-
     .frame(width: screenWidth - 106)
     .background(Color("BackgroundPanel"))
     .overlay(

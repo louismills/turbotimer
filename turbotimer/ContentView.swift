@@ -19,7 +19,6 @@ struct AppBtn: ViewModifier {
 
   func body(content: Content) -> some View {
     content
-//      .frame(minWidth: sessionRunning ? 80 : 250, minHeight: 45)
       .frame(minWidth: 80, minHeight: 45)
       .background(color)
       .foregroundColor(.white)
@@ -28,7 +27,7 @@ struct AppBtn: ViewModifier {
 }
 
 struct BtnTextPanelFormat: ViewModifier {
-  @AppStorage("userBackground") var userBackground: Color = .red
+  @AppStorage("userBackground") var userBackground: Color = .gray
 
   func body(content: Content) -> some View {
     content
@@ -138,7 +137,8 @@ struct buyShopBtn: View {
         .foregroundColor(Color("Text"))
         .padding(.leading, 10)
       starIcon()
-    }.btnTextFormat()
+    }
+    .btnTextFormat()
   }
 }
 
@@ -177,10 +177,10 @@ struct challengeConfig: View {
 
   @Binding var appState: AppState
 
-//  @State var timer: Timer? = nil
+  //  @State var timer: Timer? = nil
 
   @AppStorage("userSessionTime") var userSessionTime = 0
-  @AppStorage("userBackground") var userBackground: Color = .red
+  @AppStorage("userBackground") var userBackground: Color = .gray
   @AppStorage("challengeSelected") var challengeSelected = false
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
   @AppStorage("challengeSelectedRewardStars") var challengeSelectedRewardStars = 0
@@ -300,6 +300,18 @@ struct vehicleConfig: View {
   }
 }
 
+// wip
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
+}
+// wip
+
 struct consumableConfig: View {
   @Binding var appState: AppState
 
@@ -307,72 +319,109 @@ struct consumableConfig: View {
   @AppStorage("userHeroColour") var userHeroColour: Color = .yellow
   @AppStorage("userMultiplier") var userMultiplier: Double = 0
   @AppStorage("userImage") var userImage = "car1"
-  @AppStorage("userConsumables") var userConsumables = [UserConsumables(id: 0, bought: false, cost: 1, inventory: 0),
-                                                        UserConsumables(id: 1, bought: false, cost: 1, inventory: 0)]
+  @AppStorage("userConsumables") var userConsumables = [UserConsumables(id: 0, isActive: false, cost: 1, inventory: 0),
+                                                        UserConsumables(id: 1, isActive: false, cost: 1, inventory: 0)]
+
+  //  @State private var timeRemaining = 3600
+  @State private var timeRemaining = 10
+  @State private var timerIsActive = false
+  let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
 
   var consumable: consumable
 
   var body: some View {
     VStack {
       Button(action: {
-        if userStars >= consumable.cost && userConsumables[consumable.consumable].bought == false {
+        if userStars >= consumable.cost && userConsumables[consumable.consumable].inventory < 10 {
           userStars -= consumable.cost
-          userConsumables[consumable.consumable].bought = true
-          userMultiplier = consumable.multiplier
-        }
-        if userConsumables[consumable.consumable].bought == true {
-          userMultiplier = consumable.multiplier
-          userImage = consumable.image
+          userConsumables[consumable.consumable].inventory += 1
         }
       }) {
         ZStack {
-          Image(consumable.image)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .padding()
-          Text("+\(Int(consumable.multiplier * 100))%")
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(Color("Background"))
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .offset(x: -50, y: -70)
-          if userConsumables[consumable.consumable].bought == false {
-            buyShopBtn(cost: consumable.cost).offset(x: 40, y: -70)
-          }
-          else {
-            if userMultiplier == consumable.multiplier {
-              equippedBtn().offset(x: 50, y: -70)
+        Image(consumable.image)
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .padding()
+          HStack {
+            Text("+\(Int(consumable.multiplier * 100))%")
+              .padding(.horizontal, 10)
+              .padding(.vertical, 5)
+              .background(Color("Background"))
+              .clipShape(RoundedCorner(radius: 20, corners: [.bottomRight, .topRight]))
+            Spacer()
+            HStack {
+              Text("\(consumable.cost)")
+              starIcon()
             }
-          }
+              .padding(.horizontal, 10)
+              .padding(.vertical, 5)
+              .background(Color("Background"))
+              .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .bottomLeft]))
+          }.offset(y: -70)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(UIColor.lightGray).opacity(0.4))
         .clipShape(RoundedRectangle(cornerRadius: 20))
-
       }
-      Text("\(consumable.inventory)")
+      Text("Qty: \(userConsumables[consumable.consumable].inventory)")
       Button(action: {
-        userConsumables[consumable.consumable].inventory -= 1
-        print(consumable.inventory)
+        if userConsumables[consumable.consumable].inventory > 0 && userConsumables[consumable.consumable].isActive == false {
+          userConsumables[consumable.consumable].inventory -= 1
+          userConsumables[consumable.consumable].isActive = true
+          userMultiplier = consumable.multiplier
+
+        }
       }) {
-        if consumable.inventory > 0 {
-          Text("Activate")
+        if userConsumables[consumable.consumable].isActive {
+          ZStack {
+            ProgressView(value: progress()).progressViewStyle(MyProgressViewStyle(myColor: Color.green))
+            Text(formattedTime()).foregroundStyle(Color("Text"))
+          }
         } else {
-          Text("Buy")
+          Spacer()
+          Text("Activate")
+          Spacer()
+        }
+      }
+      .disabled(userConsumables[consumable.consumable].inventory == 0 && userConsumables[consumable.consumable].isActive == false)
+      .frame(maxWidth: .infinity, maxHeight: 40)
+      .fontWeight(.heavy)
+      .background(.green)
+      .clipShape(RoundedRectangle(cornerRadius: 20))
+    }
+    .onReceive(timer) { _ in
+      if userConsumables[consumable.consumable].isActive {
+        if timeRemaining > 0 {
+          timeRemaining -= 1
+        } else {
+          userConsumables[consumable.consumable].isActive = false
+//          timeRemaining = 3600
+          timeRemaining = 10
         }
       }
     }
     .buttonStyle(PlainButtonStyle())
 
   }
+  func progress() -> Double {
+    //          max(0.0, 1.0 - Double(timeRemaining) / 3600.0)
+    max(0.0, 1.0 - Double(timeRemaining) / 10.0)
+  }
+  func formattedTime() -> String {
+    let minutes = timeRemaining / 60
+    let seconds = timeRemaining % 60
+    return String(format: "%02d:%02d", minutes, seconds)
+  }
 }
+
+
 
 struct backgroundConfig: View {
   @Binding var appState: AppState
 
   @AppStorage("userStars") var userStars = 0
-  @AppStorage("userBackground") var userBackground: Color = .red
-  //  @AppStorage("userBackground") var userBackground = "bg1"
+  @AppStorage("userBackground") var userBackground: Color = .gray
   @AppStorage("userBackgrounds") var userBackgrounds = [UserBackgrounds(id: 0, bought: true, cost: 1),
                                                         UserBackgrounds(id: 1, bought: false, cost: 1),
                                                         UserBackgrounds(id: 2, bought: false, cost: 1),
@@ -389,11 +438,9 @@ struct backgroundConfig: View {
         if userStars >= background.cost && userBackgrounds[background.background].bought == false {
           userStars -= background.cost
           userBackgrounds[background.background].bought = true
-          //          userBackground = background.image
           userBackground = background.colour
         }
         if userBackgrounds[background.background].bought == true {
-          //          userBackground = background.image
           userBackground = background.colour
         }
 
@@ -511,8 +558,7 @@ struct SheetStoreView: View {
   @State private var showingPurchases = false
 
   @AppStorage("userDestination") var userDestination = ""
-  //  @AppStorage("userBackground") var userBackground = "bg1"
-  @AppStorage("userBackground") var userBackground: Color = .red
+  @AppStorage("userBackground") var userBackground: Color = .gray
   @AppStorage("userStars") var userStars = 0
 
   var body: some View {
@@ -541,68 +587,72 @@ struct SheetStoreView: View {
 
         ScrollView {
           HStack {
-            starIcon().padding(.leading, 10)
-            Text("\(userStars)")
-              .foregroundColor(Color("Text"))
+            //            Text("\(userStars)")
+            //              .foregroundColor(Color("Text"))
+            //            starIcon()
+            //              .padding(.leading, 10)
+
             // In store purchases button
             Button {
               showingPurchases.toggle()
             } label: {
-              Image(systemName: "plus.circle.fill").foregroundColor(.green)
+              Image(systemName: "plus.circle.fill").foregroundColor(.green).font(.system(size: 23))
+              Text("\(userStars)")
+                .foregroundColor(Color("Text"))
+              starIcon()
             }
           }.font(.system(size: 20))
             .btnTextPanelFormat()
-
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding([.leading, .top], 20)
 
           VStack() {
             // VEHICLES
-            VStack() {
-              Text("Effects")
-                .foregroundColor(Color("Text"))
-                .font(.title2)
-                .fontWeight(.bold)
-                .frame(maxWidth: .infinity, alignment: .leading)
-              Text("Speed up your trophy collection with better vehicles!")
-                .foregroundColor(Color("Text"))
-                .frame(maxWidth: .infinity, alignment: .leading)
-              GeometryReader { geo in
-                Grid(alignment: .leading, horizontalSpacing: 0, verticalSpacing: 0) {
-                  GridRow {
-                    vehicleConfig(appState: $appState, store: appState.shops[0])
-                      .padding(.trailing, 10)
-                    vehicleConfig(appState: $appState, store: appState.shops[1])
-                      .padding(.leading, 10)
-                  }
-                  .padding(.bottom, 10)
-                  .frame(width: geo.size.width / 2, height: geo.size.height / 2)
-                  GridRow {
-                    vehicleConfig(appState: $appState, store: appState.shops[2])
-                      .padding(.trailing, 10)
-                    vehicleConfig(appState: $appState, store: appState.shops[3])
-                      .padding(.leading, 10)
-                  }
-                  .padding(.bottom, 10)
-                  .frame(width: geo.size.width / 2, height: geo.size.height / 2)
-                }
-              }.frame(height: 400)
-            }
-            .padding()
-            .background(Color("BackgroundPanel"))
-            .overlay(
-              RoundedRectangle(cornerRadius: 16)
-              //                .stroke(Color("Text"), lineWidth: 2)
-                .stroke(Color(userBackground), lineWidth: 2)
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-
-            HStack {
-            }.padding(10)
+            //            VStack() {
+            //              Text("Effects")
+            //                .foregroundColor(Color("Text"))
+            //                .font(.title2)
+            //                .fontWeight(.bold)
+            //                .frame(maxWidth: .infinity, alignment: .leading)
+            //              Text("Speed up your trophy collection with better vehicles!")
+            //                .foregroundColor(Color("Text"))
+            //                .frame(maxWidth: .infinity, alignment: .leading)
+            //              GeometryReader { geo in
+            //                Grid(alignment: .leading, horizontalSpacing: 0, verticalSpacing: 0) {
+            //                  GridRow {
+            //                    vehicleConfig(appState: $appState, store: appState.shops[0])
+            //                      .padding(.trailing, 10)
+            //                    vehicleConfig(appState: $appState, store: appState.shops[1])
+            //                      .padding(.leading, 10)
+            //                  }
+            //                  .padding(.bottom, 10)
+            //                  .frame(width: geo.size.width / 2, height: geo.size.height / 2)
+            //                  GridRow {
+            //                    vehicleConfig(appState: $appState, store: appState.shops[2])
+            //                      .padding(.trailing, 10)
+            //                    vehicleConfig(appState: $appState, store: appState.shops[3])
+            //                      .padding(.leading, 10)
+            //                  }
+            //                  .padding(.bottom, 10)
+            //                  .frame(width: geo.size.width / 2, height: geo.size.height / 2)
+            //                }
+            //              }.frame(height: 400)
+            //            }
+            //            .padding()
+            //            .background(Color("BackgroundPanel"))
+            //            .overlay(
+            //              RoundedRectangle(cornerRadius: 16)
+            //              //                .stroke(Color("Text"), lineWidth: 2)
+            //                .stroke(Color(userBackground), lineWidth: 2)
+            //            )
+            //            .clipShape(RoundedRectangle(cornerRadius: 16))
+            //
+            //            HStack {
+            //            }.padding(10)
 
             // BOOSTS
             VStack {
-              Text("Powerful Boosts")
+              Text("Boosts")
                 .foregroundColor(Color("Text"))
                 .font(.title2)
                 .fontWeight(.bold)
@@ -619,13 +669,12 @@ struct SheetStoreView: View {
                   .padding(4)
                   .frame(width: geo.size.width / 2, height: geo.size.height)
                 }
-              }.frame(height: 250)
+              }.frame(height: 280)
             }
             .padding()
             .background(Color("BackgroundPanel"))
             .overlay(
               RoundedRectangle(cornerRadius: 16)
-              //                .stroke(Color("Text"), lineWidth: 2)
                 .stroke(Color(userBackground), lineWidth: 2)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -665,7 +714,6 @@ struct SheetStoreView: View {
             .background(Color("BackgroundPanel"))
             .overlay(
               RoundedRectangle(cornerRadius: 16)
-              //                .stroke(Color("Text"), lineWidth: 2)
                 .stroke(Color(userBackground), lineWidth: 2)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -676,7 +724,7 @@ struct SheetStoreView: View {
         .frame(maxWidth: .infinity)
       }
       if showingPurchases {
-        PurchasesDialog(isActive: $showingPurchases, message1: "50", buttonTitle1: "Buy for £0.99", message2: "225", buttonTitle2: "Buy for £2.99") {
+        PurchasesDialog(isActive: $showingPurchases) {
           showingPurchases = false
           dismiss()
         }
@@ -693,14 +741,10 @@ enum CollisionType: UInt32 {
 }
 
 class GameScene: SKScene {
-//class GameScene: SKScene, ObservableObject { // wip
-//  @State var timer: Timer? = nil // wip
-
   private var motionManager: CMMotionManager!
-
   private var ball: SKCropNode!
 
-  @AppStorage("userBackground") var userBackground: Color = .red
+  @AppStorage("userBackground") var userBackground: Color = .gray
 
   //  init(sceneSize: CGSize) {
   //    super.init(size: sceneSize)
@@ -712,28 +756,26 @@ class GameScene: SKScene {
 
   override func sceneDidLoad() {
     setUpBounds()
-//    createBall()
     setUpBox()
     setUpBtnTopLeft()
     setUpBtnTopMiddle()
     setUpBtnTopRight()
 
-    createTyre(tyreType: "tyreRed")
-    createTyre(tyreType: "tyreBlue")
-    createTyre(tyreType: "tyreYellow")
-    createTyre(tyreType: "tyreWhite")
-    createTyre(tyreType: "tyreGreen")
+//    createTyre(tyreType: "tyreRed")
+//    createTyre(tyreType: "tyreBlue")
+//    createTyre(tyreType: "tyreYellow")
+//    createTyre(tyreType: "tyreWhite")
+//    createTyre(tyreType: "tyreGreen")
   }
 
   override func didMove(to view: SKView) {
     motionManager = CMMotionManager()
     motionManager.startAccelerometerUpdates()
-//    print(UIColor(Color("Background")))
+    //    print(UIColor(Color("Background")))
     self.backgroundColor = UIColor(Color("Background"))
     self.physicsWorld.gravity = .zero
     self.scaleMode = .aspectFit
   }
-
 
   private func setUpBounds() {
     self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
@@ -745,8 +787,8 @@ class GameScene: SKScene {
     let screen = UIScreen.main.bounds
     let screenWidth = screen.size.width
     let shape = SKShapeNode()
-//    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 53, width: screenWidth - 106, height: 220), cornerRadius: 20).cgPath
-    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 20, width: screenWidth - 106, height: 220), cornerRadius: 20).cgPath
+    //    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 53, width: screenWidth - 106, height: 220), cornerRadius: 20).cgPath
+    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 53, width: screenWidth - 106, height: 220), cornerRadius: 20).cgPath
     shape.path = shapePath
     //    shape.position = CGPoint(x: frame.midX, y: frame.midY)
 
@@ -754,81 +796,54 @@ class GameScene: SKScene {
     shape.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
     shape.physicsBody?.isDynamic = false
     shape.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
-//    shape.strokeColor = UIColor(.black.opacity(0))
+    shape.strokeColor = UIColor(.black.opacity(0))
     shape.lineWidth = 2
     addChild(shape)
   }
 
   private func setUpBtnTopLeft() {
     let screen = UIScreen.main.bounds
-    let screenWidth = screen.size.width
     let screenHeight = screen.size.height
-
-    print("Top left screenHeight: \(screenHeight) screenWidth: \(screenWidth)")
-
-//    let screenHeight = self.scene!.size.height
-//    let screenWidth = self.scene!.size.width
-
-//    print(screenHeight)
-//    print(screenWidth)
-
     let btnTop = SKShapeNode()
-//    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 16, y: self.frame.maxY - 112, width: 166, height: 30), cornerRadius: 20).cgPath
-
-//    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 16, y: screenHeight - 97, width: 80, height: 30), cornerRadius: 20).cgPath
-
     let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 16, y: screenHeight - 93, width: 80, height: 30), cornerRadius: 20).cgPath
 
     btnTop.path = shapePath
     btnTop.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
     btnTop.physicsBody?.isDynamic = false
     btnTop.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
-//    btnTop.strokeColor = UIColor(.black.opacity(0))
+    btnTop.strokeColor = UIColor(.black.opacity(0))
     btnTop.lineWidth = 2
     addChild(btnTop)
   }
 
   private func setUpBtnTopMiddle() {
-//    let screenHeight = self.scene!.size.height
-//    let screenWidth = self.scene!.size.width
-
     let screen = UIScreen.main.bounds
-    let screenWidth = screen.size.width
     let screenHeight = screen.size.height
-
-    print("Top right screenHeight: \(screenHeight) screenWidth: \(screenWidth)")
-
     let btnTop = SKShapeNode()
-//    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 16, y: self.frame.maxY - 112, width: 166, height: 30), cornerRadius: 20).cgPath
-
-//    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 106, y: screenHeight - 97, width: 80, height: 30), cornerRadius: 20).cgPath
-
     let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 104, y: screenHeight - 93, width: 80, height: 30), cornerRadius: 20).cgPath
 
     btnTop.path = shapePath
     btnTop.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
     btnTop.physicsBody?.isDynamic = false
     btnTop.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
+    btnTop.strokeColor = UIColor(.black.opacity(0))
     btnTop.lineWidth = 2
     addChild(btnTop)
   }
 
   private func setUpBtnTopRight() {
-//    let screen = UIScreen.main.bounds
     let btnTop = SKShapeNode()
     let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.maxX - 66, y: self.frame.maxY - 100, width: 50, height: 45), cornerRadius: 20).cgPath
-
     btnTop.path = shapePath
     btnTop.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
     btnTop.physicsBody?.isDynamic = false
     btnTop.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
-//    btnTop.strokeColor = UIColor(.black.opacity(0))
+    btnTop.strokeColor = UIColor(.black.opacity(0))
     btnTop.lineWidth = 2
     addChild(btnTop)
   }
 
-  private func createTyre(tyreType: String) {
-    // Create shape node to use during mouse interaction
+  func createTyre(tyreType: String) {
     let maskShapeTexture = SKTexture(imageNamed: "circle")
     let texture = SKTexture(imageNamed: tyreType)
     let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
@@ -851,17 +866,12 @@ class GameScene: SKScene {
     if let accelerometerData = motionManager.accelerometerData {
       physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.x * 7, dy: accelerometerData.acceleration.y * 7)
     }
-// unlimited balls spawn
-//    if timer == nil {
-//      createBall()
-//    }
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     guard let touch = touches.first else { return }
     let location = touch.location(in: self)
     let maskShapeTexture = SKTexture(imageNamed: "circle")
-//    let texture = SKTexture(imageNamed: "tyre")
     let texture = SKTexture(imageNamed: "tyreRed")
     let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
     let mask = SKSpriteNode(texture: maskShapeTexture) //make a circular mask
@@ -878,7 +888,7 @@ class GameScene: SKScene {
 
     addChild(ball)
 
-//    createBall()
+    //    createBall()
   }
 }
 // WIP
@@ -889,15 +899,19 @@ struct ContentView: View {
 
   @Environment(\.dismiss) var dismiss
 
-  @State var appState = AppState {
-    AudioServicesPlaySystemSound(1032)
-  }
+  //  @State var appState = AppState {
+  //    AudioServicesPlaySystemSound(1032)
+  //  }
+
+  //  @State var appState = AppState()
+
+  @State var appState = AppState(scene: GameScene())
 
   @AppStorage("userStars") var userStars = 0
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
   @AppStorage("userSessionTime") var userSessionTime = 0
   @AppStorage("userDestination") var userDestination = ""
-  @AppStorage("userBackground") var userBackground: Color = .red
+  @AppStorage("userBackground") var userBackground: Color = .gray
   @AppStorage("userImage") var userImage = "car1"
 
   @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
@@ -906,92 +920,64 @@ struct ContentView: View {
   @State private var showingStore = false
   @State var sessionRunning = false
 
-
-
-  // WIP
-  var scene: SKScene {
+  @State var gameScene: GameScene = {
     let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
     scene.scaleMode = .resizeFill
     scene.backgroundColor = UIColor(Color("Background"))
 
-//    print(UIScreen.main.bounds.size.height)
-
     return scene
-  }
-
+  }()
 
   var body: some View {
     ZStack {
       // WIP
-      SpriteView(scene: scene)
-//              .frame(maxWidth: .infinity, maxHeight: .infinity)
-//              .frame(width: screenWidth, height: screenHeight)
+      SpriteView(scene: gameScene)
+      //              .frame(maxWidth: .infinity, maxHeight: .infinity)
+      //              .frame(width: screenWidth, height: screenHeight)
         .frame(maxHeight: UIScreen.main.bounds.size.height)
 
       //                  .frame(width: 390, height: 700)
-//        .ignoresSafeArea()
+      //        .ignoresSafeArea()
       // WIP
 
-//      VStack(spacing: 10) {
       VStack(spacing: 10) {
         // TOP NAV SECTION - total stars, total session time and shop
         HStack {
-//          HStack {
-//            starIcon().padding(.leading, 10)
-//            Text("\(userStars)")
-//              .foregroundColor(Color("Text"))
-//              .padding(.trailing, 10)
-//          }.font(.system(size: 20))
-//            .btnTextPanelFormat()
-
-          // WIP
           HStack {
-            starIcon()
-//              .padding(.leading, 10)
             Text("\(userStars)")
               .foregroundColor(Color("Text"))
-//              .padding(.trailing, 10)
+            starIcon()
           }
+          .padding(10)
           .font(.system(size: 20))
-          .frame(width: 80, height: 30)
+          .frame(height: 30)
+//          .frame(width: 80, height: 30)
           .background(Color("BackgroundPanel"))
           .overlay(
             RoundedRectangle(cornerRadius: 16)
               .stroke(Color(userBackground), lineWidth: 2)
           )
           .clipShape(RoundedRectangle(cornerRadius: 16))
-//          .position(CGPoint(x: 0, y: 0))
+
 
           HStack {
             Text("\(userTotalSessionTime)")
-//              .padding(.leading, 10)
             Image(systemName: "clock")
               .foregroundColor(Color("Text"))
-//              .padding(.trailing, 10)
           }
+          .padding(10)
           .font(.system(size: 20))
-          .frame(width: 80, height: 30)
+          .frame(height: 30)
+//          .frame(width: 80, height: 30)
           .background(Color("BackgroundPanel"))
           .overlay(
             RoundedRectangle(cornerRadius: 16)
               .stroke(Color(userBackground), lineWidth: 2)
           )
           .clipShape(RoundedRectangle(cornerRadius: 16))
-          // WIP
-
-
-//          HStack {
-//            Text("\(userTotalSessionTime)")
-//              .padding(.leading, 10)
-//            Image(systemName: "clock")
-//              .foregroundColor(Color("Text"))
-//              .padding(.trailing, 10)
-//          }.font(.system(size: 20))
-//            .btnTextPanelFormat()
           Spacer()
-
           Button {
-//            scene.createBall() // works but wip
+            self.gameScene.createTyre(tyreType: "tyreRed")
             showingStore.toggle()
           } label: {
             Image(systemName: "cart")
@@ -1004,7 +990,7 @@ struct ContentView: View {
         }
         // END OF TOP NAV SECTION
         Spacer()
-        sessionTimerSection(appState: $appState)
+        sessionTimerSection(appState: $appState, scene: gameScene)
           .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
             if newPhase == .active {
               print("Active")
@@ -1022,18 +1008,15 @@ struct ContentView: View {
             UIApplication.shared.isIdleTimerDisabled = true
           }
       }
-      .padding()
-      .padding(.bottom, 3)
-      .padding(.top, 40)
+      .padding(.bottom, 53)
+      .padding(.top, 55)
+      .padding(.horizontal, 15)
 
       if showingSessionTimerWarning {
         SessionTimerDialog(isActive: $showingSessionTimerWarning, appState: $appState) {
           showingSessionTimerWarning = false
         }
-
-
       }
-
     }.ignoresSafeArea()
   }
 }

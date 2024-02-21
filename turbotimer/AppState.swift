@@ -34,7 +34,7 @@ struct UserBackgrounds: Identifiable, Codable{
 
 struct consumable {
   var consumable: Int
-  var bought: Bool
+  var isActive: Bool
   var cost: Int
   var inventory: Int
   var multiplier: Double
@@ -44,13 +44,13 @@ struct consumable {
 
 struct UserConsumables: Identifiable, Codable{
   let id : Int
-  var bought : Bool
+  var isActive : Bool
   var cost : Int
   var inventory: Int
 
-  init(id: Int, bought: Bool, cost: Int, inventory: Int) {
+  init(id: Int, isActive: Bool, cost: Int, inventory: Int) {
     self.id = id
-    self.bought = bought
+    self.isActive = isActive
     self.cost = cost
     self.inventory = inventory
   }
@@ -132,13 +132,13 @@ extension Color {
     self.init(uiColor: platformColor)
   }
 }
-#elseif os(macOS)
-typealias PlatformColor = NSColor
-extension Color {
-  init(platformColor: PlatformColor) {
-    self.init(nsColor: platformColor)
-  }
-}
+//#elseif os(macOS)
+//typealias PlatformColor = NSColor
+//extension Color {
+//  init(platformColor: PlatformColor) {
+//    self.init(nsColor: platformColor)
+//  }
+//}
 #endif
 
 struct AppState {
@@ -159,16 +159,16 @@ struct AppState {
                shop(shop: 3, bought: false, cost: 10, multiplier: 0.1, image: "car4"),
   ]
 
-  var consumables = [consumable(consumable: 0, bought: false, cost: 5, inventory: 0, multiplier: 0.3, duration: 30, image: "fuelcan"),
-                     consumable(consumable: 1, bought: false, cost: 10, inventory: 0, multiplier: 0.75, duration: 15, image: "tyre"),
+  var consumables = [consumable(consumable: 0, isActive: false, cost: 15, inventory: 0, multiplier: 0.3, duration: 60, image: "fuelcan"),
+                     consumable(consumable: 1, isActive: false, cost: 25, inventory: 0, multiplier: 0.75, duration: 60, image: "car1"),
   ]
 
-  var backgrounds = [background(background: 0, bought: true, cost: 1, colour: .white),
-                     background(background: 1, bought: false, cost: 1, colour: .yellow),
-                     background(background: 2, bought: false, cost: 1, colour: .red),
-                     background(background: 3, bought: false, cost: 1, colour: .purple),
-                     background(background: 4, bought: false, cost: 1, colour: .blue),
-                     background(background: 5, bought: false, cost: 1, colour: .green),
+  var backgrounds = [background(background: 0, bought: true, cost: 10, colour: .gray),
+                     background(background: 1, bought: false, cost: 10, colour: .yellow),
+                     background(background: 2, bought: false, cost: 10, colour: .red),
+                     background(background: 3, bought: false, cost: 10, colour: .purple),
+                     background(background: 4, bought: false, cost: 10, colour: .blue),
+                     background(background: 5, bought: false, cost: 10, colour: .green),
   ]
 
   var workMinutes: Int = 5 {
@@ -191,8 +191,20 @@ struct AppState {
 
   var currentTime: Int
 
-  init(playSound: @escaping () -> Void) {
+  let scene: GameScene
+
+//  init(playSound: @escaping () -> Void) {
+//    self.currentTime = workMinutes * 60
+//  }
+
+//  init() {
+//    self.currentTime = workMinutes * 60
+//    self.scene = scene
+//  }
+
+  init(scene: GameScene) {
     self.currentTime = workMinutes * 60
+    self.scene = scene
   }
 
   var currentTimeDisplay: String {
@@ -233,6 +245,7 @@ struct AppState {
       sessionStars = 0
       // Create new tyre
       print("created new tyre")
+      scene.createTyre(tyreType: "tyreYellow")
     }
 
     switch(mode) {
