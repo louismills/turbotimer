@@ -24,6 +24,8 @@ struct sessionTimerSection: View {
 
   @AppStorage("userBackground") var userBackground: Color = .gray
 
+  @AppStorage("challengeSelectedRewardTyresType") var challengeSelectedRewardTyresType = ""
+
   let scene: GameScene
 
   var body: some View {
@@ -63,9 +65,9 @@ struct sessionTimerSection: View {
                 .foregroundColor(.white)
                 .font(.title)
             }
-            .settingBtnTextFormat()
+            .btnStoreFormat()
             .fullScreenCover(isPresented: $showingSettings) {
-              SheetChallengesView(appState: $appState)
+              ChallengesView(appState: $appState)
             }
           }
           VStack (alignment: .leading) {
@@ -86,10 +88,13 @@ struct sessionTimerSection: View {
 
           // BOTTOM RIGHT - Start / Stop button
           Button {
-            scene.createTyre(tyreType: "tyreBlue") // Creates a new tyre!
             if timer == nil {
               timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ _ in
                 appState.next()
+                if appState.currentTime == 0 && appState.mode == .session {
+//                  scene.createTyre(tyreType: "tyreBlue") // dynamic based on challenge selected
+                  scene.createTyre(tyreType: challengeSelectedRewardTyresType)
+                }
               }
               sessionRunning = true
             }

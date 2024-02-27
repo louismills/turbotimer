@@ -144,7 +144,6 @@ struct SessionTimerDialog: View {
 }
 
 //struct SessionTimerDialog_Previews: PreviewProvider {
-//
 //  static var previews: some View {
 //    SessionTimerDialog(isActive: .constant(true), appState: $appState, action: {})
 //  }

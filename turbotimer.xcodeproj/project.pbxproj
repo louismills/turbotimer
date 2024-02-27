@@ -10,6 +10,11 @@
 		B409056B2B7E682A002ADE74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B409056A2B7E682A002ADE74 /* LaunchScreen.storyboard */; };
 		B427009A2B7100FF00247424 /* SessionTimerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42700992B7100FF00247424 /* SessionTimerDialog.swift */; };
 		B45AEE812B4EF9F20066FFA7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45AEE802B4EF9F20066FFA7 /* AppState.swift */; };
+		B46726392B8E14F4002C96B1 /* StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46726382B8E14F4002C96B1 /* StoreView.swift */; };
+		B467263B2B8E1572002C96B1 /* ChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B467263A2B8E1572002C96B1 /* ChallengesView.swift */; };
+		B467263D2B8E16E3002C96B1 /* BackgroundConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B467263C2B8E16E3002C96B1 /* BackgroundConfig.swift */; };
+		B467263F2B8E1737002C96B1 /* ConsumableConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B467263E2B8E1737002C96B1 /* ConsumableConfig.swift */; };
+		B46726432B8E2AE4002C96B1 /* ChallengeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46726422B8E2AE4002C96B1 /* ChallengeConfig.swift */; };
 		B495D9FC2B4DB88700AF3F2D /* turbotimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495D9FB2B4DB88700AF3F2D /* turbotimerApp.swift */; };
 		B495D9FE2B4DB88700AF3F2D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B495D9FD2B4DB88700AF3F2D /* ContentView.swift */; };
 		B495DA002B4DB88800AF3F2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B495D9FF2B4DB88800AF3F2D /* Assets.xcassets */; };
@@ -43,6 +48,11 @@
 		B409056A2B7E682A002ADE74 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B42700992B7100FF00247424 /* SessionTimerDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTimerDialog.swift; sourceTree = "<group>"; };
 		B45AEE802B4EF9F20066FFA7 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		B46726382B8E14F4002C96B1 /* StoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreView.swift; sourceTree = "<group>"; };
+		B467263A2B8E1572002C96B1 /* ChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesView.swift; sourceTree = "<group>"; };
+		B467263C2B8E16E3002C96B1 /* BackgroundConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundConfig.swift; sourceTree = "<group>"; };
+		B467263E2B8E1737002C96B1 /* ConsumableConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumableConfig.swift; sourceTree = "<group>"; };
+		B46726422B8E2AE4002C96B1 /* ChallengeConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeConfig.swift; sourceTree = "<group>"; };
 		B495D9F82B4DB88700AF3F2D /* turbotimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = turbotimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B495D9FB2B4DB88700AF3F2D /* turbotimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = turbotimerApp.swift; sourceTree = "<group>"; };
 		B495D9FD2B4DB88700AF3F2D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,6 +94,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B46726402B8E177B002C96B1 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				B467263C2B8E16E3002C96B1 /* BackgroundConfig.swift */,
+				B467263E2B8E1737002C96B1 /* ConsumableConfig.swift */,
+				B46726422B8E2AE4002C96B1 /* ChallengeConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		B46726412B8E17B2002C96B1 /* Dialog */ = {
+			isa = PBXGroup;
+			children = (
+				B4AD5C232B6D53BC007FED79 /* PurchasesDialog.swift */,
+				B4AD5C212B6D3F0A007FED79 /* ChallengesDialog.swift */,
+				B42700992B7100FF00247424 /* SessionTimerDialog.swift */,
+			);
+			path = Dialog;
+			sourceTree = "<group>";
+		};
 		B495D9EF2B4DB88700AF3F2D = {
 			isa = PBXGroup;
 			children = (
@@ -111,13 +141,14 @@
 				B495D9FB2B4DB88700AF3F2D /* turbotimerApp.swift */,
 				B45AEE802B4EF9F20066FFA7 /* AppState.swift */,
 				B495D9FD2B4DB88700AF3F2D /* ContentView.swift */,
-				B495D9FF2B4DB88800AF3F2D /* Assets.xcassets */,
-				B495DA012B4DB88800AF3F2D /* Preview Content */,
-				B4AD5C232B6D53BC007FED79 /* PurchasesDialog.swift */,
-				B4AD5C212B6D3F0A007FED79 /* ChallengesDialog.swift */,
+				B46726382B8E14F4002C96B1 /* StoreView.swift */,
+				B467263A2B8E1572002C96B1 /* ChallengesView.swift */,
 				B4AD5C252B6D616E007FED79 /* SessionTimerSection.swift */,
-				B42700992B7100FF00247424 /* SessionTimerDialog.swift */,
 				B409056A2B7E682A002ADE74 /* LaunchScreen.storyboard */,
+				B495D9FF2B4DB88800AF3F2D /* Assets.xcassets */,
+				B46726402B8E177B002C96B1 /* Config */,
+				B46726412B8E17B2002C96B1 /* Dialog */,
+				B495DA012B4DB88800AF3F2D /* Preview Content */,
 			);
 			path = turbotimer;
 			sourceTree = "<group>";
@@ -278,11 +309,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B467263B2B8E1572002C96B1 /* ChallengesView.swift in Sources */,
 				B4AD5C262B6D616E007FED79 /* SessionTimerSection.swift in Sources */,
 				B4AD5C222B6D3F0A007FED79 /* ChallengesDialog.swift in Sources */,
+				B467263F2B8E1737002C96B1 /* ConsumableConfig.swift in Sources */,
+				B46726392B8E14F4002C96B1 /* StoreView.swift in Sources */,
+				B46726432B8E2AE4002C96B1 /* ChallengeConfig.swift in Sources */,
 				B45AEE812B4EF9F20066FFA7 /* AppState.swift in Sources */,
 				B427009A2B7100FF00247424 /* SessionTimerDialog.swift in Sources */,
 				B495D9FE2B4DB88700AF3F2D /* ContentView.swift in Sources */,
+				B467263D2B8E16E3002C96B1 /* BackgroundConfig.swift in Sources */,
 				B4AD5C242B6D53BC007FED79 /* PurchasesDialog.swift in Sources */,
 				B495D9FC2B4DB88700AF3F2D /* turbotimerApp.swift in Sources */,
 			);

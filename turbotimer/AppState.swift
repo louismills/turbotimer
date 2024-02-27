@@ -153,6 +153,8 @@ struct AppState {
   @AppStorage("challengeSelectedReward") var challengeSelectedReward = 0
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
 
+  @AppStorage("sessionRunning") var sessionRunning = false
+
   var shops = [shop(shop: 0, bought: true, cost: 0, multiplier: 0.0, image: "car1"),
                shop(shop: 1, bought: false, cost: 1, multiplier: 0.03, image: "car2"),
                shop(shop: 2, bought: false, cost: 4, multiplier: 0.06, image: "car3"),
@@ -191,20 +193,8 @@ struct AppState {
 
   var currentTime: Int
 
-  let scene: GameScene
-
-//  init(playSound: @escaping () -> Void) {
-//    self.currentTime = workMinutes * 60
-//  }
-
-//  init() {
-//    self.currentTime = workMinutes * 60
-//    self.scene = scene
-//  }
-
-  init(scene: GameScene) {
+  init() {
     self.currentTime = workMinutes * 60
-    self.scene = scene
   }
 
   var currentTimeDisplay: String {
@@ -244,8 +234,6 @@ struct AppState {
       userTotalSessionTime += workMinutes
       sessionStars = 0
       // Create new tyre
-      print("created new tyre")
-      scene.createTyre(tyreType: "tyreYellow")
     }
 
     switch(mode) {

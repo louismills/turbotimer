@@ -171,7 +171,6 @@ struct PurchasesDialog: View {
 
 struct PurchasesDialog_Previews: PreviewProvider {
   static var previews: some View {
-//    PurchasesDialog(isActive: .constant(true), message1: "50", buttonTitle1: "Buy for 0.99", message2: "225", buttonTitle2: "Buy for 2.99" + "\n33% Discount", action: {})
     PurchasesDialog(isActive: .constant(true), action: {})
   }
 }
