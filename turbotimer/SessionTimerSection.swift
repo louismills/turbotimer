@@ -22,7 +22,7 @@ struct sessionTimerSection: View {
   @AppStorage("userStars") var userStars = 0
   @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
 
-  @AppStorage("userBackground") var userBackground: Color = .gray
+  @AppStorage("userTheme") var userTheme: Color = .gray
 
   @AppStorage("challengeSelectedRewardTyresType") var challengeSelectedRewardTyresType = ""
 
@@ -44,15 +44,15 @@ struct sessionTimerSection: View {
               .font(.system(size: 45))
               .fontWeight(.heavy)
           }
-          Spacer()
-          VStack (alignment: .trailing) {
-            // TOP RIGHT - STARS COUNT
-            Text("Trophies")
-              .foregroundStyle(.gray)
-            Text("\(Int(appState.sessionStars))").foregroundColor(.yellow)
-              .font(.system(size: 45))
-              .fontWeight(.heavy)
-          }
+//          Spacer()
+//          VStack (alignment: .trailing) {
+//            // TOP RIGHT - STARS COUNT
+//            Text("Trophies")
+//              .foregroundStyle(.gray)
+//            Text("\(Int(appState.sessionStars))").foregroundColor(.yellow)
+//              .font(.system(size: 45))
+//              .fontWeight(.heavy)
+//          }
         }
         Spacer()
         HStack(alignment: .bottom) {
@@ -92,7 +92,6 @@ struct sessionTimerSection: View {
               timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ _ in
                 appState.next()
                 if appState.currentTime == 0 && appState.mode == .session {
-//                  scene.createTyre(tyreType: "tyreBlue") // dynamic based on challenge selected
                   scene.createTyre(tyreType: challengeSelectedRewardTyresType)
                 }
               }
@@ -126,7 +125,7 @@ struct sessionTimerSection: View {
     .background(Color("BackgroundPanel"))
     .overlay(
       RoundedRectangle(cornerRadius: 20)
-        .stroke(Color(userBackground), lineWidth: 2)
+        .stroke(Color(userTheme), lineWidth: 2)
     )
     .clipShape(RoundedRectangle(cornerRadius: 20))
   }

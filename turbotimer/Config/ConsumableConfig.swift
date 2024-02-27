@@ -7,15 +7,22 @@
 
 import SwiftUI
 
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
+}
+
 struct ConsumableConfig: View {
   @Binding var appState: AppState
 
   @AppStorage("userStars") var userStars = 0
-  @AppStorage("userHeroColour") var userHeroColour: Color = .yellow
   @AppStorage("userMultiplier") var userMultiplier: Double = 0
-  @AppStorage("userImage") var userImage = "car1"
-  @AppStorage("userConsumables") var userConsumables = [UserConsumables(id: 0, isActive: false, cost: 1, inventory: 0),
-                                                        UserConsumables(id: 1, isActive: false, cost: 1, inventory: 0)]
+  @AppStorage("userConsumables") var userConsumables = DefaultSettings.consumablesDefault
 
   //  @State private var timeRemaining = 3600
   @State private var timeRemaining = 10
@@ -23,14 +30,15 @@ struct ConsumableConfig: View {
   let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
 
-  var consumable: consumable
+//  var consumable: consumable
+  var consumable: UserConsumables
 
   var body: some View {
     VStack {
       Button(action: {
-        if userStars >= consumable.cost && userConsumables[consumable.consumable].inventory < 10 {
+        if userStars >= consumable.cost && userConsumables[consumable.id].inventory < 10 {
           userStars -= consumable.cost
-          userConsumables[consumable.consumable].inventory += 1
+          userConsumables[consumable.id].inventory += 1
         }
       }) {
         ZStack {
@@ -59,16 +67,16 @@ struct ConsumableConfig: View {
         .background(Color(UIColor.lightGray).opacity(0.4))
         .clipShape(RoundedRectangle(cornerRadius: 20))
       }
-      Text("QTY: \(userConsumables[consumable.consumable].inventory)")
+      Text("\(userConsumables[consumable.id].inventory)")
       Button(action: {
-        if (userConsumables[consumable.consumable].inventory > 0 && userConsumables[consumable.consumable].isActive == false && timerIsActive == false) {
-          userConsumables[consumable.consumable].inventory -= 1
-          userConsumables[consumable.consumable].isActive = true
+        if (userConsumables[consumable.id].inventory > 0 && userConsumables[consumable.id].isActive == false && timerIsActive == false) {
+          userConsumables[consumable.id].inventory -= 1
+          userConsumables[consumable.id].isActive = true
           timerIsActive = true
           userMultiplier = consumable.multiplier
         }
       }) {
-        if userConsumables[consumable.consumable].isActive {
+        if userConsumables[consumable.id].isActive {
           ZStack {
             ProgressView(value: progress()).progressViewStyle(MyProgressViewStyle(myColor: Color.green))
             Text(formattedTime()).foregroundStyle(Color("Text"))
@@ -79,18 +87,18 @@ struct ConsumableConfig: View {
           Spacer()
         }
       }
-      .disabled((userConsumables[consumable.consumable].inventory == 0 && userConsumables[consumable.consumable].isActive == false) || (userConsumables[consumable.consumable].isActive == false && timerIsActive == true))
+      .disabled((userConsumables[consumable.id].inventory == 0 && userConsumables[consumable.id].isActive == false) || (userConsumables[consumable.id].isActive == false && timerIsActive == true))
       .frame(maxWidth: .infinity, maxHeight: 40)
       .fontWeight(.heavy)
       .background(.green)
       .clipShape(RoundedRectangle(cornerRadius: 20))
     }
     .onReceive(timer) { _ in
-      if userConsumables[consumable.consumable].isActive {
+      if userConsumables[consumable.id].isActive {
         if timeRemaining > 0 {
           timeRemaining -= 1
         } else {
-          userConsumables[consumable.consumable].isActive = false
+          userConsumables[consumable.id].isActive = false
           timerIsActive = false
           //          timeRemaining = 3600
           timeRemaining = 10

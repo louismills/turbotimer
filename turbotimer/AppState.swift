@@ -8,51 +8,58 @@
 import Foundation
 import SwiftUI
 
+enum DefaultSettings {
+  static let consumablesDefault = [
+    UserConsumables(id: 0, isActive: false, cost: 0, inventory: 0, multiplier: 0.30, duration: 60, image: "fuelcan"),
+    UserConsumables(id: 1, isActive: false, cost: 0, inventory: 0, multiplier: 0.75, duration: 60, image: "crashhelmet")
+  ]
+
+  static let themesDefault = [
+    UserThemes(id: 0, bought: true, cost: 0, colour: "gray"),
+    UserThemes(id: 1, bought: false, cost: 0, colour: "yellow"),
+    UserThemes(id: 2, bought: false, cost: 10, colour: "red"),
+    UserThemes(id: 3, bought: false, cost: 10, colour: "purple"),
+    UserThemes(id: 4, bought: false, cost: 10, colour: "blue"),
+    UserThemes(id: 5, bought: false, cost: 10, colour: "green"),
+  ]
+}
+
 enum Mode: String, Equatable {
   case rest = "Rest time"
   case session = "Session time"
 }
 
-struct background {
-  var background: Int
-  var bought: Bool
-  var cost: Int
-  var colour: Color
-}
-
-struct UserBackgrounds: Identifiable, Codable{
+struct UserThemes: Identifiable, Codable {
   let id : Int
   var bought : Bool
   var cost : Int
+  var colour: String
 
-  init(id: Int, bought: Bool, cost: Int) {
+  init(id: Int, bought: Bool, cost: Int, colour: String) {
     self.id = id
     self.bought = bought
     self.cost = cost
+    self.colour = colour
   }
 }
 
-struct consumable {
-  var consumable: Int
-  var isActive: Bool
-  var cost: Int
-  var inventory: Int
-  var multiplier: Double
-  var duration: Int
-  var image: String
-}
-
-struct UserConsumables: Identifiable, Codable{
+struct UserConsumables: Identifiable, Codable {
   let id : Int
   var isActive : Bool
   var cost : Int
   var inventory: Int
+  var multiplier: Double
+  var duration: Int
+  var image: String
 
-  init(id: Int, isActive: Bool, cost: Int, inventory: Int) {
+  init(id: Int, isActive: Bool, cost: Int, inventory: Int, multiplier: Double, duration: Int, image: String) {
     self.id = id
     self.isActive = isActive
     self.cost = cost
     self.inventory = inventory
+    self.multiplier = multiplier
+    self.duration = duration
+    self.image = image
   }
 }
 
@@ -132,18 +139,9 @@ extension Color {
     self.init(uiColor: platformColor)
   }
 }
-//#elseif os(macOS)
-//typealias PlatformColor = NSColor
-//extension Color {
-//  init(platformColor: PlatformColor) {
-//    self.init(nsColor: platformColor)
-//  }
-//}
 #endif
 
 struct AppState {
-  var sessionStars: Float = 0.0
-
   @AppStorage("userStars") var userStars = 0
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
   @AppStorage("userSessionTime") var userSessionTime = 0
@@ -152,26 +150,12 @@ struct AppState {
 
   @AppStorage("challengeSelectedReward") var challengeSelectedReward = 0
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
+  @AppStorage("challengeSelectedRewardStars") var challengeSelectedRewardStars = 0
 
   @AppStorage("sessionRunning") var sessionRunning = false
 
-  var shops = [shop(shop: 0, bought: true, cost: 0, multiplier: 0.0, image: "car1"),
-               shop(shop: 1, bought: false, cost: 1, multiplier: 0.03, image: "car2"),
-               shop(shop: 2, bought: false, cost: 4, multiplier: 0.06, image: "car3"),
-               shop(shop: 3, bought: false, cost: 10, multiplier: 0.1, image: "car4"),
-  ]
-
-  var consumables = [consumable(consumable: 0, isActive: false, cost: 15, inventory: 0, multiplier: 0.3, duration: 60, image: "fuelcan"),
-                     consumable(consumable: 1, isActive: false, cost: 25, inventory: 0, multiplier: 0.75, duration: 60, image: "car1"),
-  ]
-
-  var backgrounds = [background(background: 0, bought: true, cost: 10, colour: .gray),
-                     background(background: 1, bought: false, cost: 10, colour: .yellow),
-                     background(background: 2, bought: false, cost: 10, colour: .red),
-                     background(background: 3, bought: false, cost: 10, colour: .purple),
-                     background(background: 4, bought: false, cost: 10, colour: .blue),
-                     background(background: 5, bought: false, cost: 10, colour: .green),
-  ]
+  @AppStorage("userConsumables") var userConsumables = DefaultSettings.consumablesDefault
+  @AppStorage("userThemes") var userThemes = DefaultSettings.themesDefault
 
   var workMinutes: Int = 5 {
     didSet {
@@ -210,30 +194,14 @@ struct AppState {
   }
 
   mutating func next() {
-    // Reward user with stars per minute
-    if currentTime % 60 == 0 {
-      //      print("WorkMinutes: \(workMinutes)")
-      //      print("challengeSelectedReward: \(challengeSelectedReward)")
-      //      print("Reward per minute: \(Float(challengeSelectedReward) / Float(workMinutes))")
-      //      print("Multiplier: \(userMultiplier)")
-      //      print("Reward Per Minute x Multiplier: \((Float(challengeSelectedReward) / Float(workMinutes)) + (Float(challengeSelectedReward) / Float(workMinutes)) * Float(userMultiplier))")
-
-      let rewardPerMinute = Float(challengeSelectedReward) / Float(workMinutes)
-      let rewardPerMinuteMultiplied = rewardPerMinute + (rewardPerMinute * Float(userMultiplier))
-
-      sessionStars += 1 * rewardPerMinuteMultiplied
-    }
-
     if currentTime > 0 {
       currentTime -= 1
       return
     }
 
     if currentTime == 0 {
-      userStars += Int(sessionStars)
+      userStars += challengeSelectedRewardStars
       userTotalSessionTime += workMinutes
-      sessionStars = 0
-      // Create new tyre
     }
 
     switch(mode) {
@@ -250,7 +218,6 @@ struct AppState {
   mutating func reset() {
     restMinutes = 1
     workMinutes = challengeSelectedDuration
-    sessionStars = 0
     mode = .session
   }
 }

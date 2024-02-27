@@ -20,8 +20,10 @@ struct StoreView: View {
   @State private var showingPurchases = false
 
   @AppStorage("userDestination") var userDestination = ""
-  @AppStorage("userBackground") var userBackground: Color = .gray
+  @AppStorage("userTheme") var userTheme: Color = .gray
   @AppStorage("userStars") var userStars = 0
+  @AppStorage("userConsumables") var userConsumables = DefaultSettings.consumablesDefault
+  @AppStorage("userThemes") var userThemes = DefaultSettings.themesDefault
 
   var body: some View {
     ZStack {
@@ -82,8 +84,8 @@ struct StoreView: View {
               GeometryReader { geo in
                 Grid(alignment: .leading, horizontalSpacing: 0, verticalSpacing: 0) {
                   GridRow {
-                    ConsumableConfig(appState: $appState, consumable: appState.consumables[0])
-                    ConsumableConfig(appState: $appState, consumable: appState.consumables[1])
+                    ConsumableConfig(appState: $appState, consumable: userConsumables[0])
+                    ConsumableConfig(appState: $appState, consumable: userConsumables[1])
                   }
                   .padding(4)
                   .frame(width: geo.size.width / 2, height: geo.size.height)
@@ -94,7 +96,7 @@ struct StoreView: View {
             .background(Color("BackgroundPanel"))
             .overlay(
               RoundedRectangle(cornerRadius: 16)
-                .stroke(Color(userBackground), lineWidth: 2)
+                .stroke(Color(userTheme), lineWidth: 2)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16))
 
@@ -113,16 +115,16 @@ struct StoreView: View {
               GeometryReader { geo in
                 Grid(alignment: .leading, horizontalSpacing: 0, verticalSpacing: 0) {
                   GridRow {
-                    BackgroundConfig(appState: $appState, background: appState.backgrounds[0])
-                    BackgroundConfig(appState: $appState, background: appState.backgrounds[1])
-                    BackgroundConfig(appState: $appState, background: appState.backgrounds[2])
+                    ThemeConfig(appState: $appState, theme: userThemes[0])
+                    ThemeConfig(appState: $appState, theme: userThemes[1])
+                    ThemeConfig(appState: $appState, theme: userThemes[2])
                   }
                   .padding(4)
                   .frame(width: geo.size.width / 3, height: geo.size.height / 2)
                   GridRow {
-                    BackgroundConfig(appState: $appState, background: appState.backgrounds[3])
-                    BackgroundConfig(appState: $appState, background: appState.backgrounds[4])
-                    BackgroundConfig(appState: $appState, background: appState.backgrounds[5])
+                    ThemeConfig(appState: $appState, theme: userThemes[3])
+                    ThemeConfig(appState: $appState, theme: userThemes[4])
+                    ThemeConfig(appState: $appState, theme: userThemes[5])
                   }
                   .padding(4)
                   .frame(width: geo.size.width / 3, height: geo.size.height / 2)
@@ -133,7 +135,7 @@ struct StoreView: View {
             .background(Color("BackgroundPanel"))
             .overlay(
               RoundedRectangle(cornerRadius: 16)
-                .stroke(Color(userBackground), lineWidth: 2)
+                .stroke(Color(userTheme), lineWidth: 2)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16))
           }

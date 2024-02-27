@@ -18,13 +18,12 @@ struct ChallengesDialog: View {
   let action: () -> ()
 
   @State private var offset: CGFloat = 1000
-  @AppStorage("userBackground") var userBackground: Color = .gray
+  @AppStorage("userTheme") var userTheme: Color = .gray
 
   var body: some View {
     ZStack {
       Color(.black)
         .opacity(0.3)
-
       VStack {
         HStack {
           ZStack {
@@ -33,8 +32,8 @@ struct ChallengesDialog: View {
               .frame(width: 90, height: 90)
             Text("\(rewardTyres)")
               .padding(10)
-              .background(userBackground)
-              .foregroundColor(.white)
+              .background(Color("Background"))
+              .foregroundColor(Color("Text"))
               .clipShape(Circle())
               .offset(x: 50, y: -40)
           }
@@ -44,8 +43,8 @@ struct ChallengesDialog: View {
               .foregroundColor(.yellow)
             Text("\(rewardStars)")
               .padding(10)
-              .background(userBackground)
-              .foregroundColor(.white)
+              .background(Color("Background"))
+              .foregroundColor(Color("Text"))
               .clipShape(Circle())
               .offset(x: 40, y: -40)
           }

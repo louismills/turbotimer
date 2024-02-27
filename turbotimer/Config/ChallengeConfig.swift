@@ -13,7 +13,7 @@ struct ChallengeConfig: View {
   @Binding var appState: AppState
 
   @AppStorage("userSessionTime") var userSessionTime = 0
-  @AppStorage("userBackground") var userBackground: Color = .gray
+  @AppStorage("userTheme") var userTheme: Color = .gray
   @AppStorage("challengeSelected") var challengeSelected = false
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
   @AppStorage("challengeSelectedRewardStars") var challengeSelectedRewardStars = 0
@@ -64,7 +64,7 @@ struct ChallengeConfig: View {
       .background(Color("BackgroundPanel"))
       .overlay(
         RoundedRectangle(cornerRadius: 16)
-          .stroke(Color(userBackground), lineWidth: 2)
+          .stroke(Color(userTheme), lineWidth: 2)
       )
       .clipShape(RoundedRectangle(cornerRadius: 16))
     }
