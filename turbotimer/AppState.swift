@@ -5,7 +5,7 @@
 //  Created by Louis Mills on 10/01/2024.
 //
 
-import Foundation
+//import Foundation
 import SwiftUI
 
 enum DefaultSettings {
@@ -36,11 +36,12 @@ enum DefaultSettings {
     Challenges(id: 9, workMinutes: 120, rewardTyresType: "tyreBlue", rewardTyres: 2,rewardStars: 38)
   ]
 
-  static let tyresDefault = [Tyres(id: 0, type: "tyreRed", inventory: 0),
-                             Tyres(id: 1, type: "tyreYellow", inventory: 0),
-                             Tyres(id: 2, type: "tyreWhite", inventory: 0),
-                             Tyres(id: 3, type: "tyreGreen", inventory: 0),
-                             Tyres(id: 4, type: "tyreBlue", inventory: 0)
+  static let tyresDefault = [
+    Tyres(id: 0, type: "tyreRed", inventory: 0),
+    Tyres(id: 1, type: "tyreYellow", inventory: 0),
+    Tyres(id: 2, type: "tyreWhite", inventory: 0),
+    Tyres(id: 3, type: "tyreGreen", inventory: 0),
+    Tyres(id: 4, type: "tyreBlue", inventory: 0)
   ]
 }
 
@@ -111,26 +112,6 @@ struct Challenges: Identifiable, Codable {
   }
 }
 
-//struct shop {
-//  var shop: Int
-//  var bought: Bool
-//  var cost: Int
-//  var multiplier: Double
-//  var image: String
-//}
-//
-//struct UserShops: Identifiable, Codable{
-//  let id : Int
-//  var bought : Bool
-//  var cost : Int
-//
-//  init(id: Int, bought: Bool, cost: Int) {
-//    self.id = id
-//    self.bought = bought
-//    self.cost = cost
-//  }
-//}
-
 extension Array: RawRepresentable where Element: Codable {
   public init?(rawValue: String) {
     guard let data = rawValue.data(using: .utf8) else {
@@ -157,59 +138,11 @@ extension Array: RawRepresentable where Element: Codable {
   }
 }
 
-extension Color: RawRepresentable {
-  public init?(rawValue: Int) {
-    let red =   Double((rawValue & 0xFF0000) >> 16) / 0xFF
-    let green = Double((rawValue & 0x00FF00) >> 8) / 0xFF
-    let blue =  Double(rawValue & 0x0000FF) / 0xFF
-    self = Color(red: red, green: green, blue: blue)
-  }
-
-  public var rawValue: Int {
-    guard let coreImageColor = coreImageColor else {
-      return 0
-    }
-    let red = Int(coreImageColor.red * 255 + 0.5)
-    let green = Int(coreImageColor.green * 255 + 0.5)
-    let blue = Int(coreImageColor.blue * 255 + 0.5)
-    return (red << 16) | (green << 8) | blue
-  }
-
-  private var coreImageColor: CIColor? {
-    return CIColor(color: PlatformColor(self))
-  }
-}
-
-#if os(iOS)
-typealias PlatformColor = UIColor
-extension Color {
-  init(platformColor: PlatformColor) {
-    self.init(uiColor: platformColor)
-  }
-}
-#endif
-
 struct AppState {
   @AppStorage("userStars") var userStars = 0
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
   @AppStorage("challengeSelectedRewardStars") var challengeSelectedRewardStars = 0
-
-//  @AppStorage("userSessionTime") var userSessionTime = 0
-
-//  @AppStorage("userMultiplier") var userMultiplier = 0.0
-//  @AppStorage("userImage") var userImage = "car1"
-
-//  @AppStorage("challengeSelectedReward") var challengeSelectedReward = 0
-
-
-
-//  @AppStorage("sessionRunning") var sessionRunning = false
-
-//  @AppStorage("consumables") var consumables = DefaultSettings.consumablesDefault
-//  @AppStorage("themes") var themes = DefaultSettings.themesDefault
-//  @AppStorage("challenges") var challenges = DefaultSettings.challengesDefault
-//  @AppStorage("userTyres") var userTyres = DefaultSettings.tyresDefault
 
   var workMinutes: Int = 5 {
     didSet {

@@ -5,11 +5,10 @@
 //  Created by Louis Mills on 09/01/2024.
 //
 
+import SwiftUI
 import SpriteKit
 import GameplayKit
 import CoreMotion
-
-import SwiftUI
 import AVFoundation
 
 struct AppBtn: ViewModifier {
@@ -27,7 +26,7 @@ struct AppBtn: ViewModifier {
 }
 
 struct BtnTextPanelFormat: ViewModifier {
-  @AppStorage("userTheme") var userTheme: Color = .gray
+  @AppStorage("userTheme") var userTheme = "gray"
 
   func body(content: Content) -> some View {
     content
@@ -61,7 +60,8 @@ struct BtnStoreFormat: ViewModifier {
 
 struct starIcon: View {
   var body: some View {
-    Image(systemName: "star.fill").foregroundColor(.yellow)
+    Image(systemName: "star.fill")
+      .foregroundColor(.yellow)
   }
 }
 
@@ -70,7 +70,7 @@ struct equippedBtn: View {
     HStack {
       Text(Image(systemName:"checkmark.circle.fill"))
         .foregroundColor(Color("Text"))
-        .padding(.leading, 10).padding(.trailing, 10)
+        .padding(.horizontal, 10)
     }
     .btnTextFormat()
   }
@@ -83,7 +83,8 @@ struct dismissBtn: View {
     Button {
       dismiss()
     } label: {
-      Image(systemName: "xmark.circle.fill").font(.title)
+      Image(systemName: "xmark.circle.fill")
+        .font(.title)
         .foregroundColor(Color("Text"))
     }
   }
@@ -142,7 +143,7 @@ struct ContentView: View {
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
   @AppStorage("userSessionTime") var userSessionTime = 0
   @AppStorage("userDestination") var userDestination = ""
-  @AppStorage("userTheme") var userTheme: Color = .gray
+  @AppStorage("userTheme") var userTheme = "gray"
   @AppStorage("userImage") var userImage = "car1"
   @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
 

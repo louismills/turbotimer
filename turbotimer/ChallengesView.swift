@@ -34,7 +34,6 @@ struct ChallengesView: View {
             .foregroundColor(Color("Text"))
             .font(.title3).fontWeight(.bold)
             .frame(maxWidth: .infinity, alignment: .center)
-//          dismissSettingsBtn()
           dismissBtn()
             .frame(width: geo.size.width / 4, alignment: .trailing)
         }

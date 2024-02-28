@@ -22,28 +22,24 @@ struct sessionTimerSection: View {
   @AppStorage("userStars") var userStars = 0
   @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
 
-  @AppStorage("userTheme") var userTheme: Color = .gray
+  @AppStorage("userTheme") var userTheme = "gray"
 
   @AppStorage("challengeSelectedRewardTyres") var challengeSelectedRewardTyres = 0
   @AppStorage("challengeSelectedRewardTyresType") var challengeSelectedRewardTyresType = ""
 
   @AppStorage("userTyres") var userTyres = DefaultSettings.tyresDefault
 
-  // wip
   func updateInventory(type: String) {
-          if let index = userTyres.firstIndex(where: { $0.type == type }) {
-            userTyres[index].inventory += 1
-          }
-      }
-  // wip
+    if let index = userTyres.firstIndex(where: { $0.type == type }) {
+      userTyres[index].inventory += 1
+    }
+  }
 
   let scene: GameScene
 
   var body: some View {
-    // WIP
     let screen = UIScreen.main.bounds
     let screenWidth = screen.size.width
-    // WIP
     GeometryReader { geo in
       VStack {
         HStack {
@@ -55,15 +51,15 @@ struct sessionTimerSection: View {
               .font(.system(size: 45))
               .fontWeight(.heavy)
           }
-//          Spacer()
-//          VStack (alignment: .trailing) {
-//            // TOP RIGHT - STARS COUNT
-//            Text("Trophies")
-//              .foregroundStyle(.gray)
-//            Text("\(Int(appState.sessionStars))").foregroundColor(.yellow)
-//              .font(.system(size: 45))
-//              .fontWeight(.heavy)
-//          }
+          //          Spacer()
+          //          VStack (alignment: .trailing) {
+          //            // TOP RIGHT - STARS COUNT
+          //            Text("Trophies")
+          //              .foregroundStyle(.gray)
+          //            Text("\(Int(appState.sessionStars))").foregroundColor(.yellow)
+          //              .font(.system(size: 45))
+          //              .fontWeight(.heavy)
+          //          }
         }
         Spacer()
         HStack(alignment: .bottom) {
@@ -129,7 +125,7 @@ struct sessionTimerSection: View {
             }
           }
           .appBtn(color: !sessionRunning ? .green : Color(UIColor.lightGray).opacity(0.4))
-            .fontWeight(.heavy)
+          .fontWeight(.heavy)
         }
       }
       .padding(.top, 10)

@@ -20,7 +20,8 @@ struct ChallengesDialog: View {
   
 
   @State private var offset: CGFloat = 1000
-  @AppStorage("userTheme") var userTheme: Color = .gray
+//  @AppStorage("userTheme") var userTheme: Color = .gray
+  @AppStorage("userTheme") var userTheme = "gray"
 
   
 

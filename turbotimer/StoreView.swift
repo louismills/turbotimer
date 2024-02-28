@@ -14,17 +14,17 @@ import AVFoundation
 
 struct StoreView: View {
   @Binding var appState: AppState
-
+  
   @Environment(\.dismiss) var dismiss
-
+  
   @State private var showingPurchases = false
-
+  
   @AppStorage("userDestination") var userDestination = ""
-  @AppStorage("userTheme") var userTheme: Color = .gray
+  @AppStorage("userTheme") var userTheme = "gray"
   @AppStorage("userStars") var userStars = 0
   @AppStorage("consumables") var consumables = DefaultSettings.consumablesDefault
   @AppStorage("themes") var themes = DefaultSettings.themesDefault
-
+  
   var body: some View {
     ZStack {
       VStack(spacing: 0) {
@@ -44,11 +44,11 @@ struct StoreView: View {
         .frame(height: 30)
         .padding()
         .background(Color("Background"))
-
+        
         Divider()
           .overlay(Color(UIColor.lightGray))
           .edgesIgnoringSafeArea(.horizontal)
-
+        
         ScrollView {
           HStack {
             Button {
@@ -63,7 +63,7 @@ struct StoreView: View {
             .btnTextPanelFormat()
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding([.leading, .top], 20)
-
+          
           VStack() {
             // BOOSTS
             VStack {
@@ -93,7 +93,7 @@ struct StoreView: View {
                 .stroke(Color(userTheme), lineWidth: 2)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16))
-
+            
             HStack {
             }.padding(10)
             // THEMES

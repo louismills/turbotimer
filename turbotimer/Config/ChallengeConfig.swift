@@ -13,7 +13,8 @@ struct ChallengeConfig: View {
   @Binding var appState: AppState
 
   @AppStorage("userSessionTime") var userSessionTime = 0
-  @AppStorage("userTheme") var userTheme: Color = .gray
+//  @AppStorage("userTheme") var userTheme: Color = .gray
+  @AppStorage("userTheme") var userTheme = "gray"
   @AppStorage("challengeSelected") var challengeSelected = false
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
   @AppStorage("challengeSelectedRewardStars") var challengeSelectedRewardStars = 0
