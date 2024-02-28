@@ -66,7 +66,6 @@ struct SessionTimerDialog: View {
             }
           }
         }
-
         Button {
           if userStars >= 10 {
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ _ in

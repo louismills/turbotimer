@@ -11,7 +11,6 @@ struct ThemeConfig: View {
   @Binding var appState: AppState
 
   @AppStorage("userStars") var userStars = 0
-//  @AppStorage("userTheme") var userTheme: Color = .gray
   @AppStorage("userTheme") var userTheme = "gray"
   @AppStorage("themes") var themes = DefaultSettings.themesDefault
 
@@ -23,11 +22,9 @@ struct ThemeConfig: View {
         if userStars >= theme.cost && themes[theme.id].bought == false {
           userStars -= theme.cost
           themes[theme.id].bought = true
-//          userTheme = Color(theme.colour)
           userTheme = theme.colour
         }
         if themes[theme.id].bought == true {
-//          userTheme = Color(theme.colour)
           userTheme = theme.colour
         }
       }) {
@@ -38,7 +35,6 @@ struct ThemeConfig: View {
             buyShopBtn(cost: theme.cost).offset(x: 30, y: -30)
           }
           else {
-//            if userTheme.rawValue == Color(theme.colour).rawValue {
             if Color(userTheme) == Color(theme.colour) {
               equippedBtn().offset(x: 30, y: -30)
             }

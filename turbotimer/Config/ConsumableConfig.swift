@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct RoundedCorner: Shape {
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
+  var radius: CGFloat = .infinity
+  var corners: UIRectCorner = .allCorners
 
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
+  func path(in rect: CGRect) -> Path {
+    let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+    return Path(path.cgPath)
+  }
 }
 
 struct ConsumableConfig: View {
@@ -67,14 +67,14 @@ struct ConsumableConfig: View {
       }
       Text("\(consumables[consumable.id].inventory)")
       Button(action: {
-        if (consumables[consumable.id].inventory > 0 && consumables[consumable.id].isActive == false && timerIsActive == false) {
+        if (consumables[consumable.id].inventory > 0 && consumables[consumable.id].active == false && timerIsActive == false) {
           consumables[consumable.id].inventory -= 1
-          consumables[consumable.id].isActive = true
+          consumables[consumable.id].active = true
           timerIsActive = true
           userMultiplier = consumable.multiplier
         }
       }) {
-        if consumables[consumable.id].isActive {
+        if consumables[consumable.id].active {
           ZStack {
             ProgressView(value: progress()).progressViewStyle(MyProgressViewStyle(myColor: Color.green))
             Text(formattedTime()).foregroundStyle(Color("Text"))
@@ -85,18 +85,18 @@ struct ConsumableConfig: View {
           Spacer()
         }
       }
-      .disabled((consumables[consumable.id].inventory == 0 && consumables[consumable.id].isActive == false) || (consumables[consumable.id].isActive == false && timerIsActive == true))
+      .disabled((consumables[consumable.id].inventory == 0 && consumables[consumable.id].active == false) || (consumables[consumable.id].active == false && timerIsActive == true))
       .frame(maxWidth: .infinity, maxHeight: 40)
       .fontWeight(.heavy)
       .background(.green)
       .clipShape(RoundedRectangle(cornerRadius: 20))
     }
     .onReceive(timer) { _ in
-      if consumables[consumable.id].isActive {
+      if consumables[consumable.id].active {
         if timeRemaining > 0 {
           timeRemaining -= 1
         } else {
-          consumables[consumable.id].isActive = false
+          consumables[consumable.id].active = false
           timerIsActive = false
           //          timeRemaining = 3600
           timeRemaining = 10

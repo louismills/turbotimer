@@ -10,8 +10,8 @@ import SwiftUI
 
 enum DefaultSettings {
   static let consumablesDefault = [
-    Consumables(id: 0, isActive: false, cost: 15, inventory: 0, multiplier: 0.30, duration: 60, image: "fuelcan"),
-    Consumables(id: 1, isActive: false, cost: 35, inventory: 0, multiplier: 0.75, duration: 60, image: "crashhelmet")
+    Consumables(id: 0, active: false, cost: 15, inventory: 0, multiplier: 0.30, duration: 60, image: "fuelcan"),
+    Consumables(id: 1, active: false, cost: 35, inventory: 0, multiplier: 0.75, duration: 60, image: "crashhelmet")
   ]
 
   static let themesDefault = [
@@ -78,16 +78,16 @@ struct Themes: Identifiable, Codable {
 
 struct Consumables: Identifiable, Codable {
   let id : Int
-  var isActive : Bool
+  var active : Bool
   var cost : Int
   var inventory: Int
   var multiplier: Double
   var duration: Int
   var image: String
 
-  init(id: Int, isActive: Bool, cost: Int, inventory: Int, multiplier: Double, duration: Int, image: String) {
+  init(id: Int, active: Bool, cost: Int, inventory: Int, multiplier: Double, duration: Int, image: String) {
     self.id = id
-    self.isActive = isActive
+    self.active = active
     self.cost = cost
     self.inventory = inventory
     self.multiplier = multiplier

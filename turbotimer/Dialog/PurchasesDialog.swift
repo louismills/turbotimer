@@ -9,12 +9,11 @@ import Foundation
 import SwiftUI
 import StoreKit
 
-// wip
 struct CustomProductStyle: ProductViewStyle {
   func makeBody(configuration: Configuration) -> some View {
     switch configuration.state {
     case .loading:
-
+      
       VStack { // Container for redacted items
         //  Placeholder for Product Name
         HStack {
@@ -22,13 +21,13 @@ struct CustomProductStyle: ProductViewStyle {
             .fill(Color.gray.opacity(0.3))
             .frame(width: 100, height: 50)
             .redacted(reason: .placeholder)
-
+          
           Capsule()
             .fill(Color.gray.opacity(0.3))
             .frame(width: 100, height: 50)
             .redacted(reason: .placeholder)
         }
-
+        
         // Placeholder for Price Area
         Capsule()
           .fill(Color.gray.opacity(0.3))
@@ -38,7 +37,7 @@ struct CustomProductStyle: ProductViewStyle {
       .padding()
       .clipShape(RoundedRectangle(cornerRadius: 20))
       .buttonStyle(.plain)
-
+      
     case .success(let product):
       VStack {
         HStack {
@@ -49,21 +48,19 @@ struct CustomProductStyle: ProductViewStyle {
             Text("225")
               .foregroundColor(Color("Text"))
           }
-          //          Text(verbatim: product.displayName)
-          //            .foregroundColor(Color("Text"))
           Image(systemName: "star.fill")
             .foregroundColor(.yellow)
         }
         .font(.system(size: 50))
         .fontWeight(.bold)
-
+        
         Button {
           configuration.purchase()
         } label: {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
               .foregroundColor(.green)
-
+            
             Text(verbatim: "Buy for \(product.displayPrice)")
               .lineLimit(2)
               .font(.system(size: 20, weight: .bold))
@@ -76,9 +73,7 @@ struct CustomProductStyle: ProductViewStyle {
       .background(Color(UIColor.lightGray).opacity(0.4))
       .clipShape(RoundedRectangle(cornerRadius: 20))
       .buttonStyle(.plain)
-
-
-
+      
     default:
       Text("Something goes wrong...")
     }
@@ -88,21 +83,17 @@ struct CustomProductStyle: ProductViewStyle {
 
 struct PurchasesDialog: View {
   @Binding var isActive: Bool
-
+  
   @AppStorage("userStars") var userStars = 0
-
-//  let message1: String
-//  let buttonTitle1: String
-//  let message2: String
-//  let buttonTitle2: String
+  
   let action: () -> ()
   @State private var offset: CGFloat = 1000
-
+  
   var body: some View {
     ZStack {
       Color(.black)
         .opacity(0.3)
-
+      
       VStack(spacing: 20) {
         VStack {
           VStack(spacing: 20) {
@@ -122,7 +113,7 @@ struct PurchasesDialog: View {
                     if product.id == "com.turbotimer.trophies.large" {
                       userStars += 225
                     }
-
+                    
                   } else {
                     print("Something else happened")
                   }
@@ -136,7 +127,7 @@ struct PurchasesDialog: View {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
               .foregroundColor(.gray)
-
+            
             Text("Cancel")
               .textCase(.uppercase)
               .font(.system(size: 20, weight: .bold))
@@ -160,7 +151,7 @@ struct PurchasesDialog: View {
     }
     .ignoresSafeArea()
   }
-
+  
   func close() {
     withAnimation(.spring()) {
       offset = 1000
