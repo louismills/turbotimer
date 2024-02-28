@@ -20,7 +20,8 @@ struct AppBtn: ViewModifier {
     content
       .frame(minWidth: 80, minHeight: 45)
       .background(color)
-      .foregroundColor(.white)
+//      .foregroundColor(.white)
+      .foregroundColor(Color("Background"))
       .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 }
@@ -49,11 +50,11 @@ struct BtnTextFormat: ViewModifier {
   }
 }
 
-struct BtnStoreFormat: ViewModifier {
+struct BtnFormat: ViewModifier {
   func body(content: Content) -> some View {
     content
       .frame(minWidth: 50, maxWidth: 50, minHeight: 45)
-      .background(.green)
+      .background(Color("Text"))
       .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 }
@@ -91,11 +92,12 @@ struct dismissBtn: View {
 }
 
 struct MyProgressViewStyle: ProgressViewStyle {
-  var myColor: Color
+//  var myColor: Color
 
   func makeBody(configuration: Configuration) -> some View {
     ProgressView(configuration)
-      .accentColor(myColor)
+//      .accentColor(myColor)
+      .accentColor(Color("Text"))
       .background(Color(UIColor.lightGray).opacity(0.4))
       .frame(minHeight: 45)
       .scaleEffect(x: 1, y: 15, anchor: .center)
@@ -124,8 +126,8 @@ extension View {
   func btnTextPanelFormat() -> some View {
     modifier(BtnTextPanelFormat())
   }
-  func btnStoreFormat() -> some View {
-    modifier(BtnStoreFormat())
+  func btnFormat() -> some View {
+    modifier(BtnFormat())
   }
 }
 
@@ -200,9 +202,10 @@ struct ContentView: View {
             showingStore.toggle()
           } label: {
             Image(systemName: "cart")
-              .foregroundColor(.white)
+//              .foregroundColor(.white)
+              .foregroundColor(Color("Background"))
               .font(.system(size: 20))
-          }.btnStoreFormat()
+          }.btnFormat()
             .fullScreenCover(isPresented: $showingStore) {
               StoreView(appState: $appState)
             }

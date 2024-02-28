@@ -56,7 +56,9 @@ struct StoreView: View {
             Button {
               showingPurchases.toggle()
             } label: {
-              Image(systemName: "plus.circle.fill").foregroundColor(.green).font(.system(size: 23))
+              Image(systemName: "plus.circle.fill")
+                .foregroundColor(Color("Text"))
+                .font(.system(size: 23))
               Text("\(userStars)")
                 .foregroundColor(Color("Text"))
               starIcon()

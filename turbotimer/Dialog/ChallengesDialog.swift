@@ -94,11 +94,11 @@ struct ChallengesDialog: View {
         } label: {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
-              .foregroundColor(.green)
+              .foregroundColor(Color("Text"))
             Text("Select")
               .textCase(.uppercase)
               .font(.system(size: 20, weight: .bold))
-              .foregroundColor(.white)
+              .foregroundColor(Color("Background"))
               .padding(10)
           }
         }

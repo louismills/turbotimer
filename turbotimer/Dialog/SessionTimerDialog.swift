@@ -84,11 +84,11 @@ struct SessionTimerDialog: View {
         } label: {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
-              .foregroundColor(.green)
+              .foregroundColor(Color("Text"))
             Text("Continue (10 Trophies)")
               .textCase(.uppercase)
               .fontWeight(.bold)
-              .foregroundColor(.white)
+              .foregroundColor(Color("Background"))
               .padding(10)
           }
         }

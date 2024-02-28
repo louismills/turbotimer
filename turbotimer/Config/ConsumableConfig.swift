@@ -77,7 +77,7 @@ struct ConsumableConfig: View {
       }) {
         if consumables[consumable.id].active {
           ZStack {
-            ProgressView(value: progress()).progressViewStyle(MyProgressViewStyle(myColor: Color.green))
+            ProgressView(value: progress()).progressViewStyle(MyProgressViewStyle())
             Text(formattedTime())
               .foregroundStyle(Color("Background"))
           }

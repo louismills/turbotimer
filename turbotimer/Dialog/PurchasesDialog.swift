@@ -10,6 +10,8 @@ import SwiftUI
 import StoreKit
 
 struct CustomProductStyle: ProductViewStyle {
+  @State private var offset: CGFloat = 1000
+
   func makeBody(configuration: Configuration) -> some View {
     switch configuration.state {
     case .loading:
@@ -59,12 +61,12 @@ struct CustomProductStyle: ProductViewStyle {
         } label: {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
-              .foregroundColor(.green)
-            
+              .foregroundColor(Color("Text"))
+
             Text(verbatim: "Buy for \(product.displayPrice)")
               .lineLimit(2)
               .font(.system(size: 20, weight: .bold))
-              .foregroundColor(Color("Text"))
+              .foregroundColor(Color("Background"))
               .padding()
           }
         }
@@ -73,7 +75,16 @@ struct CustomProductStyle: ProductViewStyle {
       .background(Color(UIColor.lightGray).opacity(0.4))
       .clipShape(RoundedRectangle(cornerRadius: 20))
       .buttonStyle(.plain)
-      
+      //wip
+      .offset(x: 0, y: offset)
+      .onAppear {
+        withAnimation(.spring()) {
+          offset = 0
+        }
+      }
+      //wip
+
+
     default:
       Text("Something goes wrong...")
     }

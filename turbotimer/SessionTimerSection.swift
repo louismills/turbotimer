@@ -42,13 +42,34 @@ struct sessionTimerSection: View {
     let screenWidth = screen.size.width
     GeometryReader { geo in
       VStack {
-        HStack {
+//        HStack {
+//          // TOP LEFT - SESSION TIME
+//          VStack (alignment: .leading) {
+//            Text(appState.mode.rawValue)
+//              .foregroundStyle(.gray)
+//            Text(appState.currentTimeDisplay)
+//              .font(.system(size: 45))
+//              .fontWeight(.heavy)
+//          }
+//          //          Spacer()
+//          //          VStack (alignment: .trailing) {
+//          //            // TOP RIGHT - STARS COUNT
+//          //            Text("Trophies")
+//          //              .foregroundStyle(.gray)
+//          //            Text("\(Int(appState.sessionStars))").foregroundColor(.yellow)
+//          //              .font(.system(size: 45))
+//          //              .fontWeight(.heavy)
+//          //          }
+//        }
+//        HStack {
           // TOP LEFT - SESSION TIME
           VStack (alignment: .leading) {
             Text(appState.mode.rawValue)
               .foregroundStyle(.gray)
             Text(appState.currentTimeDisplay)
-              .font(.system(size: 45))
+//              .font(.system(size: 45))
+                      .font(.system(size: 500))
+                      .minimumScaleFactor(0.01)
               .fontWeight(.heavy)
           }
           //          Spacer()
@@ -60,7 +81,7 @@ struct sessionTimerSection: View {
           //              .font(.system(size: 45))
           //              .fontWeight(.heavy)
           //          }
-        }
+//        }
         Spacer()
         HStack(alignment: .bottom) {
           // BOTTOM LEFT - Settings, Progress bar
@@ -69,10 +90,10 @@ struct sessionTimerSection: View {
               showingSettings.toggle()
             } label: {
               Image(systemName: "gear")
-                .foregroundColor(.white)
+                .foregroundColor(Color("Background"))
                 .font(.title)
             }
-            .btnStoreFormat()
+            .btnFormat()
             .fullScreenCover(isPresented: $showingSettings) {
               ChallengesView(appState: $appState)
             }
@@ -83,10 +104,10 @@ struct sessionTimerSection: View {
                 .foregroundStyle(.gray)
               if appState.mode == .session {
                 ProgressView(value: appState.currentTimeCountdown, total: Double(appState.workMinutes * 60))
-                  .progressViewStyle(MyProgressViewStyle(myColor: Color.green))
+                  .progressViewStyle(MyProgressViewStyle())
               } else {
                 ProgressView(value: appState.currentTimeCountdown, total: Double(appState.restMinutes * 60))
-                  .progressViewStyle(MyProgressViewStyle(myColor: Color.green))
+                  .progressViewStyle(MyProgressViewStyle())
               }
             }
           }
@@ -124,7 +145,7 @@ struct sessionTimerSection: View {
               Text("STOP")
             }
           }
-          .appBtn(color: !sessionRunning ? .green : Color(UIColor.lightGray).opacity(0.4))
+          .appBtn(color: !sessionRunning ? Color("Text") : Color(UIColor.lightGray).opacity(0.4))
           .fontWeight(.heavy)
         }
       }
