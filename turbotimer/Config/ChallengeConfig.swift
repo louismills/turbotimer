@@ -20,37 +20,36 @@ struct ChallengeConfig: View {
   @AppStorage("challengeSelectedRewardTyres") var challengeSelectedRewardTyres = 0
   @AppStorage("challengeSelectedRewardTyresType") var challengeSelectedRewardTyresType = ""
 
-  let workMinutes: Int
-  let rewardTyresType: String
-  let rewardTyres: Int
-  let rewardStars: Int
+  @AppStorage("challenges") var challenges = DefaultSettings.challengesDefault
+
+  var challenge: Challenges
 
   var body: some View {
     Button(action: {
       challengeSelected = true
-      challengeSelectedDuration = workMinutes
-      challengeSelectedRewardTyres = rewardTyres
-      challengeSelectedRewardStars = rewardStars
-      challengeSelectedRewardTyresType = rewardTyresType
+      challengeSelectedDuration = challenge.workMinutes
+      challengeSelectedRewardTyres = challenge.rewardTyres
+      challengeSelectedRewardStars = challenge.rewardStars
+      challengeSelectedRewardTyresType = challenge.rewardTyresType
     }) {
       HStack {
         Spacer()
         VStack {
           Spacer()
-          if workMinutes < 60 {
-            Text("\(workMinutes)").font(.system(size: 50))
+          if challenge.workMinutes < 60 {
+            Text("\(challenge.workMinutes)").font(.system(size: 50))
             Text("MINUTES").font(.system(size: 22))
           } else {
-            let remainingMins = (workMinutes - (((workMinutes) / 60) * 60))
+            let remainingMins = (challenge.workMinutes - (((challenge.workMinutes) / 60) * 60))
             if remainingMins > 0 {
-              Text("\(workMinutes / 60):\(remainingMins)").font(.system(size: 50))
+              Text("\(challenge.workMinutes / 60):\(remainingMins)").font(.system(size: 50))
               Text("HOURS").font(.system(size: 22))
             } else {
-              if (workMinutes / 60) > 1 {
-                Text("\(workMinutes / 60)").font(.system(size: 50))
+              if (challenge.workMinutes / 60) > 1 {
+                Text("\(challenge.workMinutes / 60)").font(.system(size: 50))
                 Text("HOURS").font(.system(size: 22))
               } else {
-                Text("\(workMinutes / 60)").font(.system(size: 50))
+                Text("\(challenge.workMinutes / 60)").font(.system(size: 50))
                 Text("HOUR").font(.system(size: 22))
               }
             }

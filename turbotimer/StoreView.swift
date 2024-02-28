@@ -22,8 +22,8 @@ struct StoreView: View {
   @AppStorage("userDestination") var userDestination = ""
   @AppStorage("userTheme") var userTheme: Color = .gray
   @AppStorage("userStars") var userStars = 0
-  @AppStorage("userConsumables") var userConsumables = DefaultSettings.consumablesDefault
-  @AppStorage("userThemes") var userThemes = DefaultSettings.themesDefault
+  @AppStorage("consumables") var consumables = DefaultSettings.consumablesDefault
+  @AppStorage("themes") var themes = DefaultSettings.themesDefault
 
   var body: some View {
     ZStack {
@@ -51,12 +51,6 @@ struct StoreView: View {
 
         ScrollView {
           HStack {
-            //            Text("\(userStars)")
-            //              .foregroundColor(Color("Text"))
-            //            starIcon()
-            //              .padding(.leading, 10)
-
-            // In store purchases button
             Button {
               showingPurchases.toggle()
             } label: {
@@ -84,8 +78,8 @@ struct StoreView: View {
               GeometryReader { geo in
                 Grid(alignment: .leading, horizontalSpacing: 0, verticalSpacing: 0) {
                   GridRow {
-                    ConsumableConfig(appState: $appState, consumable: userConsumables[0])
-                    ConsumableConfig(appState: $appState, consumable: userConsumables[1])
+                    ConsumableConfig(appState: $appState, consumable: consumables[0])
+                    ConsumableConfig(appState: $appState, consumable: consumables[1])
                   }
                   .padding(4)
                   .frame(width: geo.size.width / 2, height: geo.size.height)
@@ -115,16 +109,16 @@ struct StoreView: View {
               GeometryReader { geo in
                 Grid(alignment: .leading, horizontalSpacing: 0, verticalSpacing: 0) {
                   GridRow {
-                    ThemeConfig(appState: $appState, theme: userThemes[0])
-                    ThemeConfig(appState: $appState, theme: userThemes[1])
-                    ThemeConfig(appState: $appState, theme: userThemes[2])
+                    ThemeConfig(appState: $appState, theme: themes[0])
+                    ThemeConfig(appState: $appState, theme: themes[1])
+                    ThemeConfig(appState: $appState, theme: themes[2])
                   }
                   .padding(4)
                   .frame(width: geo.size.width / 3, height: geo.size.height / 2)
                   GridRow {
-                    ThemeConfig(appState: $appState, theme: userThemes[3])
-                    ThemeConfig(appState: $appState, theme: userThemes[4])
-                    ThemeConfig(appState: $appState, theme: userThemes[5])
+                    ThemeConfig(appState: $appState, theme: themes[3])
+                    ThemeConfig(appState: $appState, theme: themes[4])
+                    ThemeConfig(appState: $appState, theme: themes[5])
                   }
                   .padding(4)
                   .frame(width: geo.size.width / 3, height: geo.size.height / 2)

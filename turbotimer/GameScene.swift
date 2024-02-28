@@ -22,6 +22,7 @@ class GameScene: SKScene {
   private var ball: SKCropNode!
 
   @AppStorage("userTheme") var userTheme: Color = .gray
+  @AppStorage("userTyres") var userTyres = DefaultSettings.tyresDefault
 
   override func sceneDidLoad() {
     setUpBounds()
@@ -30,11 +31,12 @@ class GameScene: SKScene {
     setUpBtnTopMiddle()
     setUpBtnTopRight()
 
-    createTyre(tyreType: "tyreRed")
-    createTyre(tyreType: "tyreBlue")
-    createTyre(tyreType: "tyreYellow")
-    createTyre(tyreType: "tyreWhite")
-    createTyre(tyreType: "tyreGreen")
+    // Load tyres
+    for tyre in userTyres {
+      for _ in 0..<tyre.inventory {
+        createTyre(tyreType: tyre.type)
+      }
+    }
   }
 
   override func didMove(to view: SKView) {
@@ -57,9 +59,6 @@ class GameScene: SKScene {
     let shape = SKShapeNode()
     let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 53, width: screenWidth - 106, height: 220), cornerRadius: 20).cgPath
     shape.path = shapePath
-    //    shape.position = CGPoint(x: frame.midX, y: frame.midY)
-
-    //    shape.physicsBody = SKPhysicsBody(edgeChainFrom: shapePath)
     shape.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
     shape.physicsBody?.isDynamic = false
     shape.physicsBody?.categoryBitMask = CollisionType.wall.rawValue
@@ -152,4 +151,3 @@ class GameScene: SKScene {
 //    addChild(ball)
 //  }
 }
-// WIP

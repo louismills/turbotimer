@@ -17,8 +17,12 @@ struct ChallengesDialog: View {
   let rewardStars: Int
   let action: () -> ()
 
+  
+
   @State private var offset: CGFloat = 1000
   @AppStorage("userTheme") var userTheme: Color = .gray
+
+  
 
   var body: some View {
     ZStack {

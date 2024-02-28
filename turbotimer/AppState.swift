@@ -10,17 +10,37 @@ import SwiftUI
 
 enum DefaultSettings {
   static let consumablesDefault = [
-    UserConsumables(id: 0, isActive: false, cost: 0, inventory: 0, multiplier: 0.30, duration: 60, image: "fuelcan"),
-    UserConsumables(id: 1, isActive: false, cost: 0, inventory: 0, multiplier: 0.75, duration: 60, image: "crashhelmet")
+    Consumables(id: 0, isActive: false, cost: 15, inventory: 0, multiplier: 0.30, duration: 60, image: "fuelcan"),
+    Consumables(id: 1, isActive: false, cost: 35, inventory: 0, multiplier: 0.75, duration: 60, image: "crashhelmet")
   ]
 
   static let themesDefault = [
-    UserThemes(id: 0, bought: true, cost: 0, colour: "gray"),
-    UserThemes(id: 1, bought: false, cost: 0, colour: "yellow"),
-    UserThemes(id: 2, bought: false, cost: 10, colour: "red"),
-    UserThemes(id: 3, bought: false, cost: 10, colour: "purple"),
-    UserThemes(id: 4, bought: false, cost: 10, colour: "blue"),
-    UserThemes(id: 5, bought: false, cost: 10, colour: "green"),
+    Themes(id: 0, bought: true, cost: 0, colour: "themeGray"),
+    Themes(id: 1, bought: false, cost: 10, colour: "themeYellow"),
+    Themes(id: 2, bought: false, cost: 10, colour: "themeRed"),
+    Themes(id: 3, bought: false, cost: 10, colour: "themePurple"),
+    Themes(id: 4, bought: false, cost: 10, colour: "themeBlue"),
+    Themes(id: 5, bought: false, cost: 10, colour: "themeGreen"),
+  ]
+
+  static let challengesDefault = [
+    Challenges(id: 0, workMinutes: 5, rewardTyresType: "tyreRed", rewardTyres: 1, rewardStars: 1),
+    Challenges(id: 1, workMinutes: 10, rewardTyresType: "tyreYellow", rewardTyres: 1,rewardStars: 2),
+    Challenges(id: 2, workMinutes: 15, rewardTyresType: "tyreWhite", rewardTyres: 1,rewardStars: 3),
+    Challenges(id: 3, workMinutes: 20, rewardTyresType: "tyreGreen", rewardTyres: 1,rewardStars: 5),
+    Challenges(id: 4, workMinutes: 25, rewardTyresType: "tyreBlue", rewardTyres: 1,rewardStars: 7),
+    Challenges(id: 5, workMinutes: 30, rewardTyresType: "tyreRed", rewardTyres: 2,rewardStars: 11),
+    Challenges(id: 6, workMinutes: 45, rewardTyresType: "tyreYellow", rewardTyres: 2,rewardStars: 15),
+    Challenges(id: 7, workMinutes: 60, rewardTyresType: "tyreWhite", rewardTyres: 2,rewardStars: 22),
+    Challenges(id: 8, workMinutes: 90, rewardTyresType: "tyreGreen", rewardTyres: 2,rewardStars: 30),
+    Challenges(id: 9, workMinutes: 120, rewardTyresType: "tyreBlue", rewardTyres: 2,rewardStars: 38)
+  ]
+
+  static let tyresDefault = [Tyres(id: 0, type: "tyreRed", inventory: 0),
+                             Tyres(id: 1, type: "tyreYellow", inventory: 0),
+                             Tyres(id: 2, type: "tyreWhite", inventory: 0),
+                             Tyres(id: 3, type: "tyreGreen", inventory: 0),
+                             Tyres(id: 4, type: "tyreBlue", inventory: 0)
   ]
 }
 
@@ -29,7 +49,19 @@ enum Mode: String, Equatable {
   case session = "Session time"
 }
 
-struct UserThemes: Identifiable, Codable {
+struct Tyres: Identifiable, Codable {
+  let id : Int
+  var type: String
+  var inventory: Int
+
+  init(id: Int, type: String, inventory: Int) {
+    self.id = id
+    self.type = type
+    self.inventory = inventory
+  }
+}
+
+struct Themes: Identifiable, Codable {
   let id : Int
   var bought : Bool
   var cost : Int
@@ -43,7 +75,7 @@ struct UserThemes: Identifiable, Codable {
   }
 }
 
-struct UserConsumables: Identifiable, Codable {
+struct Consumables: Identifiable, Codable {
   let id : Int
   var isActive : Bool
   var cost : Int
@@ -63,25 +95,41 @@ struct UserConsumables: Identifiable, Codable {
   }
 }
 
-struct shop {
-  var shop: Int
-  var bought: Bool
-  var cost: Int
-  var multiplier: Double
-  var image: String
-}
-
-struct UserShops: Identifiable, Codable{
+struct Challenges: Identifiable, Codable {
   let id : Int
-  var bought : Bool
-  var cost : Int
+  var workMinutes: Int
+  var rewardTyresType: String
+  var rewardTyres: Int
+  var rewardStars: Int
 
-  init(id: Int, bought: Bool, cost: Int) {
+  init(id: Int, workMinutes: Int, rewardTyresType: String, rewardTyres: Int, rewardStars: Int) {
     self.id = id
-    self.bought = bought
-    self.cost = cost
+    self.workMinutes = workMinutes
+    self.rewardTyresType = rewardTyresType
+    self.rewardTyres = rewardTyres
+    self.rewardStars = rewardStars
   }
 }
+
+//struct shop {
+//  var shop: Int
+//  var bought: Bool
+//  var cost: Int
+//  var multiplier: Double
+//  var image: String
+//}
+//
+//struct UserShops: Identifiable, Codable{
+//  let id : Int
+//  var bought : Bool
+//  var cost : Int
+//
+//  init(id: Int, bought: Bool, cost: Int) {
+//    self.id = id
+//    self.bought = bought
+//    self.cost = cost
+//  }
+//}
 
 extension Array: RawRepresentable where Element: Codable {
   public init?(rawValue: String) {
@@ -144,18 +192,24 @@ extension Color {
 struct AppState {
   @AppStorage("userStars") var userStars = 0
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
-  @AppStorage("userSessionTime") var userSessionTime = 0
-  @AppStorage("userMultiplier") var userMultiplier = 0.0
-  @AppStorage("userImage") var userImage = "car1"
-
-  @AppStorage("challengeSelectedReward") var challengeSelectedReward = 0
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
   @AppStorage("challengeSelectedRewardStars") var challengeSelectedRewardStars = 0
 
-  @AppStorage("sessionRunning") var sessionRunning = false
+//  @AppStorage("userSessionTime") var userSessionTime = 0
 
-  @AppStorage("userConsumables") var userConsumables = DefaultSettings.consumablesDefault
-  @AppStorage("userThemes") var userThemes = DefaultSettings.themesDefault
+//  @AppStorage("userMultiplier") var userMultiplier = 0.0
+//  @AppStorage("userImage") var userImage = "car1"
+
+//  @AppStorage("challengeSelectedReward") var challengeSelectedReward = 0
+
+
+
+//  @AppStorage("sessionRunning") var sessionRunning = false
+
+//  @AppStorage("consumables") var consumables = DefaultSettings.consumablesDefault
+//  @AppStorage("themes") var themes = DefaultSettings.themesDefault
+//  @AppStorage("challenges") var challenges = DefaultSettings.challengesDefault
+//  @AppStorage("userTyres") var userTyres = DefaultSettings.tyresDefault
 
   var workMinutes: Int = 5 {
     didSet {
@@ -199,7 +253,7 @@ struct AppState {
       return
     }
 
-    if currentTime == 0 {
+    if currentTime == 0 && mode == .session {
       userStars += challengeSelectedRewardStars
       userTotalSessionTime += workMinutes
     }

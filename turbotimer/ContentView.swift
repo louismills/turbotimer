@@ -150,11 +150,11 @@ struct ContentView: View {
   @State var timer: Timer? = nil
   @State private var showingStore = false
   @State var sessionRunning = false
+
   @State var gameScene: GameScene = {
     let scene = GameScene(size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
     scene.scaleMode = .resizeFill
     scene.backgroundColor = UIColor(Color("Background"))
-
     return scene
   }()
 

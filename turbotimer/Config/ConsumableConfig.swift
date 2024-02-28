@@ -22,23 +22,21 @@ struct ConsumableConfig: View {
 
   @AppStorage("userStars") var userStars = 0
   @AppStorage("userMultiplier") var userMultiplier: Double = 0
-  @AppStorage("userConsumables") var userConsumables = DefaultSettings.consumablesDefault
+  @AppStorage("consumables") var consumables = DefaultSettings.consumablesDefault
 
   //  @State private var timeRemaining = 3600
   @State private var timeRemaining = 10
   @State private var timerIsActive = false
   let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
-
-//  var consumable: consumable
-  var consumable: UserConsumables
+  var consumable: Consumables
 
   var body: some View {
     VStack {
       Button(action: {
-        if userStars >= consumable.cost && userConsumables[consumable.id].inventory < 10 {
+        if userStars >= consumable.cost && consumables[consumable.id].inventory < 10 {
           userStars -= consumable.cost
-          userConsumables[consumable.id].inventory += 1
+          consumables[consumable.id].inventory += 1
         }
       }) {
         ZStack {
@@ -67,16 +65,16 @@ struct ConsumableConfig: View {
         .background(Color(UIColor.lightGray).opacity(0.4))
         .clipShape(RoundedRectangle(cornerRadius: 20))
       }
-      Text("\(userConsumables[consumable.id].inventory)")
+      Text("\(consumables[consumable.id].inventory)")
       Button(action: {
-        if (userConsumables[consumable.id].inventory > 0 && userConsumables[consumable.id].isActive == false && timerIsActive == false) {
-          userConsumables[consumable.id].inventory -= 1
-          userConsumables[consumable.id].isActive = true
+        if (consumables[consumable.id].inventory > 0 && consumables[consumable.id].isActive == false && timerIsActive == false) {
+          consumables[consumable.id].inventory -= 1
+          consumables[consumable.id].isActive = true
           timerIsActive = true
           userMultiplier = consumable.multiplier
         }
       }) {
-        if userConsumables[consumable.id].isActive {
+        if consumables[consumable.id].isActive {
           ZStack {
             ProgressView(value: progress()).progressViewStyle(MyProgressViewStyle(myColor: Color.green))
             Text(formattedTime()).foregroundStyle(Color("Text"))
@@ -87,18 +85,18 @@ struct ConsumableConfig: View {
           Spacer()
         }
       }
-      .disabled((userConsumables[consumable.id].inventory == 0 && userConsumables[consumable.id].isActive == false) || (userConsumables[consumable.id].isActive == false && timerIsActive == true))
+      .disabled((consumables[consumable.id].inventory == 0 && consumables[consumable.id].isActive == false) || (consumables[consumable.id].isActive == false && timerIsActive == true))
       .frame(maxWidth: .infinity, maxHeight: 40)
       .fontWeight(.heavy)
       .background(.green)
       .clipShape(RoundedRectangle(cornerRadius: 20))
     }
     .onReceive(timer) { _ in
-      if userConsumables[consumable.id].isActive {
+      if consumables[consumable.id].isActive {
         if timeRemaining > 0 {
           timeRemaining -= 1
         } else {
-          userConsumables[consumable.id].isActive = false
+          consumables[consumable.id].isActive = false
           timerIsActive = false
           //          timeRemaining = 3600
           timeRemaining = 10

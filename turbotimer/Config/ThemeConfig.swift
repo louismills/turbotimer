@@ -12,26 +12,26 @@ struct ThemeConfig: View {
 
   @AppStorage("userStars") var userStars = 0
   @AppStorage("userTheme") var userTheme: Color = .gray
-  @AppStorage("userThemes") var userThemes = DefaultSettings.themesDefault
+  @AppStorage("themes") var themes = DefaultSettings.themesDefault
 
-  var theme: UserThemes
+  var theme: Themes
 
   var body: some View {
     ZStack(alignment: .center) {
       Button(action: {
-        if userStars >= theme.cost && userThemes[theme.id].bought == false {
+        if userStars >= theme.cost && themes[theme.id].bought == false {
           userStars -= theme.cost
-          userThemes[theme.id].bought = true
+          themes[theme.id].bought = true
           userTheme = Color(theme.colour)
         }
-        if userThemes[theme.id].bought == true {
+        if themes[theme.id].bought == true {
           userTheme = Color(theme.colour)
         }
       }) {
         ZStack(alignment: .center) {
           Circle().fill(Color(theme.colour)).padding(10)
 
-          if userThemes[theme.id].bought == false {
+          if themes[theme.id].bought == false {
             buyShopBtn(cost: theme.cost).offset(x: 30, y: -30)
           }
           else {

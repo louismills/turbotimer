@@ -24,7 +24,18 @@ struct sessionTimerSection: View {
 
   @AppStorage("userTheme") var userTheme: Color = .gray
 
+  @AppStorage("challengeSelectedRewardTyres") var challengeSelectedRewardTyres = 0
   @AppStorage("challengeSelectedRewardTyresType") var challengeSelectedRewardTyresType = ""
+
+  @AppStorage("userTyres") var userTyres = DefaultSettings.tyresDefault
+
+  // wip
+  func updateInventory(type: String) {
+          if let index = userTyres.firstIndex(where: { $0.type == type }) {
+            userTyres[index].inventory += 1
+          }
+      }
+  // wip
 
   let scene: GameScene
 
@@ -83,16 +94,20 @@ struct sessionTimerSection: View {
               }
             }
           }
-
           Spacer()
-
           // BOTTOM RIGHT - Start / Stop button
           Button {
             if timer == nil {
               timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ _ in
                 appState.next()
+                // Create correct tyre colour
                 if appState.currentTime == 0 && appState.mode == .session {
-                  scene.createTyre(tyreType: challengeSelectedRewardTyresType)
+                  // Create quantity
+                  for _ in 0..<challengeSelectedRewardTyres {
+                    scene.createTyre(tyreType: challengeSelectedRewardTyresType)
+                    // add to user tyre inventory
+                    updateInventory(type: challengeSelectedRewardTyresType)
+                  }
                 }
               }
               sessionRunning = true

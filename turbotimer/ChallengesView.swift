@@ -19,6 +19,8 @@ struct ChallengesView: View {
   @AppStorage("challengeSelectedRewardTyresType") var challengeSelectedRewardTyresType = ""
   @AppStorage("userSessionTime") var userSessionTime = 0
 
+  @AppStorage("challenges") var challenges = DefaultSettings.challengesDefault
+
   @Environment(\.dismiss) var dismiss
 
   var body: some View {
@@ -49,28 +51,28 @@ struct ChallengesView: View {
       GeometryReader { geo in
         Grid(alignment: .leading, horizontalSpacing: 20, verticalSpacing: 20) {
           GridRow {
-            ChallengeConfig(appState: $appState, workMinutes: 5, rewardTyresType: "tyreRed", rewardTyres: 1, rewardStars: 1)
-            ChallengeConfig(appState: $appState, workMinutes: 10, rewardTyresType: "tyreYellow", rewardTyres: 1,rewardStars: 2)
+            ChallengeConfig(appState: $appState, challenge: challenges[0])
+            ChallengeConfig(appState: $appState, challenge: challenges[1])
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
           GridRow {
-            ChallengeConfig(appState: $appState, workMinutes: 15, rewardTyresType: "tyreWhite", rewardTyres: 1,rewardStars: 3)
-            ChallengeConfig(appState: $appState, workMinutes: 20, rewardTyresType: "tyreGreen", rewardTyres: 1,rewardStars: 5)
+            ChallengeConfig(appState: $appState, challenge: challenges[2])
+            ChallengeConfig(appState: $appState, challenge: challenges[3])
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
           GridRow {
-            ChallengeConfig(appState: $appState, workMinutes: 25, rewardTyresType: "tyreBlue", rewardTyres: 1,rewardStars: 7)
-            ChallengeConfig(appState: $appState, workMinutes: 30, rewardTyresType: "tyreRed", rewardTyres: 2,rewardStars: 11)
+            ChallengeConfig(appState: $appState, challenge: challenges[4])
+            ChallengeConfig(appState: $appState, challenge: challenges[5])
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
           GridRow {
-            ChallengeConfig(appState: $appState, workMinutes: 45, rewardTyresType: "tyreYellow", rewardTyres: 2,rewardStars: 15)
-            ChallengeConfig(appState: $appState, workMinutes: 60, rewardTyresType: "tyreWhite", rewardTyres: 2,rewardStars: 22)
+            ChallengeConfig(appState: $appState, challenge: challenges[6])
+            ChallengeConfig(appState: $appState, challenge: challenges[7])
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
           GridRow {
-            ChallengeConfig(appState: $appState, workMinutes: 90, rewardTyresType: "tyreGreen", rewardTyres: 2,rewardStars: 30)
-            ChallengeConfig(appState: $appState, workMinutes: 120, rewardTyresType: "tyreBlue", rewardTyres: 2,rewardStars: 38)
+            ChallengeConfig(appState: $appState, challenge: challenges[8])
+            ChallengeConfig(appState: $appState, challenge: challenges[9])
           }
           .frame(width: geo.size.width / 2, height: geo.size.height / 7)
         }
