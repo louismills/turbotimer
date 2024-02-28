@@ -39,7 +39,7 @@ struct CustomProductStyle: ProductViewStyle {
       .buttonStyle(.plain)
       
     case .success(let product):
-      VStack {
+      VStack (spacing: 15) {
         HStack {
           if product.id == "com.turbotimer.trophies.small" {
             Text("50")
@@ -79,13 +79,14 @@ struct CustomProductStyle: ProductViewStyle {
     }
   }
 }
-// wip
 
 struct PurchasesDialog: View {
   @Binding var isActive: Bool
   
   @AppStorage("userStars") var userStars = 0
-  
+
+  @AppStorage("showingPurchases") var showingPurchases = false
+
   let action: () -> ()
   @State private var offset: CGFloat = 1000
   
@@ -123,6 +124,7 @@ struct PurchasesDialog: View {
         }
         Button {
           close()
+          showingPurchases = false
         } label: {
           ZStack {
             RoundedRectangle(cornerRadius: 20)

@@ -23,10 +23,11 @@ struct ConsumableConfig: View {
   @AppStorage("userStars") var userStars = 0
   @AppStorage("userMultiplier") var userMultiplier: Double = 0
   @AppStorage("consumables") var consumables = DefaultSettings.consumablesDefault
+  @AppStorage("consumableIsActive") var consumableIsActive = false
 
   //  @State private var timeRemaining = 3600
   @State private var timeRemaining = 10
-  @State private var timerIsActive = false
+
   let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
   var consumable: Consumables
@@ -67,29 +68,35 @@ struct ConsumableConfig: View {
       }
       Text("\(consumables[consumable.id].inventory)")
       Button(action: {
-        if (consumables[consumable.id].inventory > 0 && consumables[consumable.id].active == false && timerIsActive == false) {
+        if (consumables[consumable.id].inventory > 0 && consumables[consumable.id].active == false && consumableIsActive == false) {
           consumables[consumable.id].inventory -= 1
           consumables[consumable.id].active = true
-          timerIsActive = true
+          consumableIsActive = true
           userMultiplier = consumable.multiplier
         }
       }) {
         if consumables[consumable.id].active {
           ZStack {
             ProgressView(value: progress()).progressViewStyle(MyProgressViewStyle(myColor: Color.green))
-            Text(formattedTime()).foregroundStyle(Color("Text"))
+            Text(formattedTime())
+              .foregroundStyle(Color("Background"))
           }
+          .frame(maxWidth: .infinity, maxHeight: 40)
+          .fontWeight(.heavy)
+          .background(Color("Text"))
+          .clipShape(RoundedRectangle(cornerRadius: 20))
         } else {
-          Spacer()
+//          Spacer()
           Text("Activate")
-          Spacer()
+            .foregroundStyle(Color("Background"))
+            .frame(maxWidth: .infinity, maxHeight: 40)
+            .fontWeight(.heavy)
+            .background(Color("Text"))
+            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
+
       }
-      .disabled((consumables[consumable.id].inventory == 0 && consumables[consumable.id].active == false) || (consumables[consumable.id].active == false && timerIsActive == true))
-      .frame(maxWidth: .infinity, maxHeight: 40)
-      .fontWeight(.heavy)
-      .background(.green)
-      .clipShape(RoundedRectangle(cornerRadius: 20))
+      .disabled((consumables[consumable.id].inventory == 0 && consumables[consumable.id].active == false) || (consumables[consumable.id].active == false && consumableIsActive == true))
     }
     .onReceive(timer) { _ in
       if consumables[consumable.id].active {
@@ -97,7 +104,7 @@ struct ConsumableConfig: View {
           timeRemaining -= 1
         } else {
           consumables[consumable.id].active = false
-          timerIsActive = false
+          consumableIsActive = false
           //          timeRemaining = 3600
           timeRemaining = 10
           userMultiplier = 0

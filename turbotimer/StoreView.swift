@@ -17,14 +17,16 @@ struct StoreView: View {
   
   @Environment(\.dismiss) var dismiss
   
-  @State private var showingPurchases = false
+//  @State private var showingPurchases = false
   
   @AppStorage("userDestination") var userDestination = ""
   @AppStorage("userTheme") var userTheme = "gray"
   @AppStorage("userStars") var userStars = 0
   @AppStorage("consumables") var consumables = DefaultSettings.consumablesDefault
   @AppStorage("themes") var themes = DefaultSettings.themesDefault
-  
+
+  @AppStorage("showingPurchases") var showingPurchases = false
+
   var body: some View {
     ZStack {
       VStack(spacing: 0) {
@@ -140,7 +142,7 @@ struct StoreView: View {
       }
       if showingPurchases {
         PurchasesDialog(isActive: $showingPurchases) {
-          showingPurchases = false
+//          showingPurchases = false
           dismiss()
         }
       }
