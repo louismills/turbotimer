@@ -15,9 +15,9 @@ enum DefaultSettings {
   ]
 
   static let themesDefault = [
-    Themes(id: 0, bought: true, cost: 0, colour: "themeGray"),
+    Themes(id: 0, bought: true, cost: 0, colour: "themeRed"),
     Themes(id: 1, bought: false, cost: 10, colour: "themeYellow"),
-    Themes(id: 2, bought: false, cost: 10, colour: "themeRed"),
+    Themes(id: 2, bought: false, cost: 10, colour: "themeOrange"),
     Themes(id: 3, bought: false, cost: 10, colour: "themePurple"),
     Themes(id: 4, bought: false, cost: 10, colour: "themeBlue"),
     Themes(id: 5, bought: false, cost: 10, colour: "themeGreen"),
@@ -164,8 +164,11 @@ struct AppState {
 
   var currentTime: Int
 
+  var consumableTime: Int // WIP
+
   init() {
     self.currentTime = workMinutes * 60
+    self.consumableTime = 10 // WIP 3600
   }
 
   var currentTimeDisplay: String {
@@ -207,4 +210,39 @@ struct AppState {
     workMinutes = challengeSelectedDuration
     mode = .session
   }
+
+
+  // WIP for consumableconfig
+  mutating func consumableNext() {
+    if consumableTime > 0 {
+      consumableTime -= 1
+      return
+    }
+
+    // reset
+    if consumableTime == 0 {
+      consumableTime = 10
+    }
+//    else {
+//      consumableTime = 10
+//    }
+
+  }
+
+  func progress() -> Double {
+    //          max(0.0, 1.0 - Double(timeRemaining) / 3600.0)
+    max(0.0, 1.0 - Double(consumableTime) / 10.0)
+  }
+
+  var consumableTimeCountdown: Double {
+    let time = Double(consumableTime)
+    return time
+  }
+
+  func consumableFormattedTime() -> String {
+    let minutes = consumableTime / 60
+    let seconds = consumableTime % 60
+    return String(format: "%02d:%02d", minutes, seconds)
+  }
+  // WIP
 }

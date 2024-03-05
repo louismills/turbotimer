@@ -161,10 +161,16 @@ struct ContentView: View {
     return scene
   }()
 
+  @Environment(\.colorScheme) var colorScheme // wip
+
   var body: some View {
     ZStack {
       SpriteView(scene: gameScene)
+        .onChange(of: self.colorScheme) {
+          gameScene.updateBackgroundColor(mode: self.colorScheme)
+    }
         .frame(maxHeight: UIScreen.main.bounds.size.height)
+
       VStack(spacing: 10) {
         // TOP NAV SECTION - total stars, total session time and shop
         HStack {
@@ -234,7 +240,8 @@ struct ContentView: View {
           showingSessionTimerWarning = false
         }
       }
-    }.ignoresSafeArea()
+    }
+    .ignoresSafeArea()
   }
 }
 

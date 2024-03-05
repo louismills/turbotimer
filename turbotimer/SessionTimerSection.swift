@@ -42,46 +42,17 @@ struct sessionTimerSection: View {
     let screenWidth = screen.size.width
     GeometryReader { geo in
       VStack {
-//        HStack {
-//          // TOP LEFT - SESSION TIME
-//          VStack (alignment: .leading) {
-//            Text(appState.mode.rawValue)
-//              .foregroundStyle(.gray)
-//            Text(appState.currentTimeDisplay)
-//              .font(.system(size: 45))
-//              .fontWeight(.heavy)
-//          }
-//          //          Spacer()
-//          //          VStack (alignment: .trailing) {
-//          //            // TOP RIGHT - STARS COUNT
-//          //            Text("Trophies")
-//          //              .foregroundStyle(.gray)
-//          //            Text("\(Int(appState.sessionStars))").foregroundColor(.yellow)
-//          //              .font(.system(size: 45))
-//          //              .fontWeight(.heavy)
-//          //          }
-//        }
-//        HStack {
-          // TOP LEFT - SESSION TIME
-          VStack (alignment: .leading) {
-            Text(appState.mode.rawValue)
-              .foregroundStyle(.gray)
-            Text(appState.currentTimeDisplay)
-//              .font(.system(size: 45))
-                      .font(.system(size: 500))
-                      .minimumScaleFactor(0.01)
-              .fontWeight(.heavy)
-          }
-          //          Spacer()
-          //          VStack (alignment: .trailing) {
-          //            // TOP RIGHT - STARS COUNT
-          //            Text("Trophies")
-          //              .foregroundStyle(.gray)
-          //            Text("\(Int(appState.sessionStars))").foregroundColor(.yellow)
-          //              .font(.system(size: 45))
-          //              .fontWeight(.heavy)
-          //          }
-//        }
+        // TOP LEFT - SESSION TIME
+        VStack (alignment: .leading) {
+          Text(appState.mode.rawValue)
+            .foregroundStyle(.gray)
+          Text(appState.currentTimeDisplay)
+            .font(.system(size: 300))
+            .minimumScaleFactor(0.01)
+            .fontWeight(.heavy)
+            .monospacedDigit()
+
+        }
         Spacer()
         HStack(alignment: .bottom) {
           // BOTTOM LEFT - Settings, Progress bar
@@ -149,7 +120,9 @@ struct sessionTimerSection: View {
           .fontWeight(.heavy)
         }
       }
-      .padding(.top, 10)
+      //      .padding(.top, 10)
+      .padding(.top, 5)
+      //      .padding(.top, sessionRunning ? 0 : 10)
     }
     .padding()
     .frame(maxHeight: 220)

@@ -23,6 +23,8 @@ class GameScene: SKScene {
 
   @AppStorage("userTyres") var userTyres = DefaultSettings.tyresDefault
 
+
+
   override func sceneDidLoad() {
     setUpBounds()
     setUpBox()
@@ -130,23 +132,11 @@ class GameScene: SKScene {
     }
   }
 
-  //  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-  //    guard let touch = touches.first else { return }
-  //    let location = touch.location(in: self)
-  //    let maskShapeTexture = SKTexture(imageNamed: "circle")
-  //    let texture = SKTexture(imageNamed: "tyreRed")
-  //    let pictureToMask = SKSpriteNode(texture: texture, size: CGSize(width: 50, height: 50))
-  //    let mask = SKSpriteNode(texture: maskShapeTexture)
-  //    let ball = SKCropNode()
-  //    ball.maskNode = mask
-  //    ball.addChild(pictureToMask)
-  //    ball.position = location
-  //    ball.zPosition = 1
-  //    ball.physicsBody = SKPhysicsBody(circleOfRadius: 25)
-  //    ball.physicsBody?.allowsRotation = true
-  //    ball.physicsBody?.linearDamping = 0.5
-  //    ball.physicsBody?.isDynamic = true
-  //
-  //    addChild(ball)
-  //  }
+  func updateBackgroundColor(mode: ColorScheme) {
+    if mode == .light {
+      backgroundColor = UIColor(Color.white)
+    } else {
+      backgroundColor = UIColor(Color.black)
+    }
+  }
 }
