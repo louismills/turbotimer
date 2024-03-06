@@ -20,14 +20,13 @@ struct AppBtn: ViewModifier {
     content
       .frame(minWidth: 80, minHeight: 45)
       .background(color)
-//      .foregroundColor(.white)
       .foregroundColor(Color("Background"))
       .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 }
 
 struct BtnTextPanelFormat: ViewModifier {
-  @AppStorage("userTheme") var userTheme = "gray"
+  @AppStorage("userTheme") var userTheme = "themeRed"
 
   func body(content: Content) -> some View {
     content
@@ -92,11 +91,9 @@ struct dismissBtn: View {
 }
 
 struct MyProgressViewStyle: ProgressViewStyle {
-//  var myColor: Color
 
   func makeBody(configuration: Configuration) -> some View {
     ProgressView(configuration)
-//      .accentColor(myColor)
       .accentColor(Color("Text"))
       .background(Color(UIColor.lightGray).opacity(0.4))
       .frame(minHeight: 45)
@@ -140,13 +137,13 @@ extension Button {
 struct ContentView: View {
   @Environment(\.scenePhase) var scenePhase
   @Environment(\.dismiss) var dismiss
+  @Environment(\.colorScheme) var colorScheme
 
   @AppStorage("userStars") var userStars = 0
   @AppStorage("userTotalSessionTime") var userTotalSessionTime = 0
   @AppStorage("userSessionTime") var userSessionTime = 0
   @AppStorage("userDestination") var userDestination = ""
-  @AppStorage("userTheme") var userTheme = "gray"
-  @AppStorage("userImage") var userImage = "car1"
+  @AppStorage("userTheme") var userTheme = "themeRed"
   @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
 
   @State var appState = AppState()
@@ -161,14 +158,12 @@ struct ContentView: View {
     return scene
   }()
 
-  @Environment(\.colorScheme) var colorScheme // wip
-
   var body: some View {
     ZStack {
       SpriteView(scene: gameScene)
         .onChange(of: self.colorScheme) {
           gameScene.updateBackgroundColor(mode: self.colorScheme)
-    }
+        }
         .frame(maxHeight: UIScreen.main.bounds.size.height)
 
       VStack(spacing: 10) {
@@ -208,7 +203,6 @@ struct ContentView: View {
             showingStore.toggle()
           } label: {
             Image(systemName: "cart")
-//              .foregroundColor(.white)
               .foregroundColor(Color("Background"))
               .font(.system(size: 20))
           }.btnFormat()

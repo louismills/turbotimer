@@ -164,11 +164,11 @@ struct AppState {
 
   var currentTime: Int
 
-  var consumableTime: Int // WIP
+  var consumableTime: Int
 
   init() {
     self.currentTime = workMinutes * 60
-    self.consumableTime = 10 // WIP 3600
+    self.consumableTime = 10 // 3600
   }
 
   var currentTimeDisplay: String {
@@ -211,8 +211,6 @@ struct AppState {
     mode = .session
   }
 
-
-  // WIP for consumableconfig
   mutating func consumableNext() {
     if consumableTime > 0 {
       consumableTime -= 1
@@ -223,9 +221,6 @@ struct AppState {
     if consumableTime == 0 {
       consumableTime = 10
     }
-//    else {
-//      consumableTime = 10
-//    }
 
   }
 
@@ -244,5 +239,4 @@ struct AppState {
     let seconds = consumableTime % 60
     return String(format: "%02d:%02d", minutes, seconds)
   }
-  // WIP
 }

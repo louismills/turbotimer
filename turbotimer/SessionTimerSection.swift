@@ -46,6 +46,7 @@ struct sessionTimerSection: View {
         VStack (alignment: .leading) {
           Text(appState.mode.rawValue)
             .foregroundStyle(.gray)
+            .fontWeight(.bold)
           Text(appState.currentTimeDisplay)
             .font(.system(size: 300))
             .minimumScaleFactor(0.01)
@@ -73,6 +74,7 @@ struct sessionTimerSection: View {
             if sessionRunning {
               Text("Progress")
                 .foregroundStyle(.gray)
+                .fontWeight(.bold)
               if appState.mode == .session {
                 ProgressView(value: appState.currentTimeCountdown, total: Double(appState.workMinutes * 60))
                   .progressViewStyle(MyProgressViewStyle())
@@ -116,16 +118,18 @@ struct sessionTimerSection: View {
               Text("STOP")
             }
           }
-          .appBtn(color: !sessionRunning ? Color("Text") : Color(UIColor.lightGray).opacity(0.4))
+//          .appBtn(color: !sessionRunning ? Color("Text") : Color(UIColor.lightGray).opacity(0.4))
+          .appBtn(color: !sessionRunning ? Color("Text") : Color(.gray))
           .fontWeight(.heavy)
         }
       }
       //      .padding(.top, 10)
       .padding(.top, 5)
-      //      .padding(.top, sessionRunning ? 0 : 10)
+//            .padding(.top, sessionRunning ? 0 : 10)
     }
     .padding()
-    .frame(maxHeight: 220)
+//    .frame(maxHeight: 220)
+    .frame(maxHeight: 235)
     .frame(width: screenWidth - 106)
     .background(Color("BackgroundPanel"))
     .overlay(

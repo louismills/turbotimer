@@ -31,18 +31,42 @@ struct ThemeConfig: View {
         ZStack(alignment: .center) {
           Circle().fill(Color(theme.colour)).padding(10)
 
+          // Theme not bought
           if themes[theme.id].bought == false {
-            buyShopBtn(cost: theme.cost).offset(x: 30, y: -30)
+//            buyShopBtn(cost: theme.cost)
+            HStack {
+              Text("\(theme.cost)")
+                .foregroundColor(Color("Text"))
+                .padding(.leading, 10)
+              starIcon()
+            }
+            .btnTextFormat()
+            .background(Color("Background"))
+            .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .bottomLeft]))
+            .offset(x: 25, y: -40)
           }
           else {
+            // Theme bought and equipped
             if Color(userTheme) == Color(theme.colour) {
-              equippedBtn().offset(x: 30, y: -30)
+//              equippedBtn()
+              HStack {
+                Text(Image(systemName:"checkmark.circle.fill"))
+                  .foregroundColor(Color("Text"))
+                  .padding(.horizontal, 10)
+              }
+              .btnTextFormat()
+                .background(Color("Background"))
+                .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .bottomLeft]))
+                .offset(x: 35, y: -40)
             }
+
           }
         }
       }
       .buttonStyle(PlainButtonStyle())
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(Color(UIColor.lightGray).opacity(0.4))
+    .clipShape(RoundedRectangle(cornerRadius: 20))
   }
 }

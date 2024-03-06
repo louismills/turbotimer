@@ -28,7 +28,6 @@ struct ConsumableConfig: View {
   //  @State private var timeRemaining = 3600
   @State private var timeRemaining = 10
 
-//  let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
   @State var timerConsumable: Timer? = nil
 
   var consumable: Consumables
@@ -75,58 +74,24 @@ struct ConsumableConfig: View {
           consumableIsActive = true
           userMultiplier = consumable.multiplier
         }
-
-        // WIP
         if timerConsumable == nil {
           timerConsumable = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ _ in
             appState.consumableNext()
-//            print("\(appState.consumableTimeCountdown)")
 
             if appState.consumableTimeCountdown == 0 {
-//              print("finished")
               timerConsumable?.invalidate()
               timerConsumable = nil
               consumables[consumable.id].active = false
               consumableIsActive = false
-
             }
-//            if timeRemaining > 0 {
-//                      timeRemaining -= 1
-//                    }
-//              else {
-//                consumables[consumable.id].active = false
-//                consumableIsActive = false
-//                //          timeRemaining = 3600
-//                timeRemaining = 10
-//                userMultiplier = 0
-//                timerConsumable?.invalidate()
-//                timerConsumable = nil
-//              }
           }
         }
-//        else {
-//          print("finished")
-//          timerConsumable?.invalidate()
-//          timerConsumable = nil
-//        }
-        // WIP
-
       }) {
         
         if consumables[consumable.id].active {
-//          ZStack {
-//            ProgressView(value: progress()).progressViewStyle(MyProgressViewStyle())
-//            Text(formattedTime())
-//              .foregroundStyle(Color("Background"))
-//          }
-//          ZStack {
-//            ProgressView(value: appState.consumableTimeCountdown, total: Double(appState.consumableTime * 60)).progressViewStyle(MyProgressViewStyle())
-//            Text(formattedTime())
-//              .foregroundStyle(Color("Background"))
-//          }
           ZStack {
-            ProgressView(value: appState.progress()).progressViewStyle(MyProgressViewStyle())
-//            Text(formattedTime())
+            ProgressView(value: appState.progress())
+              .progressViewStyle(MyProgressViewStyle())
             Text(appState.consumableFormattedTime())
               .foregroundStyle(Color("Background"))
           }
@@ -142,32 +107,9 @@ struct ConsumableConfig: View {
             .background(Color("Text"))
             .clipShape(RoundedRectangle(cornerRadius: 20))
         }
-
       }
       .disabled((consumables[consumable.id].inventory == 0 && consumables[consumable.id].active == false) || (consumables[consumable.id].active == false && consumableIsActive == true))
     }
-//    .onReceive(timer) { _ in
-//      if consumables[consumable.id].active {
-//        if timeRemaining > 0 {
-//          timeRemaining -= 1
-//        } else {
-//          consumables[consumable.id].active = false
-//          consumableIsActive = false
-//          //          timeRemaining = 3600
-//          timeRemaining = 10
-//          userMultiplier = 0
-//        }
-//      }
-//    }
     .buttonStyle(PlainButtonStyle())
   }
-//  func progress() -> Double {
-//    //          max(0.0, 1.0 - Double(timeRemaining) / 3600.0)
-//    max(0.0, 1.0 - Double(timeRemaining) / 10.0)
-//  }
-//  func formattedTime() -> String {
-//    let minutes = timeRemaining / 60
-//    let seconds = timeRemaining % 60
-//    return String(format: "%02d:%02d", minutes, seconds)
-//  }
 }

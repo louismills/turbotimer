@@ -46,11 +46,11 @@ struct StoreView: View {
         .frame(height: 30)
         .padding()
         .background(Color("Background"))
-        
+
         Divider()
           .overlay(Color(UIColor.lightGray))
           .edgesIgnoringSafeArea(.horizontal)
-        
+
         ScrollView {
           HStack {
             Button {
@@ -67,7 +67,8 @@ struct StoreView: View {
             .btnTextPanelFormat()
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding([.leading, .top], 20)
-          
+            .padding(.bottom, 10)
+
           VStack() {
             // BOOSTS
             VStack {
@@ -137,14 +138,14 @@ struct StoreView: View {
             )
             .clipShape(RoundedRectangle(cornerRadius: 16))
           }
-          .padding()
+          .padding([.horizontal], 20) // wip
+//          .padding()
         }
         .scrollIndicators(.hidden)
-        .frame(maxWidth: .infinity)
+//        .frame(maxWidth: .infinity)
       }
       if showingPurchases {
         PurchasesDialog(isActive: $showingPurchases) {
-//          showingPurchases = false
           dismiss()
         }
       }

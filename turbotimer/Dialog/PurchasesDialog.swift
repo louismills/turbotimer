@@ -9,8 +9,43 @@ import Foundation
 import SwiftUI
 import StoreKit
 
+struct StarShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        let points = [
+            center.rotate(angle: .pi / 2.5),
+            center.rotate(angle: .pi * 7 / 10),
+            center.rotate(angle: .pi * 3 / 5),
+            center.rotate(angle: .pi * 11 / 10),
+            center.rotate(angle: .pi / 5),
+        ]
+
+        var path = Path()
+        path.move(to: points[0])
+        for point in points.dropFirst() {
+            path.addLine(to: point)
+        }
+        path.closeSubpath()
+        return path
+    }
+}
+
+extension CGPoint {
+    func rotate(angle: CGFloat) -> CGPoint {
+        let x = self.x * cos(angle) - self.y * sin(angle)
+        let y = self.x * sin(angle) + self.y * cos(angle)
+        return CGPoint(x: x, y: y)
+    }
+}
+
 struct CustomProductStyle: ProductViewStyle {
   @State private var offset: CGFloat = 1000
+
+  @State private var scale = 1.0 // wip
+  @State private var animationAmount = 1.0 // /wip
+
+
+  @AppStorage("userTheme") var userTheme = "themeRed"
 
   func makeBody(configuration: Configuration) -> some View {
     switch configuration.state {
@@ -29,7 +64,6 @@ struct CustomProductStyle: ProductViewStyle {
             .frame(width: 100, height: 50)
             .redacted(reason: .placeholder)
         }
-        
         // Placeholder for Price Area
         Capsule()
           .fill(Color.gray.opacity(0.3))
@@ -45,23 +79,30 @@ struct CustomProductStyle: ProductViewStyle {
         HStack {
           if product.id == "com.turbotimer.trophies.small" {
             Text("50")
-              .foregroundColor(Color("Text"))
+            //              .foregroundColor(Color("Text"))
+              .foregroundColor(Color(.white))
+//              .foregroundColor(Color(userTheme))
           } else if product.id == "com.turbotimer.trophies.large" {
             Text("225")
-              .foregroundColor(Color("Text"))
+            //              .foregroundColor(Color("Text"))
+              .foregroundColor(Color(.white))
+//              .foregroundColor(Color(userTheme))
           }
-          Image(systemName: "star.fill")
-            .foregroundColor(.yellow)
+
+            Image(systemName: "star.fill")
+              .foregroundColor(.yellow)
+
         }
         .font(.system(size: 50))
         .fontWeight(.bold)
-        
+
         Button {
           configuration.purchase()
         } label: {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
               .foregroundColor(Color("Text"))
+//              .foregroundColor(Color(userTheme))
 
             Text(verbatim: "Buy for \(product.displayPrice)")
               .lineLimit(2)
@@ -70,20 +111,31 @@ struct CustomProductStyle: ProductViewStyle {
               .padding()
           }
         }
+        .scaleEffect(product.id == "com.turbotimer.trophies.large" ? animationAmount : 1)
+        .animation(
+          .easeInOut(duration: 0.5)
+                .repeatForever(autoreverses: true),
+            value: animationAmount
+        )
       }
       .padding()
-      .background(Color(UIColor.lightGray).opacity(0.4))
+//      .background(Color(UIColor.lightGray).opacity(0.4))
+      .background(Color(.gray).opacity(0.4))
+//      .background(Color(userTheme).opacity(0.6))
       .clipShape(RoundedRectangle(cornerRadius: 20))
       .buttonStyle(.plain)
-      //wip
       .offset(x: 0, y: offset)
+//      .onAppear {
+//        withAnimation(.spring()) {
+//          offset = 0
+//        }
+//      }
       .onAppear {
+        animationAmount = 1.05
         withAnimation(.spring()) {
-          offset = 0
-        }
+                  offset = 0
+                }
       }
-      //wip
-
 
     default:
       Text("Something goes wrong...")
@@ -95,12 +147,12 @@ struct PurchasesDialog: View {
   @Binding var isActive: Bool
   
   @AppStorage("userStars") var userStars = 0
-
   @AppStorage("showingPurchases") var showingPurchases = false
 
-  let action: () -> ()
   @State private var offset: CGFloat = 1000
-  
+
+  let action: () -> ()
+
   var body: some View {
     ZStack {
       Color(.black)
