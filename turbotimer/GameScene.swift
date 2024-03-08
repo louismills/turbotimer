@@ -23,8 +23,6 @@ class GameScene: SKScene {
 
   @AppStorage("userTyres") var userTyres = DefaultSettings.tyresDefault
 
-
-
   override func sceneDidLoad() {
     setUpBounds()
     setUpBox()

@@ -18,7 +18,8 @@ struct ChallengesDialog: View {
   let action: () -> ()
 
   @State private var offset: CGFloat = 1000
-  @AppStorage("userTheme") var userTheme = "gray"
+
+  @AppStorage("userTheme") var userTheme = "themeRed"
 
   var body: some View {
     ZStack {
@@ -49,7 +50,6 @@ struct ChallengesDialog: View {
               .offset(x: 40, y: -40)
           }
         }
-
         if duration < 60 {
           Text("Focus for \(duration) minutes")
             .textCase(.uppercase)
@@ -80,14 +80,12 @@ struct ChallengesDialog: View {
             }
           }
         }
-
         Text("You will get this reward when you complete this challenge.")
           .foregroundColor(Color("Text"))
           .multilineTextAlignment(.center).padding(.bottom, 20)
         Text("Remember: don't close or switch the app!")
           .foregroundColor(Color("Text"))
           .padding(.bottom, 20)
-
         Button {
           action()
           close()
@@ -108,7 +106,6 @@ struct ChallengesDialog: View {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
               .foregroundColor(.gray)
-
             Text("Cancel")
               .textCase(.uppercase)
               .font(.system(size: 20, weight: .bold))

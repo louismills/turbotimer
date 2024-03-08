@@ -16,12 +16,11 @@ struct StoreView: View {
   @Binding var appState: AppState
   
   @Environment(\.dismiss) var dismiss
-  
-//  @State private var showingPurchases = false
-  
+
   @AppStorage("userDestination") var userDestination = ""
   @AppStorage("userTheme") var userTheme = "themeRed"
   @AppStorage("userStars") var userStars = 0
+  
   @AppStorage("consumables") var consumables = DefaultSettings.consumablesDefault
   @AppStorage("themes") var themes = DefaultSettings.themesDefault
 

@@ -20,14 +20,12 @@ struct sessionTimerSection: View {
   @AppStorage("userSessionTime") var userSessionTime = 0
   @AppStorage("sessionRunning") var sessionRunning = false
   @AppStorage("userStars") var userStars = 0
-  @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
-
   @AppStorage("userTheme") var userTheme = "themeRed"
+  @AppStorage("userTyres") var userTyres = DefaultSettings.tyresDefault
 
+  @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
   @AppStorage("challengeSelectedRewardTyres") var challengeSelectedRewardTyres = 0
   @AppStorage("challengeSelectedRewardTyresType") var challengeSelectedRewardTyresType = ""
-
-  @AppStorage("userTyres") var userTyres = DefaultSettings.tyresDefault
 
   func updateInventory(type: String) {
     if let index = userTyres.firstIndex(where: { $0.type == type }) {
@@ -118,17 +116,13 @@ struct sessionTimerSection: View {
               Text("STOP")
             }
           }
-//          .appBtn(color: !sessionRunning ? Color("Text") : Color(UIColor.lightGray).opacity(0.4))
           .appBtn(color: !sessionRunning ? Color("Text") : Color(.gray))
           .fontWeight(.heavy)
         }
       }
-      //      .padding(.top, 10)
       .padding(.top, 5)
-//            .padding(.top, sessionRunning ? 0 : 10)
     }
     .padding()
-//    .frame(maxHeight: 220)
     .frame(maxHeight: 235)
     .frame(width: screenWidth - 106)
     .background(Color("BackgroundPanel"))
