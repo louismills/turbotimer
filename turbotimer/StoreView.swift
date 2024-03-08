@@ -20,7 +20,7 @@ struct StoreView: View {
 //  @State private var showingPurchases = false
   
   @AppStorage("userDestination") var userDestination = ""
-  @AppStorage("userTheme") var userTheme = "gray"
+  @AppStorage("userTheme") var userTheme = "themeRed"
   @AppStorage("userStars") var userStars = 0
   @AppStorage("consumables") var consumables = DefaultSettings.consumablesDefault
   @AppStorage("themes") var themes = DefaultSettings.themesDefault

@@ -12,6 +12,8 @@ enum DefaultSettings {
   static let consumablesDefault = [
     Consumables(id: 0, active: false, cost: 15, inventory: 0, multiplier: 0.30, duration: 60, image: "fuelcan"),
     Consumables(id: 1, active: false, cost: 35, inventory: 0, multiplier: 0.75, duration: 60, image: "crashhelmet")
+//    Consumables(id: 0, active: false, cost: 0, inventory: 0, multiplier: 0.30, duration: 60, image: "fuelcan"),
+//    Consumables(id: 1, active: false, cost: 0, inventory: 0, multiplier: 0.75, duration: 60, image: "crashhelmet")
   ]
 
   static let themesDefault = [
@@ -23,15 +25,28 @@ enum DefaultSettings {
     Themes(id: 5, bought: false, cost: 10, colour: "themeGreen"),
   ]
 
+//  static let challengesDefault = [
+//    Challenges(id: 0, workMinutes: 5, rewardTyresType: "tyreRed", rewardTyres: 1, rewardStars: 1),
+//    Challenges(id: 1, workMinutes: 10, rewardTyresType: "tyreYellow", rewardTyres: 1,rewardStars: 2),
+//    Challenges(id: 2, workMinutes: 15, rewardTyresType: "tyreWhite", rewardTyres: 1,rewardStars: 3),
+//    Challenges(id: 3, workMinutes: 20, rewardTyresType: "tyreGreen", rewardTyres: 1,rewardStars: 5),
+//    Challenges(id: 4, workMinutes: 25, rewardTyresType: "tyreBlue", rewardTyres: 1,rewardStars: 7),
+//    Challenges(id: 5, workMinutes: 30, rewardTyresType: "tyreRed", rewardTyres: 2,rewardStars: 11),
+//    Challenges(id: 6, workMinutes: 45, rewardTyresType: "tyreYellow", rewardTyres: 2,rewardStars: 15),
+//    Challenges(id: 7, workMinutes: 60, rewardTyresType: "tyreWhite", rewardTyres: 2,rewardStars: 22),
+//    Challenges(id: 8, workMinutes: 90, rewardTyresType: "tyreGreen", rewardTyres: 2,rewardStars: 30),
+//    Challenges(id: 9, workMinutes: 120, rewardTyresType: "tyreBlue", rewardTyres: 2,rewardStars: 38)
+//  ]
+
   static let challengesDefault = [
-    Challenges(id: 0, workMinutes: 5, rewardTyresType: "tyreRed", rewardTyres: 1, rewardStars: 1),
-    Challenges(id: 1, workMinutes: 10, rewardTyresType: "tyreYellow", rewardTyres: 1,rewardStars: 2),
-    Challenges(id: 2, workMinutes: 15, rewardTyresType: "tyreWhite", rewardTyres: 1,rewardStars: 3),
-    Challenges(id: 3, workMinutes: 20, rewardTyresType: "tyreGreen", rewardTyres: 1,rewardStars: 5),
-    Challenges(id: 4, workMinutes: 25, rewardTyresType: "tyreBlue", rewardTyres: 1,rewardStars: 7),
-    Challenges(id: 5, workMinutes: 30, rewardTyresType: "tyreRed", rewardTyres: 2,rewardStars: 11),
-    Challenges(id: 6, workMinutes: 45, rewardTyresType: "tyreYellow", rewardTyres: 2,rewardStars: 15),
-    Challenges(id: 7, workMinutes: 60, rewardTyresType: "tyreWhite", rewardTyres: 2,rewardStars: 22),
+    Challenges(id: 0, workMinutes: 5, rewardTyresType: "tyreRed", rewardTyres: 1, rewardStars: 2),
+    Challenges(id: 1, workMinutes: 10, rewardTyresType: "tyreYellow", rewardTyres: 1,rewardStars: 3),
+    Challenges(id: 2, workMinutes: 15, rewardTyresType: "tyreWhite", rewardTyres: 1,rewardStars: 4),
+    Challenges(id: 3, workMinutes: 20, rewardTyresType: "tyreGreen", rewardTyres: 1,rewardStars: 6),
+    Challenges(id: 4, workMinutes: 25, rewardTyresType: "tyreBlue", rewardTyres: 1,rewardStars: 8),
+    Challenges(id: 5, workMinutes: 30, rewardTyresType: "tyreRed", rewardTyres: 2,rewardStars: 12),
+    Challenges(id: 6, workMinutes: 45, rewardTyresType: "tyreYellow", rewardTyres: 2,rewardStars: 16),
+    Challenges(id: 7, workMinutes: 60, rewardTyresType: "tyreWhite", rewardTyres: 2,rewardStars: 23),
     Challenges(id: 8, workMinutes: 90, rewardTyresType: "tyreGreen", rewardTyres: 2,rewardStars: 30),
     Challenges(id: 9, workMinutes: 120, rewardTyresType: "tyreBlue", rewardTyres: 2,rewardStars: 38)
   ]
@@ -144,6 +159,8 @@ struct AppState {
   @AppStorage("challengeSelectedDuration") var challengeSelectedDuration = 0
   @AppStorage("challengeSelectedRewardStars") var challengeSelectedRewardStars = 0
 
+  @AppStorage("userMultiplier") var userMultiplier: Double = 0
+
   var workMinutes: Int = 5 {
     didSet {
       if mode == .session {
@@ -166,9 +183,13 @@ struct AppState {
 
   var consumableTime: Int
 
+  var sessionStars: Double // wip
+
   init() {
     self.currentTime = workMinutes * 60
-    self.consumableTime = 10 // 3600
+//    self.consumableTime = 10 // 3600
+    self.consumableTime = 3600
+    self.sessionStars = 0 // wip
   }
 
   var currentTimeDisplay: String {
@@ -184,13 +205,25 @@ struct AppState {
   }
 
   mutating func next() {
+    // every minute calculate curr stars + any consumable multipler
+    if currentTime % 60 == 0 && currentTime != challengeSelectedDuration * 60 && mode == .session {
+//      print("userMultiplier: \(userMultiplier)")
+      let perMinStars = Double(challengeSelectedRewardStars) / Double(challengeSelectedDuration)
+      sessionStars = sessionStars + (perMinStars * (1 + userMultiplier))
+//      print(sessionStars)
+    }
+
     if currentTime > 0 {
       currentTime -= 1
       return
     }
 
     if currentTime == 0 && mode == .session {
-      userStars += challengeSelectedRewardStars
+//      userStars += challengeSelectedRewardStars
+//      print(sessionStars.rounded(.up))
+      userStars += Int(sessionStars.rounded(.up))
+      sessionStars = 0 // wip
+
       userTotalSessionTime += workMinutes
     }
 
@@ -208,9 +241,11 @@ struct AppState {
   mutating func reset() {
     restMinutes = 1
     workMinutes = challengeSelectedDuration
+    sessionStars = 0 // wip
     mode = .session
   }
 
+  // CONSUMABLE FUNCS
   mutating func consumableNext() {
     if consumableTime > 0 {
       consumableTime -= 1
@@ -225,8 +260,9 @@ struct AppState {
   }
 
   func progress() -> Double {
-    //          max(0.0, 1.0 - Double(timeRemaining) / 3600.0)
-    max(0.0, 1.0 - Double(consumableTime) / 10.0)
+//              max(0.0, 1.0 - Double(timeRemaining) / 3600.0)
+//    max(0.0, 1.0 - Double(consumableTime) / 10.0)
+    max(0.0, 1.0 - Double(consumableTime) / 3600.0)
   }
 
   var consumableTimeCountdown: Double {

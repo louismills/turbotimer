@@ -22,7 +22,7 @@ struct sessionTimerSection: View {
   @AppStorage("userStars") var userStars = 0
   @AppStorage("showingSessionTimerWarning") var showingSessionTimerWarning = false
 
-  @AppStorage("userTheme") var userTheme = "gray"
+  @AppStorage("userTheme") var userTheme = "themeRed"
 
   @AppStorage("challengeSelectedRewardTyres") var challengeSelectedRewardTyres = 0
   @AppStorage("challengeSelectedRewardTyresType") var challengeSelectedRewardTyresType = ""

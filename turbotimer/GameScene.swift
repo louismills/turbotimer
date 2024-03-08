@@ -58,7 +58,7 @@ class GameScene: SKScene {
     let screen = UIScreen.main.bounds
     let screenWidth = screen.size.width
     let shape = SKShapeNode()
-    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 53, width: screenWidth - 106, height: 220), cornerRadius: 20).cgPath
+    let shapePath = UIBezierPath(roundedRect: CGRect(x: self.frame.origin.x + 53, y: self.frame.origin.y + 53, width: screenWidth - 106, height: 235), cornerRadius: 20).cgPath
     shape.path = shapePath
     shape.physicsBody = SKPhysicsBody(polygonFrom: shapePath)
     shape.physicsBody?.isDynamic = false

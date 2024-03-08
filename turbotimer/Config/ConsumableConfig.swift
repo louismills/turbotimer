@@ -25,8 +25,8 @@ struct ConsumableConfig: View {
   @AppStorage("consumables") var consumables = DefaultSettings.consumablesDefault
   @AppStorage("consumableIsActive") var consumableIsActive = false
 
-  //  @State private var timeRemaining = 3600
-  @State private var timeRemaining = 10
+    @State private var timeRemaining = 3600
+//  @State private var timeRemaining = 10
 
   @State var timerConsumable: Timer? = nil
 
