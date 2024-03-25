@@ -167,7 +167,7 @@ struct ContentView: View {
         .frame(maxHeight: UIScreen.main.bounds.size.height)
 
       VStack(spacing: 10) {
-        // TOP NAV SECTION - total stars, total session time and shop
+        // TOP NAV SECTION - total stars, total session time and shop button
         HStack {
           HStack {
             Text("\(userStars)")
@@ -212,6 +212,7 @@ struct ContentView: View {
         }
         // END OF TOP NAV SECTION
         Spacer()
+        // TIMER SECTION
         sessionTimerSection(appState: $appState, scene: gameScene)
           .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
             if newPhase  == .background {

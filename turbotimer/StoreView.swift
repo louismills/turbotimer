@@ -5,11 +5,10 @@
 //  Created by Louis Mills on 27/02/2024.
 //
 
+import SwiftUI
 import SpriteKit
 import GameplayKit
 import CoreMotion
-
-import SwiftUI
 import AVFoundation
 
 struct StoreView: View {
@@ -137,11 +136,9 @@ struct StoreView: View {
             )
             .clipShape(RoundedRectangle(cornerRadius: 16))
           }
-          .padding([.horizontal], 20) // wip
-//          .padding()
+          .padding([.horizontal], 20)
         }
         .scrollIndicators(.hidden)
-//        .frame(maxWidth: .infinity)
       }
       if showingPurchases {
         PurchasesDialog(isActive: $showingPurchases) {

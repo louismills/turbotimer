@@ -83,15 +83,16 @@ struct sessionTimerSection: View {
             }
           }
           Spacer()
-          // BOTTOM RIGHT - Start / Stop button
+          // BOTTOM RIGHT - Start / Stop button & Create new tyres on session completion
           Button {
             if timer == nil {
               timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ _ in
                 appState.next()
-                // Create correct tyre colour
+                // Session finished
                 if appState.currentTime == 0 && appState.mode == .session {
-                  // Create quantity
+                  // Create tyre quantity from selected challenge
                   for _ in 0..<challengeSelectedRewardTyres {
+                    // Create tyre with correct tyre colour
                     scene.createTyre(tyreType: challengeSelectedRewardTyresType)
                     // add to user tyre inventory
                     updateInventory(type: challengeSelectedRewardTyresType)

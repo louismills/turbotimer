@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B409056B2B7E682A002ADE74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B409056A2B7E682A002ADE74 /* LaunchScreen.storyboard */; };
+		B41A16A52B9CC5A600908DD4 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41A16A42B9CC5A600908DD4 /* PurchaseManager.swift */; };
 		B427009A2B7100FF00247424 /* SessionTimerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42700992B7100FF00247424 /* SessionTimerDialog.swift */; };
 		B45AEE812B4EF9F20066FFA7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45AEE802B4EF9F20066FFA7 /* AppState.swift */; };
 		B46726392B8E14F4002C96B1 /* StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46726382B8E14F4002C96B1 /* StoreView.swift */; };
@@ -47,6 +48,8 @@
 
 /* Begin PBXFileReference section */
 		B409056A2B7E682A002ADE74 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B41A16A42B9CC5A600908DD4 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		B41A16A62B9CC7D100908DD4 /* TurboTimer: Productivity Timer.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = "TurboTimer: Productivity Timer.storekit"; sourceTree = "<group>"; };
 		B42700992B7100FF00247424 /* SessionTimerDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTimerDialog.swift; sourceTree = "<group>"; };
 		B45AEE802B4EF9F20066FFA7 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		B46726382B8E14F4002C96B1 /* StoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreView.swift; sourceTree = "<group>"; };
@@ -147,11 +150,13 @@
 				B467263A2B8E1572002C96B1 /* ChallengesView.swift */,
 				B46726442B8E3C24002C96B1 /* GameScene.swift */,
 				B4AD5C252B6D616E007FED79 /* SessionTimerSection.swift */,
+				B41A16A42B9CC5A600908DD4 /* PurchaseManager.swift */,
 				B409056A2B7E682A002ADE74 /* LaunchScreen.storyboard */,
 				B495D9FF2B4DB88800AF3F2D /* Assets.xcassets */,
 				B46726402B8E177B002C96B1 /* Config */,
 				B46726412B8E17B2002C96B1 /* Dialog */,
 				B495DA012B4DB88800AF3F2D /* Preview Content */,
+				B41A16A62B9CC7D100908DD4 /* TurboTimer: Productivity Timer.storekit */,
 			);
 			path = turbotimer;
 			sourceTree = "<group>";
@@ -320,6 +325,7 @@
 				B46726432B8E2AE4002C96B1 /* ChallengeConfig.swift in Sources */,
 				B45AEE812B4EF9F20066FFA7 /* AppState.swift in Sources */,
 				B427009A2B7100FF00247424 /* SessionTimerDialog.swift in Sources */,
+				B41A16A52B9CC5A600908DD4 /* PurchaseManager.swift in Sources */,
 				B46726452B8E3C24002C96B1 /* GameScene.swift in Sources */,
 				B495D9FE2B4DB88700AF3F2D /* ContentView.swift in Sources */,
 				B467263D2B8E16E3002C96B1 /* ThemeConfig.swift in Sources */,
@@ -506,7 +512,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.20;
+				MARKETING_VERSION = 1.0.21;
 				PRODUCT_BUNDLE_IDENTIFIER = mills.turbotimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -539,7 +545,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.20;
+				MARKETING_VERSION = 1.0.21;
 				PRODUCT_BUNDLE_IDENTIFIER = mills.turbotimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

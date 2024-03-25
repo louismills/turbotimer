@@ -44,6 +44,10 @@ struct CustomProductStyle: ProductViewStyle {
 
   @AppStorage("userTheme") var userTheme = "themeRed"
 
+  @EnvironmentObject private var purchaseManager: PurchaseManager
+
+  
+
   func makeBody(configuration: Configuration) -> some View {
     switch configuration.state {
     case .loading:
@@ -88,25 +92,26 @@ struct CustomProductStyle: ProductViewStyle {
         .fontWeight(.bold)
 
         Button {
-          configuration.purchase()
+//          configuration.purchase()
+
+          Task {
+            try await purchaseManager.purchase(product)
+          }
         } label: {
           ZStack {
             RoundedRectangle(cornerRadius: 20)
-//              .foregroundColor(Color("Text"))
               .foregroundColor(Color(userTheme))
 
             if product.id == "com.turbotimer.trophies.large" {
               Text(verbatim: "Buy for \(product.displayPrice) \n33% discount")
                 .lineLimit(2)
                 .font(.system(size: 20, weight: .bold))
-//                .foregroundColor(Color("Background"))
                 .foregroundColor(Color(.white))
                 .padding()
             } else {
               Text(verbatim: "Buy for \(product.displayPrice)")
                 .lineLimit(2)
                 .font(.system(size: 20, weight: .bold))
-//                .foregroundColor(Color("Background"))
                 .foregroundColor(Color(.white))
                 .padding()
             }
@@ -142,6 +147,8 @@ struct PurchasesDialog: View {
   @AppStorage("userStars") var userStars = 0
   @AppStorage("showingPurchases") var showingPurchases = false
 
+  @EnvironmentObject private var purchaseManager: PurchaseManager
+
   @State private var offset: CGFloat = 1000
 
   let action: () -> ()
@@ -151,65 +158,132 @@ struct PurchasesDialog: View {
       Color(.black)
         .opacity(0.3)
 
-      VStack(spacing: 20) {
-        VStack {
-          VStack(spacing: 20) {
-            ForEach(["com.turbotimer.trophies.small", "com.turbotimer.trophies.large"], id: \.self) { id in
-              ProductView(id: id)
-                .productViewStyle(CustomProductStyle())
-                .onInAppPurchaseStart { product in
-                  print("User has started buying \(product.id)")
-                }
-                .onInAppPurchaseCompletion { product, result in
-                  if case .success(.success(let transaction)) = result {
-                    print("Purchased successfully: \(transaction.signedDate)")
-                    print("Apply trophies to user total")
-                    if product.id == "com.turbotimer.trophies.small" {
-                      userStars += 50
-                    }
-                    if product.id == "com.turbotimer.trophies.large" {
-                      userStars += 225
-                    }
-
-                  } else {
-                    print("Something else happened")
-                  }
-                }
+      // wip
+      VStack {
+        if purchaseManager.products.isEmpty {
+          ProgressView()
+        } else {
+//            ForEach(purchaseManager.products, id: \.id) { product in
+//          ForEach(purchaseManager.products.sorted(by: { $0.displayPrice < $1.displayPrice }), id: \.id) { product in
+//              Button {
+//                Task {
+//                  try await purchaseManager.purchase(product)
+//                }
+//              } label: {
+//                ProductView(id: product.id)
+//                                .productViewStyle(CustomProductStyle())
+//              }
+//              .buttonStyle(.borderedProminent)
+//            }
+          ForEach(purchaseManager.products.sorted(by: { $0.displayPrice < $1.displayPrice }), id: \.id) { product in
+            ProductView(id: product.id)
+                            .productViewStyle(CustomProductStyle())
+//              Button {
+//                Task {
+//                  try await purchaseManager.purchase(product)
+//                }
+//              } label: {
+//                ProductView(id: product.id)
+//                                .productViewStyle(CustomProductStyle())
+//              }
+//              .buttonStyle(.borderedProminent)
             }
-          }
         }
         Button {
-          close()
-          showingPurchases = false
-        } label: {
-          ZStack {
-            RoundedRectangle(cornerRadius: 20)
-              .foregroundColor(.gray)
+                 close()
+                 showingPurchases = false
+               } label: {
+                 ZStack {
+                   RoundedRectangle(cornerRadius: 20)
+                     .foregroundColor(.gray)
 
-            Text("Cancel")
-              .textCase(.uppercase)
-              .font(.system(size: 20, weight: .bold))
-              .foregroundColor(.white)
-              .padding(10)
-          }
-        }
+                   Text("Cancel")
+                     .textCase(.uppercase)
+                     .font(.system(size: 20, weight: .bold))
+                     .foregroundColor(.white)
+                     .padding(10)
+                 }
+               }
       }
-      .fixedSize(horizontal: false, vertical: true)
-      .padding()
-      .background(Color("BackgroundPanel"))
-      .clipShape(RoundedRectangle(cornerRadius: 20))
-      .shadow(radius: 20)
-      .padding(20)
-      .offset(x: 0, y: offset)
-      .onAppear {
-        withAnimation(.spring()) {
-          offset = 0
-        }
+      .task {
+        await purchaseManager.fetchProducts()
       }
-    }
-    .ignoresSafeArea()
-  }
+             .fixedSize(horizontal: false, vertical: true)
+                 .padding()
+                 .background(Color("BackgroundPanel"))
+                 .clipShape(RoundedRectangle(cornerRadius: 20))
+                 .shadow(radius: 20)
+                 .padding(20)
+                 .offset(x: 0, y: offset)
+                 .onAppear {
+                   withAnimation(.spring()) {
+                     offset = 0
+                   }
+                 }
+               }
+               .ignoresSafeArea()
+             }
+      // wip
 
+//      VStack(spacing: 20) {
+//        VStack {
+//          VStack(spacing: 20) {
+//            ForEach(["com.turbotimer.trophies.small", "com.turbotimer.trophies.large"], id: \.self) { id in
+//              ProductView(id: id)
+//                .productViewStyle(CustomProductStyle())
+//                .onInAppPurchaseStart { product in
+//                  print("User has started buying \(product.id)")
+//                }
+//                .onInAppPurchaseCompletion { product, result in
+//                  if case .success(.success(let transaction)) = result {
+//                    print("Purchased successfully: \(transaction.signedDate)")
+//                    print("Apply trophies to user total")
+//                    if product.id == "com.turbotimer.trophies.small" {
+//                      userStars += 50
+//                    }
+//                    if product.id == "com.turbotimer.trophies.large" {
+//                      userStars += 225
+//                    }
+//
+//                  } else {
+//                    print("Something else happened")
+//                  }
+//                }
+//            }
+//          }
+//        }
+//        Button {
+//          close()
+//          showingPurchases = false
+//        } label: {
+//          ZStack {
+//            RoundedRectangle(cornerRadius: 20)
+//              .foregroundColor(.gray)
+//
+//            Text("Cancel")
+//              .textCase(.uppercase)
+//              .font(.system(size: 20, weight: .bold))
+//              .foregroundColor(.white)
+//              .padding(10)
+//          }
+//        }
+//      }
+//      .fixedSize(horizontal: false, vertical: true)
+//      .padding()
+//      .background(Color("BackgroundPanel"))
+//      .clipShape(RoundedRectangle(cornerRadius: 20))
+//      .shadow(radius: 20)
+//      .padding(20)
+//      .offset(x: 0, y: offset)
+//      .onAppear {
+//        withAnimation(.spring()) {
+//          offset = 0
+//        }
+//      }
+//    }
+//    .ignoresSafeArea()
+//  }
+//
   func close() {
     withAnimation(.spring()) {
       offset = 1000
@@ -219,7 +293,10 @@ struct PurchasesDialog: View {
 }
 
 struct PurchasesDialog_Previews: PreviewProvider {
+//  @StateObject private var purchaseManager = PurchaseManager()
+
   static var previews: some View {
     PurchasesDialog(isActive: .constant(true), action: {})
+//      .environmentObject(purchaseManager)
   }
 }
